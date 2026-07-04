@@ -5,70 +5,182 @@
  * require touching a component.
  */
 
+export type ProductStatus = "available" | "coming-soon";
+export type ProductCollection = "developer" | "agency" | "automation";
+
 export interface ProductSummary {
   slug: string;
-  collection: string;
-  volume: string;
+  collection: ProductCollection;
+  category: string;
   name: string;
+  /** Outcome-focused, one sentence. */
   description: string;
-  status: "available" | "coming-soon";
+  status: ProductStatus;
   price?: number;
+  /** 3-5 bullets — what's inside, not marketing fluff. */
+  features: string[];
   href?: string;
 }
+
+export interface CollectionMeta {
+  key: ProductCollection;
+  title: string;
+  description: string;
+}
+
+export const COLLECTIONS: CollectionMeta[] = [
+  {
+    key: "developer",
+    title: "Developer Collection",
+    description: "Ship production software faster with battle-tested engineering systems.",
+  },
+  {
+    key: "agency",
+    title: "Agency Collection",
+    description: "Run and scale your agency with proven operating systems, not scattered docs.",
+  },
+  {
+    key: "automation",
+    title: "Automation Collection",
+    description: "Automate client work, sales, and operations so the business runs without you.",
+  },
+];
 
 export const PRODUCTS: ProductSummary[] = [
   {
     slug: "claude-code-mastery",
-    collection: "SARION AI Engineering Suite",
-    volume: "Volume 1",
-    name: "Claude Code Mastery",
+    collection: "developer",
+    category: "Developer Tools",
+    name: "Claude Code Mastery Kit",
     description:
-      "300+ pages of engineered prompts, playbooks, and processes that turn Claude Code into a senior engineering partner.",
+      "Ship production-ready software faster with 250+ Claude Code workflows, debugging systems, architecture playbooks, refactoring prompts, deployment checklists and engineering templates.",
     status: "available",
     price: 49,
+    features: [
+      "250+ engineered prompts",
+      "Debugging workflows",
+      "Architecture playbooks",
+      "Refactoring systems",
+      "Deployment checklists",
+    ],
     href: "/products/claude-code-mastery",
   },
   {
-    slug: "cursor-mastery",
-    collection: "SARION AI Engineering Suite",
-    volume: "Volume 2",
-    name: "Cursor Mastery",
+    slug: "nextjs-saas-boilerplate",
+    collection: "developer",
+    category: "Developer Tools",
+    name: "Next.js SaaS Boilerplate",
     description:
-      "The same battle-tested playbook system, rebuilt for Cursor power users.",
+      "Skip months of setup — launch a production SaaS on a foundation with auth, billing, and an admin panel already built.",
     status: "coming-soon",
+    features: ["Authentication", "Dashboard", "Payments", "Admin panel", "Landing page & emails"],
   },
   {
-    slug: "agency-playbook",
-    collection: "SARION AI Engineering Suite",
-    volume: "Volume 3",
-    name: "Agency Playbook",
-    description:
-      "Client-ready templates and SOPs for agencies delivering AI-powered engineering work.",
+    slug: "cursor-mastery",
+    collection: "developer",
+    category: "Developer Tools",
+    name: "Cursor Mastery Kit",
+    description: "The same battle-tested workflow system, rebuilt for Cursor power users.",
     status: "coming-soon",
+    features: ["Engineered prompts", "Debugging playbooks", "Architecture guides"],
   },
   {
     slug: "ai-engineering-library",
-    collection: "SARION AI Engineering Suite",
-    volume: "Volume 4",
+    collection: "developer",
+    category: "Developer Tools",
     name: "AI Engineering Library",
-    description:
-      "A structured reference for building production-grade AI agents and pipelines.",
+    description: "A structured reference for building production-grade AI agents and pipelines.",
     status: "coming-soon",
+    features: ["Agent design patterns", "Pipeline architecture", "Evaluation frameworks"],
   },
   {
-    slug: "ai-saas-blueprint",
-    collection: "SARION AI Engineering Suite",
-    volume: "Volume 5",
-    name: "AI SaaS Blueprint",
-    description:
-      "An end-to-end blueprint for shipping a SaaS product from idea to launch.",
+    slug: "ai-saas-launch-blueprint",
+    collection: "developer",
+    category: "Developer Tools",
+    name: "AI SaaS Launch Blueprint",
+    description: "An end-to-end blueprint for shipping an AI SaaS product from idea to launch.",
     status: "coming-soon",
+    features: ["Idea validation", "Pricing & positioning", "Launch checklist"],
+  },
+  {
+    slug: "agency-operating-system",
+    collection: "agency",
+    category: "Agency Systems",
+    name: "Agency Operating System",
+    description:
+      "Run your agency on one proven system — from first client call to the finance close.",
+    status: "coming-soon",
+    features: [
+      "CRM templates",
+      "SOPs & client onboarding",
+      "Proposal templates",
+      "Finance & hiring",
+      "KPI dashboards",
+    ],
+  },
+  {
+    slug: "n8n-starter-pack",
+    collection: "automation",
+    category: "Automation",
+    name: "n8n Starter Pack",
+    description: "20 production-ready n8n workflows so you automate client work in an afternoon, not a month.",
+    status: "coming-soon",
+    features: ["20 production workflows", "Full documentation", "Ready-to-import files", "Video walkthroughs"],
+  },
+  {
+    slug: "ai-automation-library",
+    collection: "automation",
+    category: "Automation",
+    name: "AI Automation Library",
+    description: "Automate lead qualification, CRM updates, and client follow-up with AI agents that run while you sleep.",
+    status: "coming-soon",
+    features: [
+      "Lead qualification",
+      "CRM & Gmail automation",
+      "Slack automation",
+      "AI agents & reporting",
+      "Client follow-up",
+    ],
   },
 ];
 
 export const PRODUCT_BY_SLUG: Record<string, ProductSummary> = Object.fromEntries(
   PRODUCTS.map((p) => [p.slug, p]),
 );
+
+export function productsByCollection(collection: ProductCollection): ProductSummary[] {
+  return PRODUCTS.filter((p) => p.collection === collection);
+}
+
+/** SARION CRM — the flagship subscription product. Not a one-time purchase,
+ * so it's modeled separately from the digital-products catalog above. */
+export const FLAGSHIP_CRM = {
+  name: "SARION CRM",
+  eyebrow: "Flagship SaaS · Subscription",
+  description: "Run your agency with AI-powered CRM, sales pipeline, client management and automation.",
+  primaryLabel: "Start Free Trial",
+  primaryHref: "/signup",
+  secondaryLabel: "Learn More",
+  secondaryHref: "/features",
+};
+
+export const PRODUCT_STATS = [
+  { value: "4", label: "Premium Products" },
+  { value: "250+", label: "Engineering Workflows" },
+  { value: "Built For", label: "Developers & Agencies" },
+];
+
+/** "People also buy" cross-sell chains, shown on individual product pages. */
+export interface CrossSellChain {
+  category: string;
+  slugs: string[];
+}
+
+export const CROSS_SELL: CrossSellChain[] = [
+  { category: "Developer", slugs: ["claude-code-mastery", "nextjs-saas-boilerplate"] },
+  { category: "Agency", slugs: ["agency-operating-system", "n8n-starter-pack"] },
+  { category: "Automation", slugs: ["ai-automation-library"] },
+];
 
 // ---------------------------------------------------------------------------
 // Claude Code Mastery — full product page content

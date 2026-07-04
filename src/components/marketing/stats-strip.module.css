@@ -1,0 +1,32 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--m-space-5);
+}
+
+.tile {
+  padding: var(--m-space-6) var(--m-space-5);
+  border: 1px solid var(--m-border);
+  border-radius: 6px;
+  background: var(--m-card);
+  text-align: center;
+}
+
+.value {
+  font-family: var(--font-heading), Georgia, serif;
+  font-size: var(--m-text-3xl);
+  font-weight: 600;
+  color: var(--m-primary);
+}
+
+.label {
+  margin-top: var(--m-space-2);
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

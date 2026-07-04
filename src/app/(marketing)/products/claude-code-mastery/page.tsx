@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Check, X, ArrowRight, Plus } from "lucide-react";
+import { Check, X, Plus } from "lucide-react";
 
 import { SectionHeader } from "@/components/marketing/section-header";
 import { PricingCard } from "@/components/marketing/pricing-card";
-import { ProductCard } from "@/components/marketing/product-card";
+import { CrossSell } from "@/components/marketing/cross-sell";
 import { CTASection } from "@/components/marketing/cta-section";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { StickyBuyButton } from "@/components/marketing/sticky-buy-button";
@@ -14,7 +14,6 @@ import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
 import { breadcrumbSchema, faqSchema, productSchema } from "@/lib/seo/schema";
 import {
-  PRODUCTS,
   CCM_STATS,
   CCM_INCLUDED,
   CCM_TOC,
@@ -64,8 +63,6 @@ const PRODUCT_SCHEMA = productSchema({
   image: `${CCM_BOX_MOCKUP_BASE}/main-box-light.png`,
   price: 49,
 });
-
-const RELATED_PRODUCTS = PRODUCTS.filter((p) => p.slug !== "claude-code-mastery");
 
 export default function ClaudeCodeMasteryPage() {
   return (
@@ -321,22 +318,8 @@ export default function ClaudeCodeMasteryPage() {
         </div>
       </section>
 
-      {/* Related products */}
-      <section className="mSectionTight">
-        <div className="mContainer">
-          <SectionHeader eyebrow="More from SARION" title="Related products" />
-          <div className={styles.relatedGrid}>
-            {RELATED_PRODUCTS.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-          <div style={{ textAlign: "center", marginTop: "var(--m-space-6)" }}>
-            <Link href="/products" className="mBtn mBtnSecondary">
-              View all products <ArrowRight size={16} aria-hidden />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Cross-sell */}
+      <CrossSell />
 
       <StickyBuyButton
         name="Claude Code Mastery Kit"

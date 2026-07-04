@@ -1,24 +1,46 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: var(--m-space-5);
-  margin-top: var(--m-space-7);
-  align-items: stretch;
+  padding: var(--m-space-8) var(--m-space-5) var(--m-space-4);
+  background: radial-gradient(ellipse 640px 320px at 50% 0%, var(--m-glow), transparent 70%);
 }
 
-.grid > a {
+.headline {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.08;
+}
+
+.headline span {
   display: block;
-  height: 100%;
 }
 
-@media (max-width: 980px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.headlineAccent {
+  background: linear-gradient(90deg, var(--m-primary), var(--m-primary-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-@media (max-width: 760px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.subheading {
+  max-width: 560px;
+  text-align: center;
+  text-wrap: balance;
+  font-size: var(--m-text-lg);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-space-3);
+  flex-wrap: wrap;
+  /* .hero's flex `gap` already gives 24px; add a little more so the button
+     row reads as its own group (32px total), per spacing spec. */
+  margin-top: var(--m-space-2);
 }

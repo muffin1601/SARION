@@ -212,21 +212,9 @@
   text-align: center;
 }
 
-.relatedGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--m-space-5);
-  margin-top: var(--m-space-7);
-}
-
-.relatedGrid > * {
-  height: 100%;
-}
-
 @media (max-width: 980px) {
   .statsGrid,
-  .previewGrid,
-  .relatedGrid {
+  .previewGrid {
     grid-template-columns: repeat(2, 1fr);
   }
   .tiersGrid {
