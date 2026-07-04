@@ -10,6 +10,7 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
+  { label: "Products", href: "/products" },
   { label: "Pricing", href: "/pricing" },
   { label: "Free Scorecard", href: "/scorecard" },
   { label: "Portal Demo", href: "/portal-demo" },
@@ -20,6 +21,7 @@ export const NAV_LINKS: NavLink[] = [
 /** Product column in the footer. */
 export const PRODUCT_LINKS: NavLink[] = [
   { label: "Features", href: "/features" },
+  { label: "Products", href: "/products" },
   { label: "Pricing", href: "/pricing" },
   { label: "Portal Demo", href: "/portal-demo" },
   { label: "Free Scorecard", href: "/scorecard" },

@@ -11,6 +11,8 @@ interface PricingCardProps {
   featured?: boolean;
   ctaLabel?: string;
   ctaHref?: string;
+  /** Billing period label shown after the price. Defaults to "/month". */
+  period?: string;
 }
 
 export function PricingCard({
@@ -21,6 +23,7 @@ export function PricingCard({
   featured = false,
   ctaLabel = "Start Free Trial",
   ctaHref = "/signup",
+  period = "/month",
 }: PricingCardProps) {
   return (
     <div className={styles.card} data-featured={featured}>
@@ -31,7 +34,7 @@ export function PricingCard({
       </div>
       <div className={styles.priceRow}>
         <span className={styles.price}>${price}</span>
-        <span className={styles.period}>/month</span>
+        <span className={styles.period}>{period}</span>
       </div>
       <Link
         href={ctaHref}

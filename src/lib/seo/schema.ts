@@ -128,6 +128,48 @@ export function breadcrumbSchema(trail: { name: string; path: string }[]) {
   };
 }
 
+/** ItemList — an ordered collection of pages (e.g. the products catalog). */
+export function itemListSchema(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: item.url.startsWith("http") ? item.url : `${siteConfig.url}${item.url}`,
+    })),
+  };
+}
+
+/** Product — a purchasable digital good (e.g. a SARION digital product). */
+export function productSchema(data: {
+  name: string;
+  description: string;
+  url: string;
+  image?: string;
+  price: number;
+  priceValidUntil?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: data.name,
+    description: data.description,
+    url: `${siteConfig.url}${data.url}`,
+    ...(data.image ? { image: `${siteConfig.url}${data.image}` } : {}),
+    brand: { "@type": "Brand", name: siteConfig.name },
+    offers: {
+      "@type": "Offer",
+      url: `${siteConfig.url}${data.url}`,
+      priceCurrency: "USD",
+      price: data.price,
+      availability: "https://schema.org/InStock",
+      ...(data.priceValidUntil ? { priceValidUntil: data.priceValidUntil } : {}),
+    },
+  };
+}
+
 /** Sitewide @graph (Organization + WebSite) for the marketing layout. */
 export function siteGraph() {
   return {

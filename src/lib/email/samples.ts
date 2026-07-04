@@ -68,6 +68,14 @@ export const SAMPLE_PAYLOADS: { [K in EmailKind]: EmailPayloads[K] } = {
       { feature: "Client Portal", fix: "Give clients a portal so they stop asking 'what's the status?'." },
     ],
   },
+
+  freeSampleDelivery: {
+    downloadUrl: "https://trysarion.com/release/SARION-Free-Sample/SARION-Free-Sample.pdf",
+    productUrl: "https://trysarion.com/products/claude-code-mastery",
+  },
+  newsletterWelcome: {
+    unsubscribeUrl: "https://trysarion.com/unsubscribe?token=sample",
+  },
 };
 
 export const ALL_EMAIL_KINDS = Object.keys(SAMPLE_PAYLOADS) as EmailKind[];

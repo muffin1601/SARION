@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Building2, Sparkles, Gift } from "lucide-react";
 
 import { HeroSection } from "@/components/marketing/hero-section";
 import { FounderNote } from "@/components/marketing/founder-note";
@@ -10,6 +11,7 @@ import { ProductShot } from "@/components/marketing/product-shot";
 import { CTASection } from "@/components/marketing/cta-section";
 import { ScorecardBanner } from "@/components/marketing/scorecard-banner";
 import { AboutSection } from "@/components/marketing/about-section";
+import { AnnouncementBar } from "@/components/marketing/announcement-bar";
 import { isFoundingOfferOpen } from "@/config/plans";
 import { PROBLEM_CARDS, FEATURE_CARDS } from "@/lib/marketing/features";
 import { HOME_FAQ } from "@/lib/marketing/faq";
@@ -43,12 +45,40 @@ const SOFTWARE_SCHEMA = {
 };
 const FAQ_SCHEMA = faqSchema(HOME_FAQ);
 
+// F1. Ecosystem section — links the two SARION business lines from the home page.
+const ECOSYSTEM_CARDS = [
+  {
+    icon: Building2,
+    title: "SARION CRM",
+    description: "Manage your agency.",
+    href: "/features",
+  },
+  {
+    icon: Sparkles,
+    title: "SARION AI Engineering Suite",
+    description: "Professional developer resources.",
+    href: "/products",
+  },
+  {
+    icon: Gift,
+    title: "Free Resources",
+    description: "Templates, prompts and guides.",
+    href: "/free",
+  },
+];
+
 export default function HomePage() {
   return (
     <>
       <TrackPageView event={ANALYTICS_EVENTS.LandingViewed} />
       <JsonLd id="software-schema" data={SOFTWARE_SCHEMA} />
       <JsonLd id="home-faq-schema" data={FAQ_SCHEMA} />
+
+      <AnnouncementBar
+        href="/products/claude-code-mastery"
+        label="🚀 New: SARION AI Engineering Suite – Volume 1: Claude Code Mastery is now available."
+      />
+
       <HeroSection />
 
       {/* Honest credibility — a note from the team, not fake testimonials */}
@@ -72,6 +102,28 @@ export default function HomePage() {
 
       {/* B2. Scorecard lead magnet — quantify the pain just named above. */}
       <ScorecardBanner placement="home_problem" />
+
+      {/* B3. Ecosystem — introduces the second SARION business line (digital products). */}
+      <section className="mSection">
+        <div className="mContainer">
+          <SectionHeader
+            eyebrow="The SARION Ecosystem"
+            title="Explore the SARION Ecosystem"
+            description="One brand, two ways to work smarter — run your agency, or level up how you build with AI."
+          />
+          <div className={styles.grid3}>
+            {ECOSYSTEM_CARDS.map((card) => (
+              <Link key={card.title} href={card.href} className={styles.ecosystemCard}>
+                <FeatureCard
+                  icon={card.icon}
+                  title={card.title}
+                  description={card.description}
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* C. Capabilities — honest "built for agencies" credibility */}
       <section className="mSection mSectionAlt">

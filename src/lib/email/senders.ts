@@ -54,7 +54,10 @@ export type EmailKind =
   | "productAnnouncement"
   | "newsletter"
   // Lead magnet (hello@)
-  | "scorecardReport";
+  | "scorecardReport"
+  // Digital products lead capture (hello@)
+  | "freeSampleDelivery"
+  | "newsletterWelcome";
 
 /** Workflow → sender. Drives deliverability + brand-voice correctness. */
 export const SENDER_FOR: Record<EmailKind, SenderKey> = {
@@ -86,6 +89,9 @@ export const SENDER_FOR: Record<EmailKind, SenderKey> = {
   newsletter: "hello",
 
   scorecardReport: "hello",
+
+  freeSampleDelivery: "hello",
+  newsletterWelcome: "hello",
 };
 
 /** RFC 5322 "Display Name <addr>" string for the Resend `from` field. */

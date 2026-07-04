@@ -7,12 +7,18 @@ import type { NextConfig } from "next";
 // 'self' plus the explicit allowlist below. Resend is server-side only (no CSP
 // impact); the Lemon checkout is a top-level navigation (allowed by default) but
 // frame-src/form-action are allowlisted defensively.
+// Next.js dev-mode Fast Refresh evaluates code via eval(), which a strict CSP
+// blocks — harmless in prod (no eval there) but breaks dev-mode interactivity.
+// Only relax script-src for local development; the production header is
+// byte-for-byte unchanged.
+const isDev = process.env.NODE_ENV !== "production";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' https://plausible.io https://www.googletagmanager.com https://*.posthog.com https://analytics.ahrefs.com",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://plausible.io https://www.googletagmanager.com https://*.posthog.com https://analytics.ahrefs.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",

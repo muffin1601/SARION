@@ -41,6 +41,13 @@ export const ANALYTICS_EVENTS = {
   ScorecardTrialClicked: "Scorecard Trial Clicked",
   ScorecardTrialConverted: "Scorecard Trial Converted",
 
+  // ── Digital products (client-side) ──
+  ProductsViewed: "Products Viewed",
+  ProductViewed: "Product Viewed",
+  FreeSampleViewed: "Free Sample Viewed",
+  FreeSampleDownloaded: "Free Sample Downloaded",
+  NewsletterSubscribed: "Newsletter Subscribed",
+
   // ── Legacy (kept for existing Plausible dashboards) ──
   Signup: "Signup",
   BillingUpgrade: "Billing Upgrade",

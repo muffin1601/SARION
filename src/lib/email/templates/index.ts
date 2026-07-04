@@ -11,6 +11,7 @@ import * as sales from "./sales";
 import * as contact from "./contact";
 import * as product from "./product";
 import * as scorecard from "./scorecard";
+import * as leads from "./leads";
 
 export interface EmailPayloads {
   // Auth
@@ -51,6 +52,9 @@ export interface EmailPayloads {
     trialUrl: string;
     topFixes: { feature: string; fix: string }[];
   };
+  // Digital products lead capture
+  freeSampleDelivery: { downloadUrl: string; productUrl: string };
+  newsletterWelcome: { unsubscribeUrl?: string };
 }
 
 // Compile-time guarantee that EmailPayloads covers exactly the EmailKind union.
@@ -89,4 +93,7 @@ export const TEMPLATES: {
   newsletter: product.newsletter,
 
   scorecardReport: scorecard.scorecardReport,
+
+  freeSampleDelivery: leads.freeSampleDelivery,
+  newsletterWelcome: leads.newsletterWelcome,
 };

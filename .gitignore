@@ -24,6 +24,14 @@ coverage/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+*.tsbuildinfo
 
 # Email preview output (scripts/email-preview.ts)
 # .email-previews/
+
+# Paid digital-product source content (full PDFs, sellable zip). Deliberately
+# kept OUTSIDE public/ so it's never web-servable; also excluded from git so
+# the ~135MB of paid binaries never land in repo history. See
+# PRODUCTION-READINESS-REPORT.md for why this was moved out of public/release.
+/private-release/
+

@@ -1,0 +1,48 @@
+.badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-space-3);
+  margin-bottom: var(--m-space-6);
+  flex-wrap: wrap;
+}
+
+.formWrap {
+  max-width: 480px;
+  margin: var(--m-space-7) auto 0;
+}
+
+.perks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--m-space-5);
+  margin-top: var(--m-space-8);
+  text-align: center;
+}
+
+.perkItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--m-space-3);
+  padding: var(--m-space-5);
+}
+
+.perkIcon {
+  color: var(--m-primary);
+}
+
+.perkTitle {
+  font-weight: 600;
+}
+
+.perkBody {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+}
+
+@media (max-width: 760px) {
+  .perks {
+    grid-template-columns: 1fr;
+  }
+}

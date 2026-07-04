@@ -16,6 +16,8 @@ FROM base AS builder
 # must be present HERE (not at container runtime). Pass via --build-arg.
 ARG NEXT_PUBLIC_AHREFS_KEY
 ENV NEXT_PUBLIC_AHREFS_KEY=${NEXT_PUBLIC_AHREFS_KEY}
+ARG NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL
+ENV NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL=${NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm prisma generate && pnpm build

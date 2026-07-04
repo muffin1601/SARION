@@ -12,6 +12,11 @@
   margin-top: var(--m-space-7);
 }
 
+.ecosystemCard {
+  display: block;
+  height: 100%;
+}
+
 .center {
   display: flex;
   justify-content: center;
