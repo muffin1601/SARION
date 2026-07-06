@@ -9,6 +9,8 @@ import { CrossSell } from "@/components/marketing/cross-sell";
 import { CTASection } from "@/components/marketing/cta-section";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { StickyBuyButton } from "@/components/marketing/sticky-buy-button";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
@@ -49,12 +51,26 @@ export const metadata: Metadata = {
 const CHECKOUT_URL =
   process.env.NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL || "#pricing";
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
   { name: "Claude Code Mastery", path: "/products/claude-code-mastery" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
 const FAQ_SCHEMA = faqSchema(CCM_FAQ);
+
+const RELATED_LINKS = [
+  {
+    label: "Free Sample",
+    description: "Download a free sample from this kit before you buy.",
+    href: "/free",
+  },
+  {
+    label: "All Products",
+    description: "Browse every digital product in the SARION catalog.",
+    href: "/products",
+  },
+];
 const PRODUCT_SCHEMA = productSchema({
   name: "SARION Claude Code Mastery Kit",
   description:
@@ -75,6 +91,7 @@ export default function ClaudeCodeMasteryPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <SectionHeader
             as="h1"
             eyebrow="SARION AI Engineering Suite · Volume 1"
@@ -292,6 +309,7 @@ export default function ClaudeCodeMasteryPage() {
               </details>
             ))}
           </div>
+          <RelatedPages links={RELATED_LINKS} />
         </div>
       </section>
 

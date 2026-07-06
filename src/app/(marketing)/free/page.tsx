@@ -4,11 +4,15 @@ import { FileText, ShieldCheck, Mail } from "lucide-react";
 import { SectionHeader } from "@/components/marketing/section-header";
 import { FreeSampleForm } from "@/components/marketing/free-sample-form";
 import { CTASection } from "@/components/marketing/cta-section";
+import { FaqGrid } from "@/components/marketing/faq-grid";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
-import { breadcrumbSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { FREE_SAMPLE_PAGE_COUNT } from "@/lib/marketing/products";
+import { FREE_FAQ } from "@/lib/marketing/faq";
 import styles from "./free.module.css";
 
 export const metadata: Metadata = {
@@ -29,10 +33,25 @@ export const metadata: Metadata = {
   },
 };
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Free Sample", path: "/free" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+const FAQ_SCHEMA = faqSchema(FREE_FAQ);
+
+const RELATED_LINKS = [
+  {
+    label: "Claude Code Mastery Kit",
+    description: "See the full kit this sample comes from.",
+    href: "/products/claude-code-mastery",
+  },
+  {
+    label: "All Products",
+    description: "Browse every digital product in the SARION catalog.",
+    href: "/products",
+  },
+];
 
 const PERKS = [
   {
@@ -57,9 +76,11 @@ export default function FreePage() {
     <>
       <TrackPageView event={ANALYTICS_EVENTS.FreeSampleViewed} />
       <JsonLd id="free-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
+      <JsonLd id="free-faq-schema" data={FAQ_SCHEMA} />
 
       <section className="mSectionTight">
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <SectionHeader
             as="h1"
             eyebrow="Free Sample"
@@ -80,6 +101,10 @@ export default function FreePage() {
               </div>
             ))}
           </div>
+
+          <SectionHeader eyebrow="FAQ" title="Questions about the free sample" />
+          <FaqGrid items={FREE_FAQ} />
+          <RelatedPages links={RELATED_LINKS} />
         </div>
       </section>
 

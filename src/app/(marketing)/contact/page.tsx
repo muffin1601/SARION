@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { SectionHeader } from "@/components/marketing/section-header";
 import { ContactForm } from "@/components/marketing/contact-form";
 import { SocialLinks } from "@/components/marketing/social-links";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
@@ -23,10 +25,29 @@ export const metadata: Metadata = {
   },
 };
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Contact", path: "/contact" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+
+const RELATED_LINKS = [
+  {
+    label: "Features",
+    description: "See everything Sarion does for running agency client work.",
+    href: "/features",
+  },
+  {
+    label: "Pricing",
+    description: "Plans, founding pricing, and the 14-day free trial.",
+    href: "/pricing",
+  },
+  {
+    label: "About",
+    description: "Who's building Sarion, and why.",
+    href: "/about",
+  },
+];
 
 export default function ContactPage() {
   return (
@@ -35,6 +56,7 @@ export default function ContactPage() {
       <TrackPageView event={ANALYTICS_EVENTS.ContactViewed} />
     <section className="mSectionTight">
       <div className="mContainer">
+        <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
         <SectionHeader
           as="h1"
           eyebrow="Contact"
@@ -76,6 +98,8 @@ export default function ContactPage() {
           <p className={styles.followLabel}>Follow us</p>
           <SocialLinks ariaLabel="Sarion on social media" />
         </div>
+
+        <RelatedPages links={RELATED_LINKS} />
       </div>
     </section>
     </>

@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Check } from "lucide-react";
 
 import { SectionHeader } from "@/components/marketing/section-header";
 import { ProductShot } from "@/components/marketing/product-shot";
 import { CTASection } from "@/components/marketing/cta-section";
+import { FaqGrid } from "@/components/marketing/faq-grid";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { FEATURE_SECTIONS } from "@/lib/marketing/features";
+import { FEATURES_FAQ } from "@/lib/marketing/faq";
 import styles from "./features.module.css";
 
 export const metadata: Metadata = {
@@ -29,23 +34,58 @@ export const metadata: Metadata = {
   },
 };
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Features", path: "/features" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+const FAQ_SCHEMA = faqSchema(FEATURES_FAQ);
+
+const RELATED_LINKS = [
+  {
+    label: "Pricing",
+    description: "See plans, founding pricing, and what's included at each tier.",
+    href: "/pricing",
+  },
+  {
+    label: "Portal Demo",
+    description: "Try the branded client portal your clients would actually see.",
+    href: "/portal-demo",
+  },
+  {
+    label: "Agency Scorecard",
+    description: "Score your agency's operations and see what's costing you time and revenue.",
+    href: "/scorecard",
+  },
+];
 
 export default function FeaturesPage() {
   return (
     <>
       <JsonLd id="features-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
+      <JsonLd id="features-faq-schema" data={FAQ_SCHEMA} />
       <section className="mSectionTight">
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <SectionHeader
             as="h1"
             eyebrow="Features"
             title="Everything agencies need to run client work"
             description="Sarion replaces the patchwork of tools agencies rely on with one focused workspace."
           />
+          <p className={styles.intro}>
+            Built specifically for agency delivery, not sales pipelines — Sarion combines the CRM,
+            project tracking, invoicing, and client communication most agencies stitch together
+            from separate tools into one workspace your team actually wants to use.
+          </p>
+          <div className={styles.heroActions}>
+            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+              Start Free
+            </Link>
+            <Link href="/#demo" className="mBtn mBtnSecondary mBtnLg">
+              Watch Demo
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -77,6 +117,14 @@ export default function FeaturesPage() {
           </div>
         </section>
       ))}
+
+      <section className="mSectionTight">
+        <div className="mContainer">
+          <SectionHeader eyebrow="FAQ" title="Questions about Sarion's features" />
+          <FaqGrid items={FEATURES_FAQ} />
+          <RelatedPages links={RELATED_LINKS} />
+        </div>
+      </section>
 
       <CTASection headline="See it in action with a free trial." />
     </>

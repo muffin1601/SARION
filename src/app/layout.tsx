@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { PlausibleScript } from "@/components/plausible-script";
 import { GoogleAnalytics } from "@/components/google-analytics";
 import { AhrefsAnalytics } from "@/components/ahrefs-analytics";
+import { ClarityAnalytics } from "@/components/clarity-analytics";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import { ServiceWorkerCleanup } from "@/components/sw-cleanup";
 import "./globals.css";
@@ -84,6 +85,7 @@ export default function RootLayout({
         <PlausibleScript />
         <GoogleAnalytics />
         <AhrefsAnalytics />
+        <ClarityAnalytics />
       </head>
       <body
         suppressHydrationWarning

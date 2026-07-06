@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Building2, Sparkles, Gift } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { HeroSection } from "@/components/marketing/hero-section";
 import { FounderNote } from "@/components/marketing/founder-note";
 import { SectionHeader } from "@/components/marketing/section-header";
 import { FeatureCard } from "@/components/marketing/feature-card";
-import { PricingPlans } from "@/components/marketing/pricing-plans";
 import { ProductShot } from "@/components/marketing/product-shot";
 import { CTASection } from "@/components/marketing/cta-section";
 import { ScorecardBanner } from "@/components/marketing/scorecard-banner";
-import { AboutSection } from "@/components/marketing/about-section";
 import { AnnouncementBar } from "@/components/marketing/announcement-bar";
-import { isFoundingOfferOpen } from "@/config/plans";
+import { DemoVideo } from "@/components/marketing/demo-video";
 import { PROBLEM_CARDS, FEATURE_CARDS } from "@/lib/marketing/features";
+import { MARKETING_PLANS, TRIAL_POINTS } from "@/lib/marketing/pricing";
 import { HOME_FAQ } from "@/lib/marketing/faq";
 import { HomeFaq } from "@/components/marketing/home-faq";
 import { Comparison } from "@/components/marketing/comparison";
+import { RelatedPages } from "@/components/marketing/related-pages";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
@@ -45,25 +45,23 @@ const SOFTWARE_SCHEMA = {
 };
 const FAQ_SCHEMA = faqSchema(HOME_FAQ);
 
-// F1. Ecosystem section — links the two SARION business lines from the home page.
-const ECOSYSTEM_CARDS = [
+const FEATURED_PLAN = MARKETING_PLANS.find((p) => p.featured) ?? MARKETING_PLANS[0];
+
+const RELATED_LINKS = [
   {
-    icon: Building2,
-    title: "SARION CRM",
-    description: "Manage your agency.",
-    href: "/features",
+    label: "Portal Demo",
+    description: "Try the branded client portal your clients would see.",
+    href: "/portal-demo",
   },
   {
-    icon: Sparkles,
-    title: "SARION AI Engineering Suite",
-    description: "Professional developer resources.",
-    href: "/products",
+    label: "Agency Scorecard",
+    description: "Score your agency's operations in 3 minutes, free.",
+    href: "/scorecard",
   },
   {
-    icon: Gift,
-    title: "Free Resources",
-    description: "Templates, prompts and guides.",
-    href: "/free",
+    label: "About Sarion",
+    description: "Who's building Sarion, and why.",
+    href: "/about",
   },
 ];
 
@@ -90,7 +88,7 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="The problem"
             title="Running an agency shouldn't mean juggling ten tools"
-            description="Most agencies stitch together spreadsheets, inboxes, and chat apps. The result is wasted time and missed details."
+            description="Most agencies stitch together spreadsheets, inboxes, and chat apps to run client work. The result is wasted time, duplicated effort, and details that slip through the cracks."
           />
           <div className={styles.grid3}>
             {PROBLEM_CARDS.map((p) => (
@@ -100,49 +98,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* B2. Scorecard lead magnet — quantify the pain just named above. */}
+      {/* B2. Scorecard lead magnet — quantifies the pain just named above */}
       <ScorecardBanner placement="home_problem" />
 
-      {/* B3. Ecosystem — introduces the second SARION business line (digital products). */}
-      <section className="mSection">
+      {/* C. Solution preview — a taste of the capabilities, not the full list */}
+      <section className="mSection mSectionAlt">
         <div className="mContainer">
           <SectionHeader
-            eyebrow="The SARION Ecosystem"
-            title="Explore the SARION Ecosystem"
-            description="One brand, two ways to work smarter — run your agency, or level up how you build with AI."
+            eyebrow="The solution"
+            title="Everything you need to run client work, in one place"
+            description="Sarion replaces the spreadsheets, inboxes, and disconnected apps with a single workspace built for agency delivery."
           />
           <div className={styles.grid3}>
-            {ECOSYSTEM_CARDS.map((card) => (
-              <Link key={card.title} href={card.href} className={styles.ecosystemCard}>
-                <FeatureCard
-                  icon={card.icon}
-                  title={card.title}
-                  description={card.description}
-                />
-              </Link>
+            {FEATURE_CARDS.slice(0, 4).map((f) => (
+              <FeatureCard key={f.title} {...f} />
             ))}
+          </div>
+          <div className={styles.center}>
+            <Link href="/features" className="mBtn mBtnSecondary mBtnLg">
+              Explore all features →
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* C. Capabilities — honest "built for agencies" credibility */}
-      <section className="mSection mSectionAlt">
+      {/* C2. Demo video */}
+      <section className="mSection">
         <div className="mContainer">
           <SectionHeader
-            eyebrow="Built for modern agencies"
-            title="Everything you need to run client work"
-            description="One workspace for the day-to-day of running an agency — no add-ons, no patchwork of tools."
+            eyebrow="See it in action"
+            title="See how an agency runs on SARION in 90 seconds."
           />
-          <div className={styles.grid3}>
-            {FEATURE_CARDS.map((f) => (
-              <FeatureCard key={f.title} {...f} />
-            ))}
-          </div>
+          <DemoVideo />
         </div>
       </section>
 
       {/* D. Real product screenshots */}
-      <section className="mSection">
+      <section className="mSection mSectionAlt">
         <div className="mContainer">
           <SectionHeader
             eyebrow="A look inside"
@@ -168,17 +160,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* E. Pricing preview */}
+      {/* E. Pricing preview — summary only, full plans live on /pricing */}
       <section className="mSection">
         <div className="mContainer">
           <SectionHeader
             eyebrow="Pricing"
             title="Simple plans that grow with you"
           />
-          <PricingPlans foundingOpen={isFoundingOfferOpen()} />
+          <div className={styles.pricingTeaser}>
+            <div className={styles.pricingTeaserCard}>
+              <span className={styles.pricingTeaserLabel}>Starting at</span>
+              <span className={styles.pricingTeaserPrice}>Free</span>
+              <span className={styles.pricingTeaserNote}>
+                No credit card, no time limit.
+              </span>
+            </div>
+            <div className={styles.pricingTeaserDivider} aria-hidden />
+            <div className={styles.pricingTeaserCard}>
+              <span className={styles.pricingTeaserLabel}>Most popular</span>
+              <span className={styles.pricingTeaserPrice}>
+                {FEATURED_PLAN.name} — ${FEATURED_PLAN.monthly}/mo
+              </span>
+              <ul className={styles.pricingTeaserList}>
+                {TRIAL_POINTS.slice(0, 3).map((point) => (
+                  <li key={point}>
+                    <Check aria-hidden="true" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
           <div className={styles.center}>
             <Link href="/pricing" className="mBtn mBtnSecondary mBtnLg">
               View Pricing
+            </Link>
+            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+              Start Free
             </Link>
           </div>
         </div>
@@ -196,10 +214,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* F. About + Team */}
-      <AboutSection />
+      {/* E3. Related pages — light-touch, links to pages not already linked contextually above */}
+      <section className="mSectionTight">
+        <div className="mContainer">
+          <RelatedPages links={RELATED_LINKS} />
+        </div>
+      </section>
 
-      {/* F2. FAQ — informational intent + FAQ rich results + internal links */}
+      {/* F. FAQ — informational intent + FAQ rich results + internal links */}
       <section className="mSection">
         <div className="mContainer">
           <SectionHeader

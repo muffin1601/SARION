@@ -4,6 +4,8 @@ import { Check, ShieldCheck, Sparkles, Heart } from "lucide-react";
 
 import { SectionHeader } from "@/components/marketing/section-header";
 import { PricingPlans } from "@/components/marketing/pricing-plans";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
@@ -33,10 +35,34 @@ export const metadata: Metadata = {
 };
 
 const FAQ_SCHEMA = faqSchema(PRICING_FAQ);
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Pricing", path: "/pricing" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+
+const RELATED_LINKS = [
+  {
+    label: "Features",
+    description: "See everything included in every plan.",
+    href: "/features",
+  },
+  {
+    label: "Portal Demo",
+    description: "Try the branded client portal before you sign up.",
+    href: "/portal-demo",
+  },
+  {
+    label: "Agency Scorecard",
+    description: "Score your agency's operations and see what switching could save you.",
+    href: "/scorecard",
+  },
+  {
+    label: "Book a Demo",
+    description: "Have questions first? Talk to the founding team.",
+    href: "/contact",
+  },
+];
 
 const REASSURANCE = [
   {
@@ -66,6 +92,7 @@ export default function PricingPage() {
       <JsonLd id="pricing-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
       <section className="mSectionTight">
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <SectionHeader
             as="h1"
             eyebrow="Pricing"
@@ -105,7 +132,7 @@ export default function PricingPage() {
               ))}
             </ul>
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
-              Start Free Trial
+              Start Free
             </Link>
           </div>
         </div>
@@ -123,6 +150,7 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          <RelatedPages links={RELATED_LINKS} />
         </div>
       </section>
     </>

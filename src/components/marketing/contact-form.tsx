@@ -161,7 +161,7 @@ export function ContactForm() {
           {submitting ? "Sending…" : "Send Message"}
         </button>
         <Link href="/signup" className="mBtn mBtnSecondary mBtnLg">
-          Start Free Trial
+          Start Free
         </Link>
       </div>
     </form>

@@ -4,9 +4,13 @@ import Link from "next/link";
 import { SectionHeader } from "@/components/marketing/section-header";
 import { TeamCard } from "@/components/marketing/team-card";
 import { CTASection } from "@/components/marketing/cta-section";
+import { FaqGrid } from "@/components/marketing/faq-grid";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import { TEAM } from "@/lib/marketing/team";
+import { ABOUT_FAQ } from "@/lib/marketing/faq";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -22,10 +26,30 @@ export const metadata: Metadata = {
   },
 };
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+const FAQ_SCHEMA = faqSchema(ABOUT_FAQ);
+
+const RELATED_LINKS = [
+  {
+    label: "Contact",
+    description: "Reach the founding team directly with questions or feedback.",
+    href: "/contact",
+  },
+  {
+    label: "Features",
+    description: "See everything Sarion does for running agency client work.",
+    href: "/features",
+  },
+  {
+    label: "Agency Scorecard",
+    description: "Score your agency's operations in 3 minutes, free.",
+    href: "/scorecard",
+  },
+];
 
 const CHALLENGES = [
   {
@@ -50,9 +74,11 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd id="about-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
+      <JsonLd id="about-faq-schema" data={FAQ_SCHEMA} />
       {/* Hero */}
       <section className="mSection">
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <div className={styles.hero}>
             <span className="mEyebrow">About Sarion</span>
             <h1 className={styles.headline}>
@@ -167,6 +193,15 @@ export default function AboutPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mSection">
+        <div className="mContainer">
+          <SectionHeader eyebrow="FAQ" title="Questions about Sarion the company" />
+          <FaqGrid items={ABOUT_FAQ} />
+          <RelatedPages links={RELATED_LINKS} />
         </div>
       </section>
 

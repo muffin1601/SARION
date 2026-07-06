@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Gauge, TrendingDown, Clock, MessageSquare } from "lucide-react";
 
 import { SectionHeader } from "@/components/marketing/section-header";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
@@ -71,10 +73,29 @@ const FAQS = [
   },
 ];
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Agency Operations Scorecard", path: "/scorecard" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
+
+const RELATED_LINKS = [
+  {
+    label: "Features",
+    description: "See what replaces the gaps this scorecard just measured.",
+    href: "/features",
+  },
+  {
+    label: "Pricing",
+    description: "Plans, founding pricing, and the 14-day free trial.",
+    href: "/pricing",
+  },
+  {
+    label: "Portal Demo",
+    description: "Try the branded client portal your clients would see.",
+    href: "/portal-demo",
+  },
+];
 
 export default function ScorecardLandingPage() {
   return (
@@ -86,6 +107,7 @@ export default function ScorecardLandingPage() {
       {/* Hero */}
       <section>
         <div className="mContainer">
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <div className={styles.hero}>
             <div className={styles.heroGrid}>
               {/* Copy */}
@@ -218,6 +240,8 @@ export default function ScorecardLandingPage() {
               </div>
             ))}
           </div>
+
+          <RelatedPages links={RELATED_LINKS} />
 
           <div className={styles.finalCta}>
             <SectionHeader

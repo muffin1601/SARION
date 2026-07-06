@@ -14,7 +14,7 @@ interface CTASectionProps {
 export function CTASection({
   headline,
   subtext,
-  primaryLabel = "Start Free Trial",
+  primaryLabel = "Start Free",
   primaryHref = "/signup",
   secondaryLabel = "See How It Works",
   secondaryHref = "/features",

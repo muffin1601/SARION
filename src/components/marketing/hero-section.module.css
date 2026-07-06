@@ -64,6 +64,31 @@
   color: var(--m-fg-subtle);
 }
 
+.featureStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-2) var(--m-space-5);
+  margin-top: var(--m-space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.featureStrip li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  white-space: nowrap;
+}
+
+.featureStrip li svg {
+  width: 14px;
+  height: 14px;
+  color: var(--m-primary);
+  flex-shrink: 0;
+}
+
 @media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;

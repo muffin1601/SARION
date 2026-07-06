@@ -1,0 +1,27 @@
+.trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--m-space-4);
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-subtle);
+}
+
+.link {
+  color: var(--m-fg-subtle);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--m-primary);
+}
+
+.current {
+  color: var(--m-fg-muted);
+  font-weight: 500;
+}
+
+.sep {
+  color: var(--m-fg-subtle);
+}

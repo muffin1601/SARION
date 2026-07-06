@@ -1,4 +1,7 @@
+import { TEAM } from "@/lib/marketing/team";
 import styles from "./founder-note.module.css";
+
+const FOUNDER = TEAM[0];
 
 /**
  * Honest credibility for a brand-new product: a short note on why Sarion exists,
@@ -16,7 +19,13 @@ export function FounderNote() {
             manage clients, projects, invoices, and communication from one
             workspace.”
           </p>
-          <span className={styles.signature}>— The Sarion team</span>
+          <div className={styles.founder}>
+            <span className={styles.avatar}>{FOUNDER.initials}</span>
+            <div className={styles.founderText}>
+              <span className={styles.founderName}>{FOUNDER.name}</span>
+              <span className={styles.founderTitle}>{FOUNDER.title}</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -5,11 +5,15 @@ import { StatsStrip } from "@/components/marketing/stats-strip";
 import { FlagshipCard } from "@/components/marketing/flagship-card";
 import { CollectionSection } from "@/components/marketing/collection-section";
 import { SectionHeader } from "@/components/marketing/section-header";
+import { FaqGrid } from "@/components/marketing/faq-grid";
+import { RelatedPages } from "@/components/marketing/related-pages";
+import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
 import { TrackPageView } from "@/components/analytics/track-page-view";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
-import { breadcrumbSchema, itemListSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, itemListSchema, faqSchema } from "@/lib/seo/schema";
 import { PRODUCTS, COLLECTIONS, productsByCollection } from "@/lib/marketing/products";
+import { PRODUCTS_FAQ } from "@/lib/marketing/faq";
 import styles from "./products.module.css";
 
 export const metadata: Metadata = {
@@ -33,16 +37,36 @@ export const metadata: Metadata = {
   },
 };
 
-const BREADCRUMB_SCHEMA = breadcrumbSchema([
+const BREADCRUMB_TRAIL = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
-]);
+];
+const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
 const LIST_SCHEMA = itemListSchema(
   PRODUCTS.map((p) => ({
     name: p.name,
     url: p.href ?? "/products",
   })),
 );
+const FAQ_SCHEMA = faqSchema(PRODUCTS_FAQ);
+
+const RELATED_LINKS = [
+  {
+    label: "Free Sample",
+    description: "Download a free sample from the Claude Code Mastery Kit.",
+    href: "/free",
+  },
+  {
+    label: "SARION Features",
+    description: "See what the flagship CRM does for running your agency.",
+    href: "/features",
+  },
+  {
+    label: "CRM Pricing",
+    description: "Plans and founding pricing for SARION CRM.",
+    href: "/pricing",
+  },
+];
 
 export default function ProductsPage() {
   return (
@@ -50,10 +74,12 @@ export default function ProductsPage() {
       <TrackPageView event={ANALYTICS_EVENTS.ProductsViewed} />
       <JsonLd id="products-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
       <JsonLd id="products-list-schema" data={LIST_SCHEMA} />
+      <JsonLd id="products-faq-schema" data={FAQ_SCHEMA} />
 
       {/* Hero */}
       <section className="mSectionTight">
         <div className={`mContainer ${styles.hero}`}>
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <h1 className={styles.headline}>
             <span>Build Faster.</span>
             <span>Run Better.</span>
@@ -95,6 +121,15 @@ export default function ProductsPage() {
       </div>
       <CollectionSection collection={COLLECTIONS[1]} products={productsByCollection("agency")} />
       <CollectionSection collection={COLLECTIONS[2]} products={productsByCollection("automation")} />
+
+      {/* FAQ */}
+      <section className="mSectionTight">
+        <div className="mContainer">
+          <SectionHeader eyebrow="FAQ" title="Questions about the SARION product catalog" />
+          <FaqGrid items={PRODUCTS_FAQ} />
+          <RelatedPages links={RELATED_LINKS} />
+        </div>
+      </section>
     </>
   );
 }

@@ -90,7 +90,7 @@ export function Navbar({ initialUser = null }: { initialUser?: NavUser | null })
                 Login
               </Link>
               <Link href="/signup" className="mBtn mBtnPrimary">
-                Start Free Trial
+                Start Free
               </Link>
             </>
           )}
@@ -188,7 +188,7 @@ export function Navbar({ initialUser = null }: { initialUser?: NavUser | null })
                 className="mBtn mBtnPrimary"
                 onClick={() => setOpen(false)}
               >
-                Start Free Trial
+                Start Free
               </Link>
             </div>
           )}

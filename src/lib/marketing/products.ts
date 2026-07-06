@@ -158,7 +158,7 @@ export const FLAGSHIP_CRM = {
   name: "SARION CRM",
   eyebrow: "Flagship SaaS · Subscription",
   description: "Run your agency with AI-powered CRM, sales pipeline, client management and automation.",
-  primaryLabel: "Start Free Trial",
+  primaryLabel: "Start Free",
   primaryHref: "/signup",
   secondaryLabel: "Learn More",
   secondaryHref: "/features",

@@ -59,16 +59,35 @@
   color: var(--m-fg-subtle);
 }
 
-.portalBody {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: var(--m-space-5);
-  padding: var(--m-space-5);
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-2);
+  padding: var(--m-space-4) var(--m-space-5) 0;
 }
 
-/* Activity panel spans full width below the two columns */
-.panel:nth-child(3) {
-  grid-column: 1 / -1;
+.notification {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  padding: var(--m-space-2) var(--m-space-3);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  background: var(--m-primary-soft);
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-muted);
+}
+
+.notification svg {
+  color: var(--m-primary);
+  flex-shrink: 0;
+}
+
+.portalBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--m-space-5);
+  padding: var(--m-space-5);
 }
 
 .panel {
@@ -106,6 +125,149 @@
   border: 1px solid var(--m-border);
   border-radius: var(--m-radius);
   background: var(--m-bg-elev);
+}
+
+button.listRow {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+button.listRow:hover {
+  border-color: var(--m-primary);
+}
+
+.rowEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-3);
+}
+
+.chevron {
+  color: var(--m-fg-subtle);
+  transition: transform 0.15s ease;
+}
+
+.chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+.expandPanel {
+  margin-top: var(--m-space-3);
+  padding: var(--m-space-4);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  background: var(--m-card);
+}
+
+.timeline {
+  display: flex;
+  list-style: none;
+  margin: 0 0 var(--m-space-4);
+  padding: 0;
+  gap: var(--m-space-2);
+}
+
+.timelineStep {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-subtle);
+  text-align: center;
+  position: relative;
+}
+
+.timelineStep::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -50%;
+  width: 100%;
+  height: 2px;
+  background: var(--m-border);
+  z-index: 0;
+}
+
+.timelineStep:first-child::before {
+  display: none;
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--m-border);
+  z-index: 1;
+}
+
+.timelineStep[data-done="true"] .timelineDot,
+.timelineStep[data-active="true"] .timelineDot {
+  background: var(--m-primary);
+}
+
+.timelineStep[data-active="true"] {
+  color: var(--m-fg);
+  font-weight: 600;
+}
+
+.lineItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-2);
+}
+
+.lineItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+}
+
+.commentThread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-3);
+  padding-top: var(--m-space-3);
+  border-top: 1px solid var(--m-border);
+}
+
+.commentThreadLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--m-text-xs);
+  font-weight: 600;
+  color: var(--m-fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.comment {
+  padding-top: var(--m-space-2);
+  border-top: 1px solid var(--m-border);
+}
+
+.comment:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.commentMeta {
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-subtle);
+}
+
+.commentText {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg);
+  margin-top: 2px;
 }
 
 .rowMain {
@@ -173,6 +335,168 @@
 
 @media (max-width: 760px) {
   .portalBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Desktop/Mobile preview toggle (same pattern as pricing-plans.tsx) --- */
+.viewToggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--m-space-5);
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--m-border);
+  border-radius: 999px;
+  background: var(--m-card);
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.viewToggleBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-fg-muted);
+  transition: all 0.15s ease;
+}
+
+.viewToggleBtnActive {
+  background: var(--m-fg);
+  color: var(--m-bg);
+}
+
+.portal[data-view="mobile"] {
+  max-width: 380px;
+  margin-inline: auto;
+}
+
+.portal[data-view="mobile"] .portalBody {
+  grid-template-columns: 1fr;
+}
+
+/* --- Intro / benefits / before-after / how it works --- */
+.intro {
+  max-width: 65ch;
+  margin: var(--m-space-4) auto 0;
+  text-align: center;
+  font-size: var(--m-text-base);
+  line-height: 1.6;
+  color: var(--m-fg-muted);
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--m-space-7);
+  margin-top: var(--m-space-7);
+}
+
+.benefitsCol h3 {
+  font-size: var(--m-text-lg);
+  margin-bottom: var(--m-space-4);
+  text-align: center;
+}
+
+.benefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-4);
+}
+
+.beforeAfterGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-4);
+  margin-top: var(--m-space-7);
+  max-width: 780px;
+  margin-inline: auto;
+}
+
+.beforeAfterRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--m-space-4);
+}
+
+.beforeCard,
+.afterCard {
+  padding: var(--m-space-4);
+  border-radius: var(--m-radius);
+  font-size: var(--m-text-sm);
+}
+
+.beforeCard {
+  border: 1px solid var(--m-border);
+  background: var(--m-bg-elev);
+  color: var(--m-fg-muted);
+}
+
+.afterCard {
+  border: 1px solid var(--m-primary);
+  background: var(--m-primary-soft);
+  color: var(--m-fg);
+}
+
+.beforeAfterLabel {
+  display: block;
+  font-size: var(--m-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--m-space-5);
+  margin-top: var(--m-space-7);
+}
+
+.step {
+  text-align: center;
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--m-primary);
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: var(--m-space-3);
+}
+
+.stepTitle {
+  font-size: var(--m-text-base);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stepText {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+}
+
+.inlineCta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--m-space-6);
+}
+
+@media (max-width: 760px) {
+  .benefitsGrid,
+  .beforeAfterRow,
+  .stepsGrid {
     grid-template-columns: 1fr;
   }
 }
