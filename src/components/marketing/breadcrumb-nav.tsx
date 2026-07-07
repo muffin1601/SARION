@@ -12,9 +12,16 @@ export interface BreadcrumbTrailItem {
  * breadcrumbSchema() — keeps the visible trail and the structured data in
  * sync by construction.
  */
-export function BreadcrumbNav({ trail }: { trail: BreadcrumbTrailItem[] }) {
+export function BreadcrumbNav({
+  trail,
+  center,
+}: {
+  trail: BreadcrumbTrailItem[];
+  /** Center the trail — use when the hero's SectionHeader is center-aligned. */
+  center?: boolean;
+}) {
   return (
-    <nav aria-label="Breadcrumb" className={styles.trail}>
+    <nav aria-label="Breadcrumb" className={styles.trail} data-center={center || undefined}>
       {trail.map((item, i) => {
         const isLast = i === trail.length - 1;
         return (

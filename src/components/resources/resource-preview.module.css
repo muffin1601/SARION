@@ -1,0 +1,43 @@
+.frame {
+  max-width: 640px;
+  border-radius: var(--m-radius);
+  border: 1px solid var(--m-border);
+  background: var(--m-card);
+  overflow: hidden;
+  box-shadow: var(--m-shadow-card);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  padding: var(--m-space-3) var(--m-space-4);
+  background: var(--m-bg-elev);
+  border-bottom: 1px solid var(--m-border);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--m-border-strong);
+}
+
+.label {
+  margin-left: var(--m-space-2);
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-subtle);
+}
+
+.body {
+  padding: var(--m-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-2);
+}
+
+.line {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  font-family: var(--font-heading), Georgia, serif;
+}

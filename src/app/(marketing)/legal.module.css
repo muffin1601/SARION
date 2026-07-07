@@ -47,3 +47,30 @@
 .prose a:hover {
   text-decoration: underline;
 }
+
+.prose section {
+  scroll-margin-top: var(--m-space-7);
+  border-top: 1px solid var(--m-border);
+  padding-top: var(--m-space-6);
+}
+.prose section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.legalNav {
+  margin-top: var(--m-space-8);
+  padding-top: var(--m-space-5);
+  border-top: 1px solid var(--m-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-2) var(--m-space-5);
+}
+.legalNav a {
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-primary);
+}
+.legalNav a:hover {
+  text-decoration: underline;
+}

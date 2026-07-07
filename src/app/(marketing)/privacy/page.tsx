@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 import { SectionHeader } from "@/components/marketing/section-header";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import styles from "../legal.module.css";
 
 export const metadata: Metadata = {
@@ -15,6 +18,13 @@ const UPDATED = "June 11, 2026";
 export default function PrivacyPage() {
   return (
     <section className="mSectionTight">
+      <JsonLd
+        id="privacy-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Privacy Policy", path: "/privacy" },
+        ])}
+      />
       <div className="mContainer">
         <div className={styles.wrap}>
           <SectionHeader
@@ -148,9 +158,15 @@ export default function PrivacyPage() {
                 <a href={`mailto:${siteConfig.contactEmail}`}>
                   {siteConfig.contactEmail}
                 </a>
-                .
+                , or visit our <Link href="/contact">contact page</Link>.
               </p>
             </section>
+          </div>
+
+          <div className={styles.legalNav}>
+            <Link href="/">← Back to Home</Link>
+            <Link href="/terms">Terms of Service</Link>
+            <Link href="/contact">Contact us</Link>
           </div>
         </div>
       </div>

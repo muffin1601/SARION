@@ -1,0 +1,28 @@
+.heroActions {
+  margin-top: var(--m-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-3);
+}
+
+.shotCtas {
+  margin-top: var(--m-space-5);
+  display: flex;
+  gap: var(--m-space-3);
+  flex-wrap: wrap;
+}
+
+.outcomes {
+  margin-top: var(--m-space-6);
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-3);
+  padding-left: var(--m-space-5);
+}
+
+.outcomes li {
+  font-size: var(--m-text-base);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}

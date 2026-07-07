@@ -7,6 +7,17 @@
   box-shadow: var(--m-shadow);
 }
 
+.frameLink {
+  display: block;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.frameLink:hover {
+  border-color: var(--m-primary);
+  box-shadow: var(--m-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
 .chrome {
   display: flex;
   align-items: center;

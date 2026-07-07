@@ -32,18 +32,18 @@ export interface IconCard {
 export const PROBLEM_CARDS: IconCard[] = [
   {
     icon: SearchX,
-    title: "Client information everywhere",
-    description: "Finding notes, files, and conversations wastes time.",
+    title: "Client info everywhere",
+    description: "Notes, files, and threads scattered across five tools.",
   },
   {
     icon: BellRing,
-    title: "Clients constantly ask for updates",
-    description: "Status requests create unnecessary work.",
+    title: '"Any update?" — again',
+    description: "Every status question is an interruption you didn't need.",
   },
   {
     icon: CreditCard,
     title: "Invoices fall through the cracks",
-    description: "Tracking payments manually causes delays.",
+    description: "Manual tracking means late payments you never see coming.",
   },
 ];
 
@@ -52,26 +52,22 @@ export const FEATURE_CARDS: IconCard[] = [
   {
     icon: Users,
     title: "Client Management",
-    description:
-      "Keep every client's details, notes, and history in one organized place.",
+    description: "Every client's details, notes, and history — one place.",
   },
   {
     icon: FolderKanban,
     title: "Project Tracking",
-    description:
-      "Track status, due dates, and progress across all your engagements.",
+    description: "Status, due dates, and progress across every engagement.",
   },
   {
     icon: Globe,
     title: "Client Portal",
-    description:
-      "Give clients a branded space to see progress without the back-and-forth.",
+    description: "A branded space where clients see progress, no back-and-forth.",
   },
   {
     icon: FileText,
     title: "Invoices",
-    description:
-      "See what's paid, unpaid, and overdue so nothing slips through.",
+    description: "Paid, unpaid, overdue — always visible, never missed.",
   },
   {
     icon: UsersRound,
@@ -91,16 +87,27 @@ export const FEATURE_CARDS: IconCard[] = [
 export interface FeatureSection {
   eyebrow: string;
   title: string;
+  /** Who this section is for and how they use it day-to-day, in one sentence. */
+  workflow: string;
+  /** The concrete outcome/benefit this section delivers. */
+  benefit: string;
   features: string[];
   /** Real screenshot shown alongside the section. */
   shot: ShotName;
   shotAlt: string;
+  /** Optional contextual link shown under the feature list (e.g. pricing, demo). */
+  ctaHref?: string;
+  ctaLabel?: string;
 }
 
 export const FEATURE_SECTIONS: FeatureSection[] = [
   {
     eyebrow: "Client Management",
     title: "Every client, fully organized",
+    workflow:
+      "Built for account managers who juggle a dozen clients at once — log a call note right after you hang up, then search it back up months later instead of digging through old email threads.",
+    benefit:
+      "Nobody on the team has to ask \"does anyone know where that came from?\" again.",
     features: ["Client records", "Notes", "Activity history", "Search"],
     shot: "clients",
     shotAlt: "The Sarion clients list with company, email, and project counts",
@@ -108,6 +115,9 @@ export const FEATURE_SECTIONS: FeatureSection[] = [
   {
     eyebrow: "Project Management",
     title: "Keep work moving forward",
+    workflow:
+      "Project leads set a status and due date the moment a project kicks off, then check the board each morning to see what's slipping before a client has to ask.",
+    benefit: "Deadlines stay visible instead of living in someone's memory.",
     features: ["Status tracking", "Due dates", "Task checklists"],
     shot: "projects",
     shotAlt: "The Sarion projects view showing status and due dates per client",
@@ -115,6 +125,9 @@ export const FEATURE_SECTIONS: FeatureSection[] = [
   {
     eyebrow: "Client Portal",
     title: "A branded space for your clients",
+    workflow:
+      "Instead of writing a status-update email every Friday, account managers post progress once and clients check their own branded portal to comment and follow along.",
+    benefit: "Status-update emails go away almost entirely.",
     features: [
       "Branded portal",
       "Comments",
@@ -123,20 +136,32 @@ export const FEATURE_SECTIONS: FeatureSection[] = [
     ],
     shot: "portal",
     shotAlt: "The branded Sarion client portal with project updates and comments",
+    ctaHref: "/portal-demo",
+    ctaLabel: "See it live",
   },
   {
     eyebrow: "Invoices",
     title: "Never lose track of a payment",
+    workflow:
+      "Whoever handles billing marks an invoice sent, then glances at the paid/unpaid/overdue split each week instead of reconciling a spreadsheet against a bank statement.",
+    benefit: "Overdue invoices get chased before they turn into bad debt.",
     features: ["Paid", "Unpaid", "Overdue"],
     shot: "invoices",
     shotAlt: "The Sarion invoices list showing paid, unpaid, and overdue status",
+    ctaHref: "/pricing",
+    ctaLabel: "See plans",
   },
   {
     eyebrow: "Team Collaboration",
     title: "Work together, cleanly",
+    workflow:
+      "Founders invite contractors and junior staff with the exact access they need, so a freelancer working one project never sees client data outside their lane.",
+    benefit: "Everyone works from the same source of truth, with no oversharing.",
     features: ["Owner access", "Team member access", "Shared workflows"],
     shot: "team",
     shotAlt: "The Sarion team settings with members, invites, and permissions",
+    ctaHref: "/pricing",
+    ctaLabel: "See plans",
   },
 ];
 

@@ -91,7 +91,7 @@ export default function ClaudeCodeMasteryPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <SectionHeader
             as="h1"
             eyebrow="SARION AI Engineering Suite · Volume 1"
@@ -316,7 +316,7 @@ export default function ClaudeCodeMasteryPage() {
       {/* Final CTA */}
       <CTASection
         headline="Start driving Claude Code like a pro."
-        subtext="One payment. Yours forever. 14-day money-back guarantee."
+        subtext="Instant download after checkout. 14-day refund if it's not for you."
         primaryLabel="Get Instant Access"
         primaryHref={CHECKOUT_URL}
         secondaryLabel="Download Free Sample"

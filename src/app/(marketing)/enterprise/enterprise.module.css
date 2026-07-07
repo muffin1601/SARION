@@ -1,0 +1,51 @@
+.prose {
+  max-width: 720px;
+}
+
+.proseBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-4);
+  margin-top: var(--m-space-6);
+}
+
+.proseBody p {
+  font-size: var(--m-text-base);
+  color: var(--m-fg-muted);
+  line-height: 1.75;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--m-space-5);
+  margin-top: var(--m-space-7);
+}
+
+.card {
+  padding: var(--m-space-5);
+  background: var(--m-card);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-2);
+}
+
+.cardTitle {
+  font-size: var(--m-text-base);
+  font-weight: 700;
+  color: var(--m-fg);
+}
+
+.cardBody {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}

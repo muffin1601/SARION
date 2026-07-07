@@ -76,21 +76,26 @@ export const PRICING_FAQ: FAQItem[] = [
   {
     question: "Can I change plans later?",
     answer:
-      "Anytime, from your billing settings. Upgrades and downgrades are prorated automatically by Stripe, and your founding price is preserved.",
+      "Yes, anytime from your billing settings — no need to email support. Upgrades apply immediately; downgrades take effect at the start of your next billing cycle, and your founding price stays locked in through every change.",
   },
   {
-    question: "What happens to my data if I downgrade or cancel?",
+    question: "How do I cancel, and what happens to my data?",
     answer:
-      "Nothing is deleted. Your workspace stays intact — you just regain access to everything the moment you upgrade again. Cancel anytime, no contracts.",
+      "Cancel from your billing settings in one click — no phone call, no retention flow. Your workspace and data aren't deleted; you're moved to the Free plan's limits and everything else is preserved, so upgrading again picks up right where you left off.",
+  },
+  {
+    question: "How am I billed, and can I see invoices?",
+    answer:
+      "Card payments are processed securely through Lemon Squeezy, our billing partner. You'll get an emailed receipt for every charge, and full invoice history is available from your billing settings at any time.",
   },
   {
     question: "Do you help me migrate from another tool?",
     answer:
-      "Yes — free migration assistance is included, and Agency customers get concierge onboarding with founder support.",
+      "Yes — free migration assistance is included on every paid plan. Send us an export from your current tool or spreadsheet and we'll get your clients and projects into Sarion before your trial ends. Agency customers also get concierge onboarding with direct founder support.",
   },
   {
     question: "What counts as a team member?",
     answer:
-      "Anyone you invite into your agency workspace. Your clients use the client portal and are never counted as team members.",
+      "Anyone you invite into your agency workspace as staff or a contractor. Your clients use the separate client portal and are never counted toward your plan's team member limit.",
   },
 ];

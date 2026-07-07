@@ -1,6 +1,6 @@
 /* Hero */
 .hero {
-  max-width: 800px;
+  max-width: 760px;
   margin-inline: auto;
   text-align: center;
   display: flex;
@@ -19,7 +19,7 @@
   font-size: var(--m-text-lg);
   color: var(--m-fg-muted);
   line-height: 1.65;
-  max-width: 640px;
+  max-width: 620px;
 }
 
 /* Prose sections */

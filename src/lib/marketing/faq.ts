@@ -80,6 +80,30 @@ export const FEATURES_FAQ: HomeFaqItem[] = [
     answer:
       "Yes. Team members you invite get access to your agency's workspace with role-based permissions, so junior staff and contractors only see what they need.",
   },
+  {
+    question: "Can I track tasks within a project, not just overall status?",
+    answer:
+      "Yes. Each project supports its own task checklist, so you can break work into steps and see exactly what's done versus outstanding — not just a single status label.",
+  },
+  {
+    question: "Does Sarion send reminders for overdue invoices?",
+    answer:
+      "Overdue invoices are flagged automatically in your invoices list, so billing stays visible without you having to manually track due dates in a separate spreadsheet.",
+  },
+  {
+    question: "Can clients comment directly on a project in the portal?",
+    answer:
+      "Yes. Clients can leave comments on their project inside the portal, so feedback happens in context instead of scattered across email and chat.",
+    href: "/portal-demo",
+    hrefLabel: "See portal comments in action",
+  },
+  {
+    question: "What happens to my data if I switch plans?",
+    answer:
+      "Nothing is lost. Clients, projects, invoices, and portal history all stay intact when you upgrade or downgrade — you only gain or lose access to plan-specific features like custom subdomains.",
+    href: "/pricing",
+    hrefLabel: "Compare plan features",
+  },
 ];
 
 // /about — trust-building questions specific to the company itself.
@@ -105,6 +129,39 @@ export const ABOUT_FAQ: HomeFaqItem[] = [
     question: "Is Sarion going to disappear or get shut down?",
     answer:
       "Sarion is self-funded and profitable-first by design, not burning investor cash toward a shutdown or acquisition. Founding members also lock in pricing for life, which only makes sense for a product built to last.",
+  },
+];
+
+// /contact — practical questions people have right before they message us.
+export const CONTACT_FAQ: HomeFaqItem[] = [
+  {
+    question: "How fast do you respond?",
+    answer:
+      "We reply within one business day, and most messages get a response same-day. There's no ticket queue — your message goes straight to the founding team.",
+  },
+  {
+    question: "Do you offer a demo call?",
+    answer:
+      "Yes. Mention it's for a demo in the form and we'll set up a time to walk through Sarion live and answer questions specific to your agency.",
+  },
+  {
+    question: "Should I email sales or support?",
+    answer:
+      "If you're evaluating Sarion, have questions about plans, or want a demo, use the sales & general address. If you're already a customer with an account issue or a bug, use the support address — it gets prioritized differently.",
+  },
+  {
+    question: "Can I get a refund?",
+    answer:
+      "Yes — reach out within 14 days of a paid charge and we'll refund it, no questions asked. Message either email above and we'll take care of it quickly.",
+    href: "/pricing",
+    hrefLabel: "See plans & pricing",
+  },
+  {
+    question: "I'm not ready to talk to sales yet — can I just try it?",
+    answer:
+      "Of course. You can start on the Free plan or a 14-day trial without contacting anyone. The form here is for when you have a specific question or want a guided demo.",
+    href: "/pricing",
+    hrefLabel: "Start free",
   },
 ];
 
@@ -139,12 +196,12 @@ export const PORTAL_DEMO_FAQ: HomeFaqItem[] = [
   {
     question: "Do clients need to create an account to use the portal?",
     answer:
-      "No. Clients access their portal through a secure link — no signup, no password to remember.",
+      "No. Clients open a secure link and land straight in their portal — no signup, no password to remember, no app to install.",
   },
   {
     question: "Can I control what clients see in their portal?",
     answer:
-      "Yes. You choose which projects, files, and invoices are visible to each client — nothing shows up that you haven't shared.",
+      "Yes. You choose which projects, files, and invoices are visible to each client — nothing shows up that you haven't shared, and nothing from other clients ever crosses over.",
   },
   {
     question: "Is the portal mobile-friendly?",
@@ -157,6 +214,13 @@ export const PORTAL_DEMO_FAQ: HomeFaqItem[] = [
       "No. The branded client portal is included on every paid plan — it's not a separate add-on.",
     href: "/pricing",
     hrefLabel: "See what's included",
+  },
+  {
+    question: "Is this exactly what my clients will see, or just a mockup?",
+    answer:
+      "This demo mirrors the real portal layout and interactions your clients get — projects, timeline, invoices, and files — using sample data so you can click through it freely before connecting your own.",
+    href: "/features",
+    hrefLabel: "See everything else Sarion includes",
   },
 ];
 

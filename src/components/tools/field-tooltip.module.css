@@ -1,0 +1,28 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.trigger {
+  display: inline-flex;
+  color: var(--m-fg-subtle);
+}
+.trigger:hover {
+  color: var(--m-primary);
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  padding: var(--m-space-3);
+  border-radius: var(--m-radius);
+  background: var(--m-fg);
+  color: var(--m-bg);
+  font-size: var(--m-text-xs);
+  line-height: 1.5;
+  z-index: 10;
+  box-shadow: var(--m-shadow-card-hover);
+}

@@ -67,14 +67,15 @@
 
 .columns {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--m-space-5);
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: var(--m-space-5);
+  row-gap: var(--m-space-8);
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  gap: var(--m-space-3);
+  gap: var(--m-space-2);
 }
 
 .heading {
@@ -83,6 +84,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--m-fg-subtle);
+  margin-bottom: var(--m-space-1);
 }
 
 .link {
@@ -114,6 +116,9 @@
   .inner {
     grid-template-columns: 1fr;
     gap: var(--m-space-6);
+  }
+  .columns {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

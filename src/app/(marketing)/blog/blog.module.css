@@ -1,0 +1,14 @@
+.toolbar {
+  margin-top: var(--m-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m-space-4);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-2);
+}

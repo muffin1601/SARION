@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 
 import { ProductShot } from "./product-shot";
-import { ScorecardLink } from "./scorecard-link";
 import styles from "./hero-section.module.css";
 
 const HERO_FEATURES = [
@@ -21,23 +20,20 @@ export function HeroSection() {
         <div className={styles.copy}>
           <span className="mEyebrow">Agency operating system</span>
           <h1 className={styles.headline}>
-            Stop juggling 8 tools. Run your entire agency from{" "}
-            <em className={styles.accent}>one workspace</em>.
+            Your agency, out of <em className={styles.accent}>8 tools</em>{" "}
+            and into one.
           </h1>
           <p className={styles.subheadline}>
-            Win back hours every week — clients, projects, invoicing, a
-            branded client portal, and your team, all in one place.
+            Clients, projects, invoicing, and a branded client portal — one
+            workspace, so nothing slips through the cracks.
           </p>
           <div className={styles.actions}>
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
-              Start Free
+              Start Free Trial
             </Link>
-            <Link href="#demo" className="mBtn mBtnSecondary mBtnLg">
-              Watch Demo
+            <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
+              See Portal Demo
             </Link>
-            <ScorecardLink placement="home_hero" className="mBtn mBtnGhost mBtnLg">
-              Score your agency →
-            </ScorecardLink>
           </div>
           <ul className={styles.featureStrip}>
             {HERO_FEATURES.map((feature) => (
@@ -48,7 +44,10 @@ export function HeroSection() {
             ))}
           </ul>
           <p className={styles.note}>
-            14-day free trial · No credit card required
+            14-day free trial · No credit card required ·{" "}
+            <Link href="/scorecard" className={styles.noteLink}>
+              Score your agency free →
+            </Link>
           </p>
         </div>
 

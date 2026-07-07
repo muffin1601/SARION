@@ -49,14 +49,49 @@ const FEATURED_PLAN = MARKETING_PLANS.find((p) => p.featured) ?? MARKETING_PLANS
 
 const RELATED_LINKS = [
   {
+    label: "Features",
+    description: "The full breakdown of every tool in the workspace.",
+    href: "/features",
+  },
+  {
+    label: "Pricing",
+    description: "Simple plans that grow with your agency.",
+    href: "/pricing",
+  },
+  {
     label: "Portal Demo",
     description: "Try the branded client portal your clients would see.",
     href: "/portal-demo",
   },
   {
+    label: "Products",
+    description: "Digital products and playbooks for agencies and builders.",
+    href: "/products",
+  },
+  {
     label: "Agency Scorecard",
     description: "Score your agency's operations in 3 minutes, free.",
     href: "/scorecard",
+  },
+  {
+    label: "Blog",
+    description: "Practical articles on agency CRM, client management, and operations.",
+    href: "/blog",
+  },
+  {
+    label: "Solutions by Industry",
+    description: "See how Sarion fits your specific kind of agency or practice.",
+    href: "/solutions",
+  },
+  {
+    label: "Compare Sarion",
+    description: "Honest comparisons against ClickUp, Notion, HubSpot, and more.",
+    href: "/compare",
+  },
+  {
+    label: "Free Calculators",
+    description: "Interactive pricing, profit, and growth calculators for agencies.",
+    href: "/tools",
   },
   {
     label: "About Sarion",
@@ -88,13 +123,17 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="The problem"
             title="Running an agency shouldn't mean juggling ten tools"
-            description="Most agencies stitch together spreadsheets, inboxes, and chat apps to run client work. The result is wasted time, duplicated effort, and details that slip through the cracks."
+            description="Spreadsheets, inboxes, and chat apps weren't built to run client work — so things slip through the cracks."
           />
           <div className={styles.grid3}>
             {PROBLEM_CARDS.map((p) => (
               <FeatureCard key={p.title} {...p} />
             ))}
           </div>
+          <p className={styles.inlineLink}>
+            Most of this disappears with a{" "}
+            <Link href="/portal-demo">branded client portal</Link>.
+          </p>
         </div>
       </section>
 
@@ -107,9 +146,9 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="The solution"
             title="Everything you need to run client work, in one place"
-            description="Sarion replaces the spreadsheets, inboxes, and disconnected apps with a single workspace built for agency delivery."
+            description="One workspace, built for agency delivery — not another spreadsheet to maintain."
           />
-          <div className={styles.grid3}>
+          <div className={styles.grid4}>
             {FEATURE_CARDS.slice(0, 4).map((f) => (
               <FeatureCard key={f.title} {...f} />
             ))}
@@ -127,7 +166,7 @@ export default function HomePage() {
         <div className="mContainer">
           <SectionHeader
             eyebrow="See it in action"
-            title="See how an agency runs on SARION in 90 seconds."
+            title="An agency's whole workflow, in 90 seconds"
           />
           <DemoVideo />
         </div>
@@ -145,18 +184,22 @@ export default function HomePage() {
               name="portal"
               alt="The branded Sarion client portal showing project updates and a comment thread"
               url="trysarion.com/portal"
+              href="/portal-demo"
             />
             <ProductShot
               name="clients"
               alt="The Sarion clients list with companies, emails, and project counts"
               url="trysarion.com/clients"
+              href="/portal-demo"
             />
             <ProductShot
               name="invoices"
               alt="The Sarion invoices list showing paid, unpaid, and overdue status"
               url="trysarion.com/invoices"
+              href="/portal-demo"
             />
           </div>
+          <p className={styles.shotsHint}>Click any screenshot to explore the live Portal Demo →</p>
         </div>
       </section>
 
@@ -196,7 +239,7 @@ export default function HomePage() {
               View Pricing
             </Link>
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
-              Start Free
+              Start Free Trial
             </Link>
           </div>
         </div>
@@ -208,7 +251,7 @@ export default function HomePage() {
           <SectionHeader
             eyebrow="Why Sarion"
             title="One workspace beats a patchwork of tools"
-            description="Spreadsheets and a generic CRM can limp along — but neither was built to run agency delivery end to end. Here's how Sarion compares."
+            description="Spreadsheets and a generic CRM can limp along — neither was built to run agency delivery end to end."
           />
           <Comparison />
         </div>
@@ -237,6 +280,9 @@ export default function HomePage() {
       <CTASection
         headline="Run your agency from one place."
         subtext="Start your 14-day free trial today. No credit card required."
+        primaryLabel="Start Free Trial"
+        secondaryLabel="See Portal Demo"
+        secondaryHref="/portal-demo"
       />
     </>
   );

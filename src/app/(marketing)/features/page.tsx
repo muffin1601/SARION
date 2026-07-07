@@ -57,6 +57,16 @@ const RELATED_LINKS = [
     description: "Score your agency's operations and see what's costing you time and revenue.",
     href: "/scorecard",
   },
+  {
+    label: "Products",
+    description: "Browse templates, automation systems, and other digital products.",
+    href: "/products",
+  },
+  {
+    label: "Contact",
+    description: "Have a question first? Talk to the team building Sarion.",
+    href: "/contact",
+  },
 ];
 
 export default function FeaturesPage() {
@@ -66,7 +76,7 @@ export default function FeaturesPage() {
       <JsonLd id="features-faq-schema" data={FAQ_SCHEMA} />
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <SectionHeader
             as="h1"
             eyebrow="Features"
@@ -90,12 +100,17 @@ export default function FeaturesPage() {
       </section>
 
       {FEATURE_SECTIONS.map((section, index) => (
-        <section key={section.eyebrow} className="mSectionTight">
+        <section
+          key={section.eyebrow}
+          className={`mSectionTight ${styles.rowSection}`}
+          data-first={index === 0}
+        >
           <div className="mContainer">
             <div className={styles.row} data-reverse={index % 2 === 1}>
               <div className={styles.copy}>
                 <span className="mEyebrow">{section.eyebrow}</span>
                 <h2 className={styles.title}>{section.title}</h2>
+                <p className={styles.workflow}>{section.workflow}</p>
                 <ul className={styles.list}>
                   {section.features.map((feature) => (
                     <li key={feature} className={styles.item}>
@@ -104,6 +119,12 @@ export default function FeaturesPage() {
                     </li>
                   ))}
                 </ul>
+                <p className={styles.benefit}>{section.benefit}</p>
+                {section.ctaHref && section.ctaLabel ? (
+                  <Link href={section.ctaHref} className={styles.inlineLink}>
+                    {section.ctaLabel} →
+                  </Link>
+                ) : null}
               </div>
               <div className={styles.visual}>
                 <ProductShot

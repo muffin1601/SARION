@@ -1,0 +1,23 @@
+.categories {
+  margin-top: var(--m-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--m-space-5);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

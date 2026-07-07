@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "./product-shot.module.css";
 
@@ -18,6 +19,8 @@ interface ProductShotProps {
   url?: string;
   priority?: boolean;
   sizes?: string;
+  /** When set, the whole screenshot navigates here (e.g. "/portal-demo") — no lightbox, just a link. */
+  href?: string;
 }
 
 // Real screenshots captured from the running app — see scripts/capture-screenshots.mjs.
@@ -34,9 +37,10 @@ export function ProductShot({
   url = "trysarion.com",
   priority,
   sizes = "(max-width: 980px) 100vw, 1100px",
+  href,
 }: ProductShotProps) {
-  return (
-    <div className={styles.frame}>
+  const content = (
+    <>
       <div className={styles.chrome}>
         <span className={styles.dot} />
         <span className={styles.dot} />
@@ -61,6 +65,16 @@ export function ProductShot({
         sizes={sizes}
         className={`${styles.shot} ${styles.shotDark}`}
       />
-    </div>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className={`${styles.frame} ${styles.frameLink}`} aria-label={alt}>
+        {content}
+      </Link>
+    );
+  }
+
+  return <div className={styles.frame}>{content}</div>;
 }

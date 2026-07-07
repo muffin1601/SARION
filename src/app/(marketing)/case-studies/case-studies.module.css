@@ -1,0 +1,142 @@
+/* Hero */
+.hero {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--m-space-4);
+}
+
+.headline {
+  font-size: var(--m-text-4xl);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.subheadline {
+  font-size: var(--m-text-lg);
+  color: var(--m-fg-muted);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+/* Honest placeholder panel */
+.panel {
+  padding: var(--m-space-6);
+  background: var(--m-card);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.panelTitle {
+  font-size: var(--m-text-lg);
+  font-weight: 700;
+  color: var(--m-fg);
+  text-align: center;
+}
+
+.panelBody {
+  margin-top: var(--m-space-3);
+  font-size: var(--m-text-base);
+  color: var(--m-fg-muted);
+  line-height: 1.7;
+}
+
+/* Future structure steps */
+.structure {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--m-space-4);
+  margin-top: var(--m-space-6);
+}
+
+.structureStep {
+  padding: var(--m-space-4);
+  background: var(--m-bg);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+}
+
+.structureLabel {
+  font-size: var(--m-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--m-fg-muted);
+}
+
+.structureTitle {
+  margin-top: var(--m-space-2);
+  font-size: var(--m-text-sm);
+  font-weight: 700;
+  color: var(--m-fg);
+}
+
+.structureBody {
+  margin-top: var(--m-space-2);
+  font-size: var(--m-text-xs);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}
+
+/* In the meantime links */
+.meantimeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--m-space-4);
+  margin-top: var(--m-space-6);
+}
+
+.meantimeCard {
+  display: block;
+  padding: var(--m-space-5);
+  background: var(--m-card);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  transition: border-color 0.15s ease;
+}
+
+.meantimeCard:hover {
+  border-color: var(--m-primary);
+}
+
+.meantimeTitle {
+  font-size: var(--m-text-base);
+  font-weight: 700;
+  color: var(--m-fg);
+}
+
+.meantimeBody {
+  margin-top: var(--m-space-2);
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .structure {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .meantimeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .headline {
+    font-size: var(--m-text-3xl);
+  }
+
+  .subheadline {
+    font-size: var(--m-text-base);
+  }
+
+  .structure {
+    grid-template-columns: 1fr;
+  }
+}

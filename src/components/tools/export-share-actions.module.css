@@ -1,0 +1,21 @@
+.wrap {
+  margin-top: var(--m-space-5);
+  padding-top: var(--m-space-5);
+  border-top: 1px solid var(--m-border);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-2);
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.emailForm {
+  margin-top: var(--m-space-4);
+  max-width: 480px;
+}

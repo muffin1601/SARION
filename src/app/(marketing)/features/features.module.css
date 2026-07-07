@@ -1,6 +1,8 @@
-.intro {
+/* Double class selector to out-specificity the sitewide `.marketingTheme p { margin: 0; }` reset. */
+.intro.intro {
   max-width: 60ch;
-  margin: var(--m-space-4) auto 0;
+  margin-top: var(--m-space-4);
+  margin-inline: auto;
   text-align: center;
   font-size: var(--m-text-base);
   line-height: 1.6;
@@ -22,6 +24,12 @@
   gap: var(--m-space-8);
 }
 
+/* Each row lives in its own <section>, so the boundary is applied to the
+   section wrapper (via data-first) rather than a CSS sibling selector. */
+.rowSection[data-first="false"] {
+  border-top: 1px solid var(--m-border);
+}
+
 .row[data-reverse="true"] .copy {
   order: 2;
 }
@@ -32,12 +40,37 @@
 .copy {
   display: flex;
   flex-direction: column;
-  gap: var(--m-space-4);
+  gap: var(--m-space-5);
 }
 
 .title {
   font-size: var(--m-text-2xl);
   max-width: 16ch;
+}
+
+.workflow {
+  font-size: var(--m-text-sm);
+  line-height: 1.6;
+  color: var(--m-fg-muted);
+}
+
+.benefit {
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-fg);
+}
+
+.inlineLink {
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  width: fit-content;
+}
+
+.inlineLink:hover {
+  color: var(--m-primary-hover);
 }
 
 .list {

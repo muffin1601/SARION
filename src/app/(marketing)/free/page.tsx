@@ -51,23 +51,28 @@ const RELATED_LINKS = [
     description: "Browse every digital product in the SARION catalog.",
     href: "/products",
   },
+  {
+    label: "Pricing",
+    description: "Compare tiers if you decide to upgrade from the sample.",
+    href: "/pricing",
+  },
 ];
 
 const PERKS = [
   {
     icon: FileText,
     title: `${FREE_SAMPLE_PAGE_COUNT} real pages`,
-    body: "A genuine slice of the full kit — not a teaser, the actual prompts and playbooks.",
+    body: "Judge the quality before you buy anything — these are the same prompts and playbooks that ship in the paid kit, word for word.",
   },
   {
     icon: ShieldCheck,
     title: "No credit card",
-    body: "Just your email. No trial that silently converts to a charge.",
+    body: "Zero risk to try it. Just your email — no card on file, no trial quietly converting into a charge later.",
   },
   {
     icon: Mail,
     title: "Instant delivery",
-    body: "Your download starts immediately, and we email you a copy of the link too.",
+    body: "No waiting on a sales team or a drip sequence — your download starts right away, and a copy of the link lands in your inbox as backup.",
   },
 ];
 
@@ -80,12 +85,12 @@ export default function FreePage() {
 
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <SectionHeader
             as="h1"
             eyebrow="Free Sample"
             title="Download Free Sample"
-            description={`Get a real ${FREE_SAMPLE_PAGE_COUNT}-page sample from the SARION Claude Code Mastery Kit — no credit card, no trial, just your email.`}
+            description={`Get a real ${FREE_SAMPLE_PAGE_COUNT}-page slice of the SARION Claude Code Mastery Kit — actual prompts, playbooks, and checklists, not a preview. It's free because we'd rather you try the work before you pay for it: no credit card, no trial. Enter your email and check your inbox for the download link — it lands instantly.`}
           />
 
           <div className={styles.formWrap}>

@@ -8,18 +8,18 @@ import { FaqGrid } from "@/components/marketing/faq-grid";
 import { RelatedPages } from "@/components/marketing/related-pages";
 import { BreadcrumbNav } from "@/components/marketing/breadcrumb-nav";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, faqSchema, personSchema } from "@/lib/seo/schema";
 import { TEAM } from "@/lib/marketing/team";
 import { ABOUT_FAQ } from "@/lib/marketing/faq";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
-  title: "About · Sarion",
+  title: "About",
   description:
     "Sarion is an independent software company building tools to help agencies run more efficiently.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About · Sarion",
+    title: "About",
     description:
       "Sarion is an independent software company building tools to help agencies run more efficiently.",
     url: "/about",
@@ -33,7 +33,27 @@ const BREADCRUMB_TRAIL = [
 const BREADCRUMB_SCHEMA = breadcrumbSchema(BREADCRUMB_TRAIL);
 const FAQ_SCHEMA = faqSchema(ABOUT_FAQ);
 
+function slugifyName(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, "-");
+}
+
+// Real, named founders — genuine Person entities for E-E-A-T, referenced by
+// @id from blog posts' authorship (see blogPostingSchema's authorId param).
+const PERSON_SCHEMAS = TEAM.map((member) =>
+  personSchema({
+    id: `/about#person-${slugifyName(member.name)}`,
+    name: member.name,
+    jobTitle: member.title,
+    description: member.bio,
+  }),
+);
+
 const RELATED_LINKS = [
+  {
+    label: "Home",
+    description: "See how Sarion brings agency operations into one workspace.",
+    href: "/",
+  },
   {
     label: "Contact",
     description: "Reach the founding team directly with questions or feedback.",
@@ -49,24 +69,34 @@ const RELATED_LINKS = [
     description: "Score your agency's operations in 3 minutes, free.",
     href: "/scorecard",
   },
+  {
+    label: "Partners",
+    description: "Work with us as a referral, technology, or agency partner.",
+    href: "/partners",
+  },
+  {
+    label: "Affiliate Program",
+    description: "Refer agencies to Sarion and earn a commission.",
+    href: "/affiliate",
+  },
 ];
 
 const CHALLENGES = [
   {
-    title: "Scattered tools",
-    body: "Most agencies use a different tool for every task — project management, invoicing, client communication, file sharing. Nothing connects.",
+    title: "Five tools, one project",
+    body: "A single client engagement gets split across a project tracker, an invoicing app, an inbox, and a file-sharing folder. Nothing talks to anything else, so someone has to manually keep them in sync.",
   },
   {
-    title: "Fragmented communication",
-    body: "Client updates live in inboxes, chat threads, and notes apps. Finding the latest status means digging through multiple places.",
+    title: "The status is in someone's head",
+    body: "Ask \"where's this project at?\" and the real answer lives in a mix of Slack threads, email replies, and a teammate's memory — not in any system either the agency or the client can check.",
   },
   {
-    title: "Manual invoicing",
-    body: "Invoices are built in spreadsheets, chased over email, and tracked in yet another tab. The process is slow and error-prone.",
+    title: "Invoices built by hand, every time",
+    body: "Hours get copied from a tracker into a spreadsheet, turned into a PDF, and emailed out — then chased again a week later because there's no record of who's actually paid.",
   },
   {
-    title: "Poor client visibility",
-    body: "Clients have no way to see what's happening with their projects. Agencies spend time on status updates instead of actual work.",
+    title: "Clients ping you for updates you already have",
+    body: "Without a shared view of progress, clients default to emailing for status — and agencies spend billable hours writing updates instead of shipping work.",
   },
 ];
 
@@ -75,8 +105,9 @@ export default function AboutPage() {
     <>
       <JsonLd id="about-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
       <JsonLd id="about-faq-schema" data={FAQ_SCHEMA} />
+      <JsonLd id="about-person-schema" data={PERSON_SCHEMAS} />
       {/* Hero */}
-      <section className="mSection">
+      <section className="mSectionTight">
         <div className="mContainer">
           <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
           <div className={styles.hero}>
@@ -85,8 +116,8 @@ export default function AboutPage() {
               We build software that helps agencies focus on their work.
             </h1>
             <p className={styles.subheadline}>
-              Sarion is an independent software company based in India. We are a
-              small founding team building focused, practical tools — not
+              Sarion is an independent software company based in India. We are
+              a small founding team building focused, practical tools — not
               all-in-one platforms bloated with features no one asked for.
             </p>
           </div>
@@ -104,14 +135,18 @@ export default function AboutPage() {
             />
             <div className={styles.proseBody}>
               <p>
-                Agencies do great work for their clients. The internal
-                side — tracking projects, sending invoices, keeping clients
-                updated, managing the team — is where time gets lost.
+                Before Sarion, our founders ran client work for agencies of
+                their own. The client work itself was never the hard part —
+                juggling five disconnected tools just to answer &ldquo;where&apos;s this
+                project at?&rdquo; was. Every week meant rebuilding the same status
+                in a different app: project tracker, invoice spreadsheet,
+                email thread, chat log.
               </p>
               <p>
-                Our mission is to reduce that friction. Sarion brings clients,
-                projects, invoices, and team collaboration into one workspace so
-                agencies can spend more time on the work that matters.
+                Sarion exists to close that gap. It brings clients, projects,
+                invoices, and team collaboration into one workspace, so
+                agencies stop maintaining their tools and get back to the work
+                clients actually pay for.
               </p>
             </div>
           </div>
@@ -129,14 +164,18 @@ export default function AboutPage() {
             />
             <div className={styles.proseBody}>
               <p>
-                We want Sarion to become the default workspace for agencies that
-                value clarity over complexity. Not the largest platform, not the
-                most feature-rich — the most useful one for the kind of agency
-                that wants to stay focused and move fast.
+                Sarion is built to become the default workspace for agencies
+                that value clarity over complexity — not the largest
+                platform, not the one with the longest feature list, but the
+                one an agency actually opens every day because it saves them
+                time.
               </p>
               <p>
-                We are building toward that one step at a time, starting with the
-                fundamentals agencies actually need every day.
+                We&apos;re building toward that deliberately, starting with the
+                fundamentals — client visibility, invoicing, project
+                tracking — and expanding next into automation that removes
+                the manual status updates and follow-ups agencies still do by
+                hand.
               </p>
             </div>
           </div>
@@ -148,8 +187,8 @@ export default function AboutPage() {
         <div className="mContainer">
           <SectionHeader
             eyebrow="Why We Built Sarion"
-            title="The agency workflow problem is real"
-            description="Agencies of every size face the same set of operational challenges. Sarion was built to address them directly."
+            title="We lived these problems before we built the fix"
+            description="Every agency we've worked with hits the same four walls. Sarion addresses each one directly."
           />
           <div className={styles.challenges}>
             {CHALLENGES.map((c) => (
@@ -168,11 +207,13 @@ export default function AboutPage() {
           <SectionHeader
             eyebrow="The Team"
             title="Meet the founders"
-            description="Sarion is built by a small founding team. We are hands-on and focused on making the product better every day."
+            description="Sarion is built by a small founding team, hands-on with the product every day."
           />
           <div className={styles.teamGrid}>
             {TEAM.map((member) => (
-              <TeamCard key={member.name} {...member} />
+              <div key={member.name} id={`person-${slugifyName(member.name)}`}>
+                <TeamCard {...member} />
+              </div>
             ))}
           </div>
         </div>

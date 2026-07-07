@@ -331,3 +331,154 @@ html.dark .marketingTheme .mBtnSecondary:hover {
   background: var(--m-primary-soft);
   color: var(--m-primary);
 }
+
+/* --- Article body (blog posts, resources) --------------------------------
+   Built entirely from existing --m-* tokens — no new colors or fonts. */
+.mProse {
+  max-width: 720px;
+  font-size: var(--m-text-lg);
+  line-height: 1.75;
+  color: var(--m-fg-muted);
+}
+
+.mProse > * + * {
+  margin-top: var(--m-space-5);
+}
+
+.mProse h2,
+.mProse h3,
+.mProse h4 {
+  margin-top: var(--m-space-8);
+  color: var(--m-fg);
+  scroll-margin-top: var(--m-space-7);
+}
+.mProse h2 {
+  font-size: var(--m-text-2xl);
+}
+.mProse h3 {
+  font-size: var(--m-text-xl);
+}
+.mProse h4 {
+  font-size: var(--m-text-lg);
+}
+
+.mProse a {
+  color: var(--m-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.mProse a:hover {
+  color: var(--m-primary-hover);
+}
+
+.mProse ul,
+.mProse ol {
+  padding-left: var(--m-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-3);
+}
+
+.mProse blockquote {
+  border-left: 3px solid var(--m-primary);
+  padding-left: var(--m-space-5);
+  font-style: italic;
+  color: var(--m-fg);
+}
+
+.mProse code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9em;
+  background: var(--m-bg-elev);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  padding: 0.1em 0.4em;
+}
+
+.mProse pre {
+  background: var(--m-bg-elev);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  padding: var(--m-space-4);
+  overflow-x: auto;
+}
+.mProse pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.mProse table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--m-text-base);
+}
+.mProse th,
+.mProse td {
+  border: 1px solid var(--m-border);
+  padding: var(--m-space-2) var(--m-space-3);
+  text-align: left;
+}
+.mProse th {
+  color: var(--m-fg);
+  background: var(--m-bg-elev);
+}
+
+.mProse hr {
+  border: none;
+  border-top: 1px solid var(--m-border);
+}
+
+/* Anchor-link wrapper injected by rehype-autolink-headings (behavior: wrap) */
+.mProse h2 > a,
+.mProse h3 > a,
+.mProse h4 > a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+.mProse h2 > a:hover,
+.mProse h3 > a:hover,
+.mProse h4 > a:hover {
+  text-decoration: underline;
+}
+
+/* --- Blog-specific atoms --------------------------------------------------- */
+.mTocLink {
+  display: block;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  padding-block: var(--m-space-1);
+  border-left: 2px solid transparent;
+  padding-left: var(--m-space-3);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.mTocLink:hover {
+  color: var(--m-fg);
+}
+.mTocLink[data-active="true"] {
+  color: var(--m-primary);
+  border-left-color: var(--m-primary);
+  font-weight: 600;
+}
+
+.mShareBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-space-2);
+  height: 36px;
+  padding-inline: var(--m-space-4);
+  border-radius: var(--m-radius);
+  border: 1px solid var(--m-border);
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-fg-muted);
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.mShareBtn:hover {
+  color: var(--m-fg);
+  border-color: var(--m-border-strong);
+  background: var(--m-card-hover);
+}

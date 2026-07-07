@@ -25,6 +25,20 @@ export default function NotFound() {
           </Link>
         </Button>
       </div>
+      <nav aria-label="Popular pages" className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+        <Link href="/search" className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+          Search the site
+        </Link>
+        <Link href="/blog" className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+          Blog
+        </Link>
+        <Link href="/pricing" className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+          Pricing
+        </Link>
+        <Link href="/contact" className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+          Contact
+        </Link>
+      </nav>
     </main>
   );
 }

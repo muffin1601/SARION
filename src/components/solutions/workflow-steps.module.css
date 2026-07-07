@@ -1,0 +1,34 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-5);
+}
+
+.item {
+  display: flex;
+  gap: var(--m-space-4);
+}
+
+.number {
+  flex-shrink: 0;
+  font-family: var(--font-heading), Georgia, serif;
+  font-size: var(--m-text-xl);
+  color: var(--m-primary);
+  font-weight: 600;
+  width: 2ch;
+}
+
+.step {
+  font-size: var(--m-text-lg);
+  font-weight: 600;
+}
+
+.description {
+  margin-top: var(--m-space-1);
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}

@@ -3,6 +3,11 @@ import Image from "next/image";
 
 import {
   PRODUCT_LINKS,
+  CONTENT_LINKS,
+  SOLUTIONS_LINKS,
+  COMPARE_LINKS,
+  DEVELOPER_LINKS,
+  TRUST_LINKS,
   LEGAL_LINKS,
   COMPANY_LINKS,
 } from "@/lib/marketing/navigation";
@@ -11,8 +16,13 @@ import { SocialLinks } from "./social-links";
 import styles from "./footer.module.css";
 
 const COLUMNS: { heading: string; links: typeof PRODUCT_LINKS }[] = [
-  { heading: "Product", links: PRODUCT_LINKS },
   { heading: "Company", links: COMPANY_LINKS },
+  { heading: "Product", links: PRODUCT_LINKS },
+  { heading: "Resources", links: CONTENT_LINKS },
+  { heading: "Solutions", links: SOLUTIONS_LINKS },
+  { heading: "Compare", links: COMPARE_LINKS },
+  { heading: "Developers", links: DEVELOPER_LINKS },
+  { heading: "Trust", links: TRUST_LINKS },
   { heading: "Legal", links: LEGAL_LINKS },
 ];
 

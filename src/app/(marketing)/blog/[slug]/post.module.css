@@ -1,0 +1,31 @@
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--m-space-8);
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--m-nav-h) + var(--m-space-5));
+}
+
+.share,
+.nav {
+  margin-top: var(--m-space-6);
+  max-width: 720px;
+}
+
+.related {
+  margin-top: var(--m-space-8);
+  max-width: 720px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .toc {
+    display: none;
+  }
+}

@@ -17,7 +17,7 @@ import styles from "./pricing.module.css";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple, transparent pricing for agencies. Start free, or take a 14-day trial of every premium feature — no credit card. Lock in founding pricing for life during launch.",
+    "Simple, transparent pricing for agencies. Start free or try every premium feature for 14 days — no credit card. Founding pricing locked for life.",
   alternates: { canonical: "/pricing" },
   keywords: [
     "agency software pricing",
@@ -62,23 +62,28 @@ const RELATED_LINKS = [
     description: "Have questions first? Talk to the founding team.",
     href: "/contact",
   },
+  {
+    label: "Startup Program",
+    description: "Early-stage agency? See if you qualify for special pricing consideration.",
+    href: "/startup-program",
+  },
 ];
 
 const REASSURANCE = [
   {
     icon: Sparkles,
     title: "Founding pricing, locked forever",
-    body: "Join during launch and your rate never goes up — even as we add features and raise prices.",
+    body: "Sign up during launch and that exact rate is yours for as long as you stay subscribed — including future renewals, even after list prices go up.",
   },
   {
     icon: ShieldCheck,
     title: "Free migration included",
-    body: "Coming from another tool? We'll help you move your clients and projects over at no cost.",
+    body: "Send us your client list and active projects from a spreadsheet or another tool — we'll set them up in Sarion for you, at no extra cost, before your trial ends.",
   },
   {
     icon: Heart,
     title: "Founder support",
-    body: "You're talking to the people who build Sarion. Real answers, fast — not a ticket queue.",
+    body: "Email support goes directly to the founding team that builds Sarion — no support tier, no outsourced queue, and no bot triage before a real answer.",
   },
 ];
 
@@ -92,7 +97,7 @@ export default function PricingPage() {
       <JsonLd id="pricing-breadcrumb-schema" data={BREADCRUMB_SCHEMA} />
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <SectionHeader
             as="h1"
             eyebrow="Pricing"

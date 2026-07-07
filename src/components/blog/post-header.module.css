@@ -1,0 +1,17 @@
+.wrap {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-4);
+}
+
+.title {
+  font-size: var(--m-text-4xl);
+  margin-top: var(--m-space-2);
+}
+
+.description {
+  font-size: var(--m-text-lg);
+  color: var(--m-fg-muted);
+  line-height: 1.6;
+}

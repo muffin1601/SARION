@@ -131,11 +131,22 @@ button.listRow {
   width: 100%;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 button.listRow:hover {
   border-color: var(--m-primary);
+  background: var(--m-primary-soft);
+}
+
+button.listRow:focus-visible {
+  outline: none;
+  border-color: var(--m-primary);
+  box-shadow: 0 0 0 3px var(--m-primary-soft);
+}
+
+button.listRow:active {
+  transition-duration: 0.1s;
 }
 
 .rowEnd {
@@ -146,7 +157,12 @@ button.listRow:hover {
 
 .chevron {
   color: var(--m-fg-subtle);
-  transition: transform 0.15s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+button.listRow:hover .chevron,
+button.listRow:focus-visible .chevron {
+  color: var(--m-primary);
 }
 
 .chevron[data-open="true"] {
@@ -159,6 +175,18 @@ button.listRow:hover {
   border: 1px solid var(--m-border);
   border-radius: var(--m-radius);
   background: var(--m-card);
+  animation: portalExpandIn 0.2s ease;
+}
+
+@keyframes portalExpandIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .timeline {
@@ -331,6 +359,24 @@ button.listRow:hover {
 .ctaTitle {
   font-size: var(--m-text-2xl);
   max-width: 24ch;
+}
+
+.ctaSub {
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  max-width: 48ch;
+}
+
+.ctaSub a {
+  color: var(--m-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.ctaSub a:hover,
+.ctaSub a:focus-visible {
+  color: var(--m-fg);
 }
 
 @media (max-width: 760px) {

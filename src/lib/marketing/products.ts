@@ -32,17 +32,20 @@ export const COLLECTIONS: CollectionMeta[] = [
   {
     key: "developer",
     title: "Developer Collection",
-    description: "Ship production software faster with battle-tested engineering systems.",
+    description:
+      "For engineers and solo builders working in Claude Code or Cursor — battle-tested prompts, playbooks, and boilerplate that replace hours of trial-and-error with a repeatable process.",
   },
   {
     key: "agency",
     title: "Agency Collection",
-    description: "Run and scale your agency with proven operating systems, not scattered docs.",
+    description:
+      "For agency owners tired of running the business from scattered docs and tribal knowledge — proven operating systems for client work, onboarding, and finance, ready to plug in.",
   },
   {
     key: "automation",
     title: "Automation Collection",
-    description: "Automate client work, sales, and operations so the business runs without you.",
+    description:
+      "For teams who'd rather build the workflow once than repeat it forever — ready-to-import automations that handle client work, sales follow-up, and reporting without a developer on call.",
   },
 ];
 
@@ -157,7 +160,8 @@ export function productsByCollection(collection: ProductCollection): ProductSumm
 export const FLAGSHIP_CRM = {
   name: "SARION CRM",
   eyebrow: "Flagship SaaS · Subscription",
-  description: "Run your agency with AI-powered CRM, sales pipeline, client management and automation.",
+  description:
+    "Built for agencies and client-based businesses replacing a patchwork of spreadsheets, generic CRMs, and manual follow-up. SARION combines pipeline, client management, and AI-powered automation in one system, so nothing falls through the cracks between the first call and the invoice.",
   primaryLabel: "Start Free",
   primaryHref: "/signup",
   secondaryLabel: "Learn More",
@@ -250,7 +254,7 @@ export const CCM_WHO_FOR = [
   "You use Claude Code (or want to)",
   "You're a solo builder shipping fast",
   "You lead a team standardizing AI workflows",
-  "You're tired of mediocre AI output",
+  "You're tired of rewriting Claude's first draft every time",
 ];
 
 export const CCM_NOT_FOR = [

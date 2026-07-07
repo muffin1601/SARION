@@ -52,6 +52,11 @@ const FAQ_SCHEMA = faqSchema(PRODUCTS_FAQ);
 
 const RELATED_LINKS = [
   {
+    label: "Home",
+    description: "Back to the SARION homepage.",
+    href: "/",
+  },
+  {
     label: "Free Sample",
     description: "Download a free sample from the Claude Code Mastery Kit.",
     href: "/free",

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 import { SectionHeader } from "@/components/marketing/section-header";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import styles from "../legal.module.css";
 
 export const metadata: Metadata = {
@@ -15,6 +18,13 @@ const UPDATED = "June 11, 2026";
 export default function TermsPage() {
   return (
     <section className="mSectionTight">
+      <JsonLd
+        id="terms-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Terms of Service", path: "/terms" },
+        ])}
+      />
       <div className="mContainer">
         <div className={styles.wrap}>
           <SectionHeader
@@ -118,9 +128,15 @@ export default function TermsPage() {
                 <a href={`mailto:${siteConfig.contactEmail}`}>
                   {siteConfig.contactEmail}
                 </a>
-                .
+                , or visit our <Link href="/contact">contact page</Link>.
               </p>
             </section>
+          </div>
+
+          <div className={styles.legalNav}>
+            <Link href="/">← Back to Home</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/contact">Contact us</Link>
           </div>
         </div>
       </div>

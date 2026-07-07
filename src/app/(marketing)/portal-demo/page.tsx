@@ -46,15 +46,15 @@ const FAQ_SCHEMA = faqSchema(PORTAL_DEMO_FAQ);
 const HOW_IT_WORKS = [
   {
     title: "Create a project",
-    text: "Add a client and a project in Sarion — takes less than a minute.",
+    text: "Add a client and a project in Sarion. One form, under a minute — no setup wizard to fight through.",
   },
   {
-    title: "Invite the client",
-    text: "Send a secure portal link. No account or password required on their end.",
+    title: "Send one link",
+    text: "Share a secure portal link. Your client opens it and is straight in — no account, no password, no download.",
   },
   {
-    title: "They see it live",
-    text: "Status, files, and invoices update in real time as you work.",
+    title: "The updates happen themselves",
+    text: "You keep working in Sarion; the portal reflects it instantly. No status email ever has to be written.",
   },
 ];
 
@@ -85,12 +85,12 @@ export default function PortalDemoPage() {
       {/* Intro */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <SectionHeader
             as="h1"
             eyebrow="Portal Demo"
-            title="See what your clients would see"
-            description="A client portal is a private, branded page where your clients check project status, files, and invoices — without emailing you for updates. Try the interactive mock below, or read on to see exactly how it works."
+            title="What your clients see when they log in"
+            description="This is the exact experience: a private, branded page where clients check project status, files, and invoices — without ever emailing you for an update. Click through the live demo below, then see how easy it is to set up for your own clients."
           />
         </div>
       </section>
@@ -124,7 +124,7 @@ export default function PortalDemoPage() {
         <div className="mContainer">
           <div className={styles.demoNote}>
             <span className="mBadge mBadgeInfo">Live demo</span>
-            <span>Click a project or invoice to expand it — this is exactly what your clients would see.</span>
+            <span>Click a project or invoice to expand it — this is pixel-for-pixel what your clients see when they log in.</span>
           </div>
 
           <PortalDemoClient />
@@ -142,7 +142,7 @@ export default function PortalDemoPage() {
         <div className="mContainer">
           <SectionHeader
             eyebrow="Before vs. after"
-            title="What changes once clients have a portal"
+            title="The status-update tax disappears"
           />
           <div className={styles.beforeAfterGrid}>
             {PORTAL_BEFORE_AFTER.map((item) => (
@@ -196,10 +196,15 @@ export default function PortalDemoPage() {
         <div className="mContainer">
           <div className={styles.cta}>
             <h2 className={styles.ctaTitle}>
-              Want your clients to have this experience?
+              Give your clients this experience today
             </h2>
+            <p className={styles.ctaSub}>
+              The branded client portal is included free on every plan — see{" "}
+              <Link href="/pricing">pricing</Link> or browse{" "}
+              <Link href="/features">everything Sarion includes</Link>.
+            </p>
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
-              Start Free
+              Start Free Trial
             </Link>
           </div>
         </div>

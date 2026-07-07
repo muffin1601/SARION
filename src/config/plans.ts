@@ -94,7 +94,7 @@ export const PLANS: Record<PlanTier, PlanDefinition> = {
   free: {
     tier: "free",
     name: "Free",
-    tagline: "Kick the tires — no credit card, no clock.",
+    tagline: "See how Sarion feels with one real client before you commit to anything.",
     features: [
       "1 client",
       "1 active project",
@@ -120,7 +120,7 @@ export const PLANS: Record<PlanTier, PlanDefinition> = {
   starter: {
     tier: "starter",
     name: "Starter",
-    tagline: "For freelancers and solo operators.",
+    tagline: "Stop chasing clients across email and spreadsheets — run every project and invoice from one place.",
     features: [
       "Unlimited clients & projects",
       "Invoices",
@@ -150,7 +150,7 @@ export const PLANS: Record<PlanTier, PlanDefinition> = {
   growth: {
     tier: "growth",
     name: "Growth",
-    tagline: "For growing agencies with a team.",
+    tagline: "Bring your team onto one workspace and give clients a branded portal that makes you look bigger than you are.",
     featured: true,
     features: [
       "Everything in Starter",
@@ -182,7 +182,7 @@ export const PLANS: Record<PlanTier, PlanDefinition> = {
   agency: {
     tier: "agency",
     name: "Agency",
-    tagline: "For larger agencies that need it all.",
+    tagline: "Remove Sarion from the picture entirely — full white-label, unlimited team, and a founder on call for onboarding.",
     features: [
       "Everything in Growth",
       "Unlimited team members",

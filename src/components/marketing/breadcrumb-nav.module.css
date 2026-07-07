@@ -8,6 +8,10 @@
   color: var(--m-fg-subtle);
 }
 
+.trail[data-center] {
+  justify-content: center;
+}
+
 .link {
   color: var(--m-fg-subtle);
   text-decoration: none;

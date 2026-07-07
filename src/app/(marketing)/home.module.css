@@ -20,6 +20,23 @@
   margin-top: var(--m-space-6);
 }
 
+.inlineLink {
+  margin-top: var(--m-space-5);
+  text-align: center;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+}
+
+.inlineLink a {
+  color: var(--m-primary);
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+}
+
+.inlineLink a:hover {
+  opacity: 0.75;
+}
+
 .pricingTeaser {
   display: flex;
   align-items: stretch;
@@ -98,14 +115,31 @@
   }
 }
 
-/* "A look inside" — stacked real product screenshots. */
+/* "A look inside" — real product screenshots, side by side on desktop. */
 .shots {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--m-space-6);
   margin-top: var(--m-space-7);
-  max-width: 940px;
-  margin-inline: auto;
+}
+
+.shotsHint {
+  margin-top: var(--m-space-5);
+  text-align: center;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-subtle);
+}
+
+@media (max-width: 980px) {
+  .shots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .shots {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 980px) {

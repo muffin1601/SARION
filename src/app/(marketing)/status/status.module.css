@@ -1,0 +1,119 @@
+/* Hero */
+.hero {
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--m-space-4);
+}
+
+.headline {
+  font-size: var(--m-text-4xl);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.subheadline {
+  font-size: var(--m-text-lg);
+  color: var(--m-fg-muted);
+  line-height: 1.65;
+  max-width: 620px;
+}
+
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  padding: var(--m-space-2) var(--m-space-4);
+  border-radius: 999px;
+  background: var(--m-success-soft);
+  color: var(--m-success);
+  font-weight: 600;
+  font-size: var(--m-text-sm);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--m-success);
+}
+
+.smallDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--m-success);
+  display: inline-block;
+}
+
+/* Table */
+.table {
+  margin-top: var(--m-space-7);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  overflow: hidden;
+  background: var(--m-card);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: var(--m-space-3) var(--m-space-5);
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-fg-muted);
+  border-bottom: 1px solid var(--m-border);
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: var(--m-space-4) var(--m-space-5);
+  border-bottom: 1px solid var(--m-border);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.systemName {
+  font-size: var(--m-text-base);
+  color: var(--m-fg);
+  font-weight: 600;
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  font-size: var(--m-text-base);
+  color: var(--m-fg-muted);
+}
+
+/* Notes */
+.note {
+  margin-top: var(--m-space-5);
+  font-size: var(--m-text-base);
+  color: var(--m-fg-muted);
+  line-height: 1.7;
+  max-width: 720px;
+}
+
+.inlineLink {
+  color: var(--m-primary, inherit);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .headline {
+    font-size: var(--m-text-3xl);
+  }
+
+  .subheadline {
+    font-size: var(--m-text-base);
+  }
+}

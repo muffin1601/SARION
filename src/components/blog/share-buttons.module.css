@@ -1,0 +1,14 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: var(--m-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--m-fg-subtle);
+  margin-right: var(--m-space-1);
+}

@@ -1,0 +1,37 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m-space-3);
+  align-items: flex-start;
+}
+
+.input {
+  flex: 1;
+  min-width: 220px;
+  height: 48px;
+  padding-inline: var(--m-space-4);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  background: var(--m-card);
+  color: var(--m-fg);
+  font-size: var(--m-text-base);
+}
+.input:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--m-ring);
+}
+
+.error {
+  width: 100%;
+  font-size: var(--m-text-sm);
+  color: var(--m-warning);
+}
+
+.success {
+  display: flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  font-size: var(--m-text-base);
+  font-weight: 600;
+  color: var(--m-success);
+}
