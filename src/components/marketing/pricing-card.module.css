@@ -38,6 +38,43 @@
   }
 }
 
+/* Standalone, single-offer variant — wider and more premium than a tier
+   sitting in a 3-up grid. Overrides the tier-lift transform above so it
+   only ever moves on hover. */
+.card[data-solo="true"] {
+  max-width: 520px;
+  width: 100%;
+  margin-inline: auto;
+  padding: var(--m-space-7);
+  gap: var(--m-space-6);
+  transform: none;
+}
+.card[data-solo="true"]:hover {
+  transform: translateY(-4px);
+}
+@media (min-width: 761px) {
+  .card[data-solo="true"] {
+    transform: none;
+  }
+  .card[data-solo="true"]:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.card[data-solo="true"] .name {
+  font-size: var(--m-text-2xl);
+}
+
+.card[data-solo="true"] .price {
+  font-size: var(--m-text-4xl);
+}
+
+.card[data-solo="true"] .features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--m-space-3) var(--m-space-4);
+}
+
 .flag {
   position: absolute;
   top: var(--m-space-5);

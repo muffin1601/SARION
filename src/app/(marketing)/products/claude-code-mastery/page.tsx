@@ -22,7 +22,7 @@ import {
   CCM_WHO_FOR,
   CCM_NOT_FOR,
   CCM_OUTCOMES,
-  CCM_TIERS,
+  CCM_ACTIVE_OFFER,
   CCM_FAQ,
   CCM_BOX_MOCKUP_BASE,
 } from "@/lib/marketing/products";
@@ -274,10 +274,10 @@ export default function ClaudeCodeMasteryPage() {
           <SectionHeader
             eyebrow="Pricing"
             title="One payment. Yours forever."
-            description="Every tier includes lifetime access and free Version 1.x updates. 14-day, no-questions-asked refund."
+            description="Lifetime access and free Version 1.x updates. 14-day, no-questions-asked refund."
           />
-          <div className={styles.tiersGrid}>
-            {CCM_TIERS.map((tier) => (
+          <div className={styles.tiersGrid} data-solo={CCM_ACTIVE_OFFER.length === 1 || undefined}>
+            {CCM_ACTIVE_OFFER.map((tier) => (
               <PricingCard
                 key={tier.name}
                 name={tier.name}
@@ -285,6 +285,8 @@ export default function ClaudeCodeMasteryPage() {
                 description={tier.description}
                 features={tier.features}
                 featured={tier.featured}
+                badge={tier.badge}
+                solo={CCM_ACTIVE_OFFER.length === 1}
                 ctaLabel="Get Instant Access"
                 ctaHref={CHECKOUT_URL}
                 period="one-time"

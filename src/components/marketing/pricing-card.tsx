@@ -13,6 +13,10 @@ interface PricingCardProps {
   ctaHref?: string;
   /** Billing period label shown after the price. Defaults to "/month". */
   period?: string;
+  /** Badge text shown on the card. Defaults to "Most popular" when featured. */
+  badge?: string;
+  /** Renders as a single, wider, premium card — use for a standalone offer. */
+  solo?: boolean;
 }
 
 export function PricingCard({
@@ -24,10 +28,13 @@ export function PricingCard({
   ctaLabel = "Start Free Trial",
   ctaHref = "/signup",
   period = "/month",
+  badge,
+  solo = false,
 }: PricingCardProps) {
+  const flagText = badge ?? (featured ? "Most popular" : undefined);
   return (
-    <div className={styles.card} data-featured={featured}>
-      {featured && <span className={styles.flag}>Most popular</span>}
+    <div className={styles.card} data-featured={featured} data-solo={solo || undefined}>
+      {flagText && <span className={styles.flag}>{flagText}</span>}
       <div className={styles.head}>
         <h3 className={styles.name}>{name}</h3>
         <p className={styles.description}>{description}</p>

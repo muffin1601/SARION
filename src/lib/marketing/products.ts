@@ -279,8 +279,14 @@ export interface ProductTier {
   description: string;
   features: string[];
   featured?: boolean;
+  /** Small badge shown on the card, e.g. "🔥 Early Access Price". */
+  badge?: string;
 }
 
+// Multi-tier lineup — kept for a future re-launch. Not currently rendered;
+// see CCM_ACTIVE_OFFER, which points at CCM_SINGLE_OFFER during the
+// product-validation stage. Swap CCM_ACTIVE_OFFER back to this to restore
+// Starter/Pro/Team without touching the page.
 export const CCM_TIERS: ProductTier[] = [
   {
     name: "Starter",
@@ -313,6 +319,36 @@ export const CCM_TIERS: ProductTier[] = [
     ],
   },
 ];
+
+// Single, all-inclusive offer for the product-validation stage — one price,
+// every resource, no tier comparison.
+export const CCM_SINGLE_OFFER: ProductTier[] = [
+  {
+    name: "Claude Code Mastery Kit",
+    price: 49,
+    description:
+      "Everything you need to build production-ready AI software with Claude Code.",
+    features: [
+      "250+ expert prompts",
+      "60+ playbooks",
+      "30+ templates",
+      "13 SOPs",
+      "10 deployment guides",
+      "VS Code snippets",
+      "AI workflows",
+      "Frameworks",
+      "Checklists",
+      "Cheat sheets",
+      "Bonus resources",
+      "Future updates",
+    ],
+    featured: true,
+    badge: "🔥 Early Access Price",
+  },
+];
+
+// Swap this to CCM_TIERS to bring back the three-tier pricing section.
+export const CCM_ACTIVE_OFFER: ProductTier[] = CCM_SINGLE_OFFER;
 
 export const CCM_FAQ = [
   {

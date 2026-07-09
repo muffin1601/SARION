@@ -165,6 +165,11 @@
   margin-top: var(--m-space-7);
 }
 
+.tiersGrid[data-solo="true"] {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
 .faqList {
   max-width: 760px;
   margin: var(--m-space-7) auto 0;
@@ -217,7 +222,7 @@
   .previewGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .tiersGrid {
+  .tiersGrid:not([data-solo="true"]) {
     grid-template-columns: 1fr;
     max-width: 420px;
     margin-inline: auto;
