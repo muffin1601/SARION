@@ -130,7 +130,7 @@ export default function CaseStudiesPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={TRAIL} />
+          <BreadcrumbNav trail={TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">Case Studies</span>
             <h1 className={styles.headline}>

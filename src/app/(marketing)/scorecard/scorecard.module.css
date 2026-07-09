@@ -4,12 +4,14 @@
 /* ── Hero: centered single column — copy → sample preview → CTA ── */
 .hero {
   position: relative;
-  padding-block: var(--m-space-7) var(--m-space-8);
+  padding-block: var(--m-space-8) var(--m-space-8);
 }
 .hero::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
+  top: -200px;
+  left: 0;
+  right: 0;
   height: 520px;
   background: radial-gradient(60% 60% at 50% 0%, var(--m-glow), transparent 70%);
   pointer-events: none;

@@ -1,7 +1,7 @@
 import type { TeamMember } from "@/lib/marketing/team";
 import styles from "./team-card.module.css";
 
-export function TeamCard({ name, initials, title, bio }: TeamMember) {
+export function TeamCard({ name, initials, title, bio, linkedin }: TeamMember) {
   return (
     <div className={styles.card}>
       <div className={styles.avatar} aria-hidden>
@@ -11,6 +11,14 @@ export function TeamCard({ name, initials, title, bio }: TeamMember) {
         <p className={styles.name}>{name}</p>
         <p className={styles.title}>{title}</p>
         <p className={styles.bio}>{bio}</p>
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.linkedin}
+        >
+          LinkedIn
+        </a>
       </div>
     </div>
   );

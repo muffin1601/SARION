@@ -109,7 +109,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">About Sarion</span>
             <h1 className={styles.headline}>

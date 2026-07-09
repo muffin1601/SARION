@@ -111,7 +111,7 @@ export default function WhySarionPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={TRAIL} />
+          <BreadcrumbNav trail={TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">Why Sarion</span>
             <h1 className={styles.headline}>

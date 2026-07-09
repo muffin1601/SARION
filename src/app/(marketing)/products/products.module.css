@@ -5,8 +5,8 @@
   align-items: center;
   text-align: center;
   gap: var(--m-space-5);
-  padding: var(--m-space-8) var(--m-space-5) var(--m-space-4);
-  background: radial-gradient(ellipse 640px 320px at 50% 0%, var(--m-glow), transparent 70%);
+  padding: 0 var(--m-space-5) var(--m-space-4);
+  background: radial-gradient(ellipse 640px 320px at 50% -160px, var(--m-glow), transparent 70%);
 }
 
 .headline {

@@ -128,7 +128,7 @@ export default function CustomersPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={TRAIL} />
+          <BreadcrumbNav trail={TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">Customers</span>
             <h1 className={styles.headline}>Built for agencies like yours</h1>

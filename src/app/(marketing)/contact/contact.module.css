@@ -29,7 +29,7 @@
 .card {
   padding: var(--m-space-5);
   border: 1px solid var(--m-border);
-  border-radius: var(--m-radius-lg, 12px);
+  border-radius: var(--m-radius);
   background: var(--m-bg-elev);
 }
 

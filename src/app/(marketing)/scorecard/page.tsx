@@ -107,7 +107,7 @@ export default function ScorecardLandingPage() {
       {/* Hero */}
       <section>
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <div className={styles.hero}>
             <div className={styles.heroGrid}>
               {/* Copy */}

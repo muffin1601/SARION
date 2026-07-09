@@ -1,17 +1,26 @@
 .wrap {
   margin-top: var(--m-space-8);
+  margin-bottom: var(--m-space-8);
+  text-align: center;
 }
 
 .heading {
   display: inline-flex;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
   align-items: center;
   gap: var(--m-space-2);
+  padding: 5px 11px;
+  border-radius: var(--m-radius);
+  border: 1px solid var(--m-border);
+  background: var(--m-primary-soft);
   font-size: var(--m-text-xs);
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--m-primary);
-  margin-bottom: var(--m-space-5);
+  margin-bottom: var(--m-space-6);
 }
 
 .heading::before {
@@ -26,6 +35,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--m-space-5);
+  margin-top: var(--m-space-6);
 }
 
 .card {

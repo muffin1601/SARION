@@ -126,7 +126,7 @@ export default function PartnersPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">Partners</span>
             <h1 className={styles.headline}>

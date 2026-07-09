@@ -84,7 +84,7 @@ export default function ProductsPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className={`mContainer ${styles.hero}`}>
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <h1 className={styles.headline}>
             <span>Build Faster.</span>
             <span>Run Better.</span>

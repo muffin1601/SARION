@@ -49,3 +49,14 @@
   color: var(--m-fg-muted);
   line-height: 1.55;
 }
+
+.linkedin {
+  margin-top: var(--m-space-2);
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-primary);
+}
+
+.linkedin:hover {
+  text-decoration: underline;
+}

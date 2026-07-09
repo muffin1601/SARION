@@ -76,7 +76,7 @@ export default function StatusPage() {
       {/* Hero */}
       <section className="mSectionTight">
         <div className="mContainer">
-          <BreadcrumbNav trail={BREADCRUMB_TRAIL} />
+          <BreadcrumbNav trail={BREADCRUMB_TRAIL} center />
           <div className={styles.hero}>
             <span className="mEyebrow">System Status</span>
             <h1 className={styles.headline}>Sarion system status</h1>
