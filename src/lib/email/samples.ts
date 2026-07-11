@@ -76,6 +76,16 @@ export const SAMPLE_PAYLOADS: { [K in EmailKind]: EmailPayloads[K] } = {
   newsletterWelcome: {
     unsubscribeUrl: "https://trysarion.com/unsubscribe?token=sample",
   },
+  automationNotification: {
+    subject: "Invoice paid — great news!",
+    message: "Your invoice INV-0001 was just marked paid. Thanks for your business!",
+    fromAgency: "Northbeam Studio",
+  },
+  proposalShared: {
+    proposalName: "Website Redesign Proposal",
+    proposalUrl: "https://trysarion.com/p/sample-token",
+    fromAgency: "Northbeam Studio",
+  },
 };
 
 export const ALL_EMAIL_KINDS = Object.keys(SAMPLE_PAYLOADS) as EmailKind[];

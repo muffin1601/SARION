@@ -12,10 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  updateFeedbackStatus,
-  FEEDBACK_STATUSES,
-} from "@/server/actions/feedback";
+import { updateFeedbackStatus } from "@/server/actions/feedback";
+import { FEEDBACK_STATUSES } from "@/lib/feedback";
 
 export interface FeedbackRow {
   id: string;

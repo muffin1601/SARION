@@ -9,6 +9,7 @@ import { logActivity } from "@/server/activity";
 import { checkLimit } from "@/server/services/plan-limits";
 import { captureServer } from "@/lib/posthog-server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
+import { runAutomationsForActivity } from "@/server/services/automation-engine";
 
 // --- Validation ----------------------------------------------------------
 
@@ -100,21 +101,23 @@ export async function createProject(input: ProjectInput): Promise<ActionResult> 
     };
   }
 
-  const project = await db.$transaction(async (tx) => {
+  const { project, activityId } = await db.$transaction(async (tx) => {
     const created = await tx.project.create({
       data: { agencyId, ...parsed.data },
     });
-    await logActivity(
+    const activity = await logActivity(
       {
         agencyId,
         clientId: created.clientId,
         projectId: created.id,
+        userId,
         type: "Project Created",
+        title: "Project Created",
         description: `Project "${created.name}" was created.`,
       },
       tx,
     );
-    return created;
+    return { project: created, activityId: activity.id };
   });
 
   revalidatePath("/projects");
@@ -126,6 +129,14 @@ export async function createProject(input: ProjectInput): Promise<ActionResult> 
     properties: { status: parsed.data.status },
   });
 
+  await runAutomationsForActivity({
+    agencyId,
+    triggerType: "Project Created",
+    activityId,
+    clientId: project.clientId,
+    projectId: project.id,
+  });
+
   return { ok: true, projectId: project.id };
 }
 
@@ -135,7 +146,7 @@ export async function updateProject(
   projectId: string,
   input: ProjectInput,
 ): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const parsed = projectSchema.safeParse(input);
   if (!parsed.success) {
@@ -160,7 +171,7 @@ export async function updateProject(
       where: { id: projectId, agencyId, deletedAt: null },
       select: { status: true },
     });
-    if (!existing) return false;
+    if (!existing) return null;
 
     await tx.project.update({
       where: { id: projectId },
@@ -168,32 +179,51 @@ export async function updateProject(
     });
 
     const statusChanged = existing.status !== parsed.data.status;
-    await logActivity(
+    const statusType =
+      parsed.data.status === "ACTIVE"
+        ? "Project Started"
+        : parsed.data.status === "COMPLETED"
+          ? "Project Completed"
+          : "Status Changed";
+    const activity = await logActivity(
       {
         agencyId,
         clientId: parsed.data.clientId,
         projectId,
-        type: statusChanged ? "Status Changed" : "Project Updated",
+        userId,
+        type: statusChanged ? statusType : "Project Updated",
+        title: statusChanged ? statusType : "Project Updated",
         description: statusChanged
           ? `Status changed to ${STATUS_LABEL[parsed.data.status]}.`
           : "Project details were updated.",
       },
       tx,
     );
-    return true;
+    return { activityId: activity.id, completed: statusChanged && parsed.data.status === "COMPLETED" };
   });
 
   if (!result) return { ok: false, error: "Project not found." };
 
   revalidatePath("/projects");
   revalidatePath(`/projects/${projectId}`);
+
+  if (result.completed) {
+    await runAutomationsForActivity({
+      agencyId,
+      triggerType: "Project Completed",
+      activityId: result.activityId,
+      clientId: parsed.data.clientId,
+      projectId,
+    });
+  }
+
   return { ok: true, projectId };
 }
 
 // --- Archive (soft delete) ----------------------------------------------
 
 export async function archiveProject(projectId: string): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const result = await db.$transaction(async (tx) => {
     const existing = await tx.project.findFirst({
@@ -211,7 +241,9 @@ export async function archiveProject(projectId: string): Promise<ActionResult> {
         agencyId,
         clientId: existing.clientId,
         projectId,
+        userId,
         type: "Project Archived",
+        title: "Project Archived",
         description: "Project was archived.",
       },
       tx,

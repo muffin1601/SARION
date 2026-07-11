@@ -190,3 +190,23 @@ View invoice: ${data.invoiceUrl}
 ${textSignature()}`,
   };
 }
+
+// ── Proposal shared ─────────────────────────────────────────────────────────
+export function proposalShared(data: { proposalName: string; proposalUrl: string; fromAgency?: string }): EmailContent {
+  const who = data.fromAgency ? escapeHtml(data.fromAgency) : "Sarion";
+  const body =
+    heading(`A new proposal from ${who}`) +
+    paragraph(`<strong style="color:${brand.ink};">${escapeHtml(data.proposalName)}</strong> is ready for your review.`) +
+    button({ href: data.proposalUrl, label: "View proposal" });
+  return {
+    subject: `New proposal: ${data.proposalName}`,
+    html: emailLayout({ preheader: `${data.proposalName} is ready for your review.`, body }),
+    text: `${data.proposalName}
+
+From: ${data.fromAgency ?? "Sarion"}
+
+View proposal: ${data.proposalUrl}
+
+${textSignature()}`,
+  };
+}

@@ -17,6 +17,7 @@ import {
   invoiceStatusLabel,
   displayStatus,
 } from "@/lib/invoice-status";
+import { ProposalStatusBadge } from "@/components/proposals/proposal-status-badge";
 
 // Token-gated client portal — must never be indexed. Each portal exposes a
 // specific client's private project data behind an unguessable token.
@@ -195,6 +196,67 @@ export default async function PortalPage({
             )}
           </CardContent>
         </Card>
+
+        {/* Proposals — read-only summary, full accept/reject/comment/download flow lives on /p/[shareToken]. */}
+        {data.proposals.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Proposals</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="divide-y">
+                {data.proposals.map((proposal) => (
+                  <li key={proposal.id} className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0">
+                    <a href={`/p/${proposal.shareToken}`} className="min-w-0 font-medium hover:underline">
+                      {proposal.name}
+                    </a>
+                    <div className="flex items-center gap-3">
+                      <ProposalStatusBadge status={proposal.status} />
+                      <span className="font-semibold tabular-nums">{formatCurrency(proposal.total)}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Subscription — read-only, no accept/pay UI here. */}
+        {data.subscription && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Subscription</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="font-medium">{data.subscription.name}</p>
+                <p className="text-xs text-muted-foreground">
+                  {data.subscription.frequency} · Next billing {formatDate(data.subscription.nextBillingDate)}
+                </p>
+              </div>
+              <span className="text-lg font-semibold tabular-nums">{formatCurrency(data.subscription.amount)}</span>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Time Summary — read-only rollup for this client's billable hours this month. */}
+        {data.timeSummary.totalHoursThisMonth > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Time This Month</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-2xl font-bold tabular-nums">{data.timeSummary.billableHoursThisMonth}h</p>
+                <p className="text-xs text-muted-foreground">Billable hours</p>
+              </div>
+              <div>
+                <p className="text-2xl font-bold tabular-nums">{data.timeSummary.totalHoursThisMonth}h</p>
+                <p className="text-xs text-muted-foreground">Total hours</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </main>
 
       {data.showPoweredBy && (

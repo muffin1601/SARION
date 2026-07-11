@@ -7,22 +7,7 @@ import { db } from "@/lib/db";
 import { requireAgency, requireOwner } from "@/server/auth-context";
 import { captureServer } from "@/lib/posthog-server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
-
-/** The three feedback categories surfaced in the widget. */
-export const FEEDBACK_TYPES = [
-  "feature_request",
-  "bug_report",
-  "general",
-] as const;
-
-/** Workflow states an owner can move a submission through. */
-export const FEEDBACK_STATUSES = [
-  "open",
-  "in_review",
-  "planned",
-  "completed",
-  "declined",
-] as const;
+import { FEEDBACK_TYPES, FEEDBACK_STATUSES } from "@/lib/feedback";
 
 const submitSchema = z.object({
   type: z.enum(FEEDBACK_TYPES),

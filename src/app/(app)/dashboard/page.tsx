@@ -1,227 +1,220 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Users,
-  FolderKanban,
-  DollarSign,
   CalendarClock,
+  DollarSign,
+  FileClock,
+  FolderKanban,
+  ListTodo,
+  TrendingUp,
+  TriangleAlert,
+  UserPlus,
+  Users,
+  UsersRound,
+  Wallet,
   type LucideIcon,
 } from "lucide-react";
 
 import { requireAgency } from "@/server/auth-context";
-import { getDashboardData } from "@/server/data/dashboard";
+import { db } from "@/lib/db";
+import { getCommandCenterData, type SnapshotCard } from "@/server/data/dashboard";
 import { ensureWorkspaceSeeded } from "@/server/services/seed-workspace";
+import { getClientOptions } from "@/server/data/projects";
+import { parseDashboardPrefs, DASHBOARD_WIDGET_IDS, type DashboardWidgetId } from "@/lib/dashboard-prefs";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OnboardingCard } from "@/components/dashboard/onboarding-card";
-import { PROJECT_STATUS_VARIANT, statusLabel } from "@/lib/project-status";
-import { ACTIVITY_VARIANT } from "@/lib/activity-style";
+import { DashboardCard } from "@/components/dashboard/dashboard-card";
+import { HealthScoreCard } from "@/components/dashboard/health-score-card";
+import { PriorityList } from "@/components/dashboard/priority-list";
+import { NotificationPanel } from "@/components/dashboard/notification-panel";
+import { RevenueCharts } from "@/components/dashboard/revenue-charts";
+import { ProjectOverviewCard } from "@/components/dashboard/project-overview-card";
+import { TopClientsCard } from "@/components/dashboard/top-clients-card";
+import { RecentInvoicesCard } from "@/components/dashboard/recent-invoices-card";
+import { TeamActivityCard } from "@/components/dashboard/team-activity-card";
+import { QuickActionGrid } from "@/components/dashboard/quick-action-grid";
+import { RecentAutomationRunsCard } from "@/components/dashboard/recent-automation-runs-card";
+import { FinanceWidget } from "@/components/dashboard/finance-widget";
+import {
+  TodaysHoursWidget,
+  BillableHoursWidget,
+  TeamUtilizationWidget,
+  UpcomingRenewalsWidget,
+  RecurringRevenueWidget,
+  ProposalPipelineWidget,
+} from "@/components/dashboard/ops-widgets";
+import { Timeline } from "@/components/timeline/timeline";
+import { DashboardCustomizeProvider } from "@/components/dashboard/dashboard-customize-context";
+import { DashboardCustomizeToggle } from "@/components/dashboard/dashboard-customize-toggle";
+import { DashboardWidget } from "@/components/dashboard/dashboard-widget";
 
 export const metadata: Metadata = { title: "Dashboard · Sarion" };
 
-function formatDate(date: Date | null) {
-  if (!date) return "—";
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(date);
+const SNAPSHOT_ICON: Record<string, LucideIcon> = {
+  todayRevenue: DollarSign,
+  monthlyRevenue: TrendingUp,
+  outstanding: Wallet,
+  projectsActive: FolderKanban,
+  projectsDelayed: TriangleAlert,
+  invoicesDue: FileClock,
+  clients: Users,
+  newClients: UserPlus,
+  teamMembers: UsersRound,
+  openTasks: ListTodo,
+};
+
+const WIDGET_TITLE: Record<DashboardWidgetId, string> = {
+  priorities: "Today's Priorities",
+  recentActivity: "Recent Activity",
+  revenueCharts: "Revenue Overview",
+  projectOverview: "Project Overview",
+  topClients: "Top Clients",
+  recentInvoices: "Recent Invoices",
+  teamActivity: "Team Activity",
+  quickActions: "Quick Actions",
+  notifications: "Notifications Center",
+  recentAutomationRuns: "Recent Automation Runs",
+  financeSnapshot: "Finance",
+  todaysHours: "Today's Hours",
+  billableHours: "Billable Hours",
+  teamUtilization: "Team Utilization",
+  upcomingRenewals: "Upcoming Renewals",
+  recurringRevenue: "Recurring Revenue",
+  proposalPipeline: "Proposal Pipeline",
+};
+
+function greeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning";
+  if (hour < 18) return "Good Afternoon";
+  return "Good Evening";
 }
 
-function formatMoney(n: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
-}
-
-function timeAgo(date: Date) {
-  const diff = Date.now() - date.getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d ago`;
-  return formatDate(date);
+function weekday() {
+  return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date());
 }
 
 export default async function DashboardPage() {
-  const { agencyId, name } = await requireAgency();
+  const { agencyId, userId, name } = await requireAgency();
 
   // First visit on a fresh agency seeds a starter workspace (idempotent).
   await ensureWorkspaceSeeded(agencyId);
 
-  const { metrics, recentProjects, recentActivity, onboarding } =
-    await getDashboardData(agencyId);
+  const [data, user, clientOptions] = await Promise.all([
+    getCommandCenterData(agencyId),
+    db.user.findUnique({ where: { id: userId }, select: { dashboardPrefs: true } }),
+    getClientOptions(agencyId),
+  ]);
 
+  const prefs = parseDashboardPrefs(user?.dashboardPrefs);
   const firstName = name.split(" ")[0] ?? "there";
 
-  const stats: { label: string; value: string; icon: LucideIcon }[] = [
-    {
-      label: "Total Clients",
-      value: String(metrics.totalClients),
-      icon: Users,
-    },
-    {
-      label: "Active Projects",
-      value: String(metrics.activeProjects),
-      icon: FolderKanban,
-    },
-    {
-      label: "Unpaid Total",
-      value: formatMoney(metrics.unpaidTotal),
-      icon: DollarSign,
-    },
-    {
-      label: "Due This Week",
-      value: String(metrics.dueThisWeek),
-      icon: CalendarClock,
-    },
-  ];
+  const widgetContent: Record<DashboardWidgetId, React.ReactNode> = {
+    priorities: (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Today&apos;s Priorities</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PriorityList signals={data.priorities} />
+        </CardContent>
+      </Card>
+    ),
+    recentActivity: (
+      <Card>
+        <CardHeader className="flex-row items-center justify-between space-y-0">
+          <CardTitle className="text-base">Recent Activity</CardTitle>
+          <Button asChild variant="link" className="h-auto p-0 text-sm">
+            <Link href="/activity">View Full Timeline</Link>
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <Timeline items={data.recentActivity} hasMore={false} />
+        </CardContent>
+      </Card>
+    ),
+    revenueCharts: <RevenueCharts data={data.revenueCharts} />,
+    projectOverview: <ProjectOverviewCard overview={data.projectOverview} />,
+    topClients: <TopClientsCard clients={data.topClients} />,
+    recentInvoices: <RecentInvoicesCard invoices={data.recentInvoices} />,
+    teamActivity: <TeamActivityCard team={data.teamActivity} />,
+    quickActions: <QuickActionGrid clientOptions={clientOptions} />,
+    recentAutomationRuns: <RecentAutomationRunsCard runs={data.recentAutomationRuns} />,
+    financeSnapshot: <FinanceWidget snapshot={data.financeSnapshot} />,
+    todaysHours: <TodaysHoursWidget hours={data.ops.todaysHours} />,
+    billableHours: <BillableHoursWidget hours={data.ops.billableHoursThisWeek} />,
+    teamUtilization: <TeamUtilizationWidget percent={data.ops.teamUtilizationPercent} />,
+    upcomingRenewals: <UpcomingRenewalsWidget renewals={data.ops.upcomingRenewals} />,
+    recurringRevenue: <RecurringRevenueWidget formatted={data.ops.recurringRevenueFormatted} />,
+    proposalPipeline: <ProposalPipelineWidget pipeline={data.ops.proposalPipeline} />,
+    notifications: (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Notifications Center</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <NotificationPanel signals={data.notifications} dismissedIds={prefs.dismissedNotificationIds} />
+        </CardContent>
+      </Card>
+    ),
+  };
+
+  const orderedWidgets = prefs.order.filter((id): id is DashboardWidgetId =>
+    (DASHBOARD_WIDGET_IDS as readonly string[]).includes(id),
+  );
 
   return (
-    <PageWrapper
-      title={`Welcome back, ${firstName} 👋`}
-      description="Here's what's happening across your agency today."
-      action={
-        <Button asChild variant="brand">
-          <Link href="/projects/new">+ New Project</Link>
-        </Button>
-      }
-    >
-      <div className="space-y-6">
-        <OnboardingCard status={onboarding} />
+    <DashboardCustomizeProvider>
+      <PageWrapper
+        title={`${greeting()}, ${firstName} 👋`}
+        description={`Today is ${weekday()}. Here's what's happening in your business today.`}
+        action={
+          <div className="flex items-center gap-2">
+            <DashboardCustomizeToggle />
+            <Button asChild variant="brand">
+              <Link href="/projects/new">+ New Project</Link>
+            </Button>
+          </div>
+        }
+      >
+        <div className="space-y-6">
+          <OnboardingCard status={data.onboarding} />
 
-        {/* Stat cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={stat.label}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-muted-foreground">
-                      {stat.label}
-                    </span>
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                  </div>
-                  <div className="mt-4">
-                    <span className="text-3xl font-bold tracking-tight tabular-nums">
-                      {stat.value}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+          {/* Snapshot cards */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            {data.snapshot.map((card: SnapshotCard) => (
+              <DashboardCard
+                key={card.key}
+                label={card.label}
+                value={card.formatted}
+                icon={SNAPSHOT_ICON[card.key] ?? CalendarClock}
+                href={card.href}
+                trend={card.trend}
+              />
+            ))}
+          </div>
+
+          {/* Health score */}
+          <HealthScoreCard health={data.health} />
+
+          {/* Reorderable / hideable widget sections */}
+          {orderedWidgets.map((id, index) => (
+            <DashboardWidget
+              key={id}
+              id={id}
+              title={WIDGET_TITLE[id]}
+              collapsedInitially={prefs.collapsed.includes(id)}
+              hiddenInitially={prefs.hidden.includes(id)}
+              isFirst={index === 0}
+              isLast={index === orderedWidgets.length - 1}
+            >
+              {widgetContent[id]}
+            </DashboardWidget>
+          ))}
         </div>
-
-        {/* Recent projects + activity */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <Card className="lg:col-span-2">
-            <CardHeader className="flex-row items-center justify-between space-y-0">
-              <CardTitle>Recent Projects</CardTitle>
-              <Button asChild variant="link" className="h-auto p-0 text-sm">
-                <Link href="/projects">View all</Link>
-              </Button>
-            </CardHeader>
-            <CardContent className="p-0">
-              {recentProjects.length === 0 ? (
-                <p className="px-6 py-10 text-center text-sm text-muted-foreground">
-                  No projects yet.
-                </p>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="pl-6">Project</TableHead>
-                      <TableHead>Client</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="pr-6 text-right">Due date</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {recentProjects.map((project) => (
-                      <TableRow key={project.id}>
-                        <TableCell className="pl-6 font-medium">
-                          <Link
-                            href={`/projects/${project.id}`}
-                            className="hover:text-primary hover:underline"
-                          >
-                            {project.name}
-                          </Link>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {project.clientName}
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={PROJECT_STATUS_VARIANT[project.status]}>
-                            {statusLabel(project.status)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="pr-6 text-right text-muted-foreground">
-                          {formatDate(project.dueDate)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {recentActivity.length === 0 ? (
-                <p className="py-10 text-center text-sm text-muted-foreground">
-                  No activity yet.
-                </p>
-              ) : (
-                <ul className="space-y-4">
-                  {recentActivity.map((item) => (
-                    <li key={item.id} className="flex flex-col gap-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <Badge variant={ACTIVITY_VARIANT[item.type] ?? "secondary"}>
-                          {item.type}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground">
-                          {timeAgo(item.createdAt)}
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </PageWrapper>
+      </PageWrapper>
+    </DashboardCustomizeProvider>
   );
 }

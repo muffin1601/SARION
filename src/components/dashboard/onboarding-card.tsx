@@ -21,6 +21,7 @@ const STEPS: Step[] = [
   { key: "hasLogo", label: "Upload Agency Logo", href: "/settings" },
   { key: "hasPortalView", label: "Open Client Portal", href: "/clients" },
   { key: "hasInvoice", label: "Create First Invoice", href: "/invoices/new" },
+  { key: "hasTeamInvite", label: "Invite Team", href: "/team" },
 ];
 
 /**

@@ -83,15 +83,9 @@ export async function listArchivedClients(
   }));
 }
 
-/** A single active client owned by the agency, with its recent activity. */
+/** A single active client owned by the agency. */
 export async function getClient(agencyId: string, clientId: string) {
   return db.client.findFirst({
     where: { id: clientId, agencyId, deletedAt: null },
-    include: {
-      activities: {
-        orderBy: { createdAt: "desc" },
-        take: 20,
-      },
-    },
   });
 }

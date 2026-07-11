@@ -3,6 +3,8 @@ import "server-only";
 import { db } from "@/lib/db";
 import { logActivity } from "@/server/activity";
 import { effectivePlanTier, getPlanLimits } from "@/config/plans";
+import { runAutomationsForActivity } from "@/server/services/automation-engine";
+import { getClientTimeSummary } from "@/server/data/time";
 
 /**
  * Portal reads are authenticated by the client's unguessable portalToken (not a
@@ -32,6 +34,23 @@ export interface PortalInvoice {
   createdAt: Date;
 }
 
+export interface PortalProposal {
+  id: string;
+  name: string;
+  status: string;
+  total: number;
+  shareToken: string;
+}
+
+export interface PortalSubscription {
+  id: string;
+  name: string;
+  amount: number;
+  frequency: string;
+  nextBillingDate: Date;
+  status: string;
+}
+
 export interface PortalData {
   client: { id: string; agencyId: string; name: string };
   agency: { name: string; logoUrl: string | null };
@@ -40,6 +59,10 @@ export interface PortalData {
   invoices: PortalInvoice[];
   /** Whether to show the "Powered by Sarion" footer (Free plan only). */
   showPoweredBy: boolean;
+  proposals: PortalProposal[];
+  subscription: PortalSubscription | null;
+  upcomingInvoiceTotal: number | null;
+  timeSummary: { billableHoursThisMonth: number; totalHoursThisMonth: number };
 }
 
 export async function getPortalData(token: string): Promise<PortalData | null> {
@@ -96,6 +119,20 @@ export async function getPortalData(token: string): Promise<PortalData | null> {
     Date.now(),
   );
 
+  const [proposals, subscription, timeSummary] = await Promise.all([
+    db.proposal.findMany({
+      where: { clientId: client.id, status: { in: ["sent", "viewed", "accepted", "rejected"] } },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, name: true, status: true, total: true, shareToken: true },
+    }),
+    db.subscription.findFirst({
+      where: { clientId: client.id, status: "active" },
+      orderBy: { nextBillingDate: "asc" },
+      select: { id: true, name: true, amount: true, frequency: true, nextBillingDate: true, status: true },
+    }),
+    getClientTimeSummary(client.agencyId, client.id),
+  ]);
+
   return {
     client: { id: client.id, agencyId: client.agencyId, name: client.name },
     agency: agencyDisplay,
@@ -108,6 +145,10 @@ export async function getPortalData(token: string): Promise<PortalData | null> {
       total: Number(total),
     })),
     showPoweredBy: getPlanLimits(effectiveTier).poweredByBranding,
+    proposals: proposals.map((p) => ({ ...p, total: Number(p.total) })),
+    subscription: subscription ? { ...subscription, amount: Number(subscription.amount) } : null,
+    upcomingInvoiceTotal: subscription ? Number(subscription.amount) : null,
+    timeSummary,
   };
 }
 
@@ -128,10 +169,13 @@ export async function logPortalView(
   });
   if (recent) return;
 
-  await logActivity({
+  const activity = await logActivity({
     agencyId,
     clientId,
     type: "Portal Viewed",
+    title: "Portal Viewed",
     description: "Client opened the portal.",
   });
+
+  await runAutomationsForActivity({ agencyId, triggerType: "Portal Viewed", activityId: activity.id, clientId });
 }

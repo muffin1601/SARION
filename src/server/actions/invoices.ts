@@ -4,12 +4,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { requireAgency } from "@/server/auth-context";
+import { requireAgency, requireVerifiedEmailOrError } from "@/server/auth-context";
 import { logActivity } from "@/server/activity";
 import { generateInvoiceNumber } from "@/server/services/invoice-number";
 import { checkLimit } from "@/server/services/plan-limits";
 import { captureServer } from "@/lib/posthog-server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
+import { runAutomationsForActivity } from "@/server/services/automation-engine";
 
 // --- Validation ----------------------------------------------------------
 
@@ -124,7 +125,7 @@ export async function createInvoice(input: InvoiceInput): Promise<ActionResult> 
 
   const { prepared, total } = computeItems(parsed.data.items);
 
-  const invoice = await db.$transaction(async (tx) => {
+  const { invoice, activityId } = await db.$transaction(async (tx) => {
     const number = await generateInvoiceNumber(agencyId, tx);
 
     const created = await tx.invoice.create({
@@ -142,21 +143,29 @@ export async function createInvoice(input: InvoiceInput): Promise<ActionResult> 
       },
     });
 
-    await logActivity(
+    const activity = await logActivity(
       {
         agencyId,
         clientId: created.clientId,
+        invoiceId: created.id,
+        userId,
         type: "Invoice Created",
+        title: "Invoice Created",
         description: `Invoice ${created.number} was created (${formatMoney(total)}).`,
+        metadata: { amount: total, number: created.number },
       },
       tx,
     );
-    return created;
+    return { invoice: created, activityId: activity.id };
   });
 
   // Best-effort invoice delivery — email the client a link to their portal if
-  // we have an address. Never blocks invoice creation.
+  // we have an address. Never blocks invoice creation. Gated on the sender's
+  // email being verified: an unverified account can still build out invoices
+  // (exploration stays open), it just can't email clients yet.
+  const emailVerificationError = await requireVerifiedEmailOrError(userId);
   try {
+    if (emailVerificationError) throw new Error(emailVerificationError);
     const [client, agency] = await Promise.all([
       db.client.findUnique({
         where: { id: invoice.clientId },
@@ -183,6 +192,24 @@ export async function createInvoice(input: InvoiceInput): Promise<ActionResult> 
         invoiceUrl: `${appUrl}/portal/${client.portalToken}`,
         fromAgency: agency?.name,
       });
+
+      const sentActivity = await logActivity({
+        agencyId,
+        clientId: invoice.clientId,
+        invoiceId: invoice.id,
+        userId,
+        type: "Invoice Sent",
+        title: "Invoice Sent",
+        description: `Invoice ${invoice.number} was emailed to ${client.name}.`,
+        metadata: { amount: total, number: invoice.number },
+      });
+      await runAutomationsForActivity({
+        agencyId,
+        triggerType: "Invoice Sent",
+        activityId: sentActivity.id,
+        clientId: invoice.clientId,
+        invoiceId: invoice.id,
+      });
     }
   } catch (err) {
     console.error("[invoices] invoice delivery email failed:", err);
@@ -198,6 +225,14 @@ export async function createInvoice(input: InvoiceInput): Promise<ActionResult> 
     properties: { status: parsed.data.status, item_count: parsed.data.items.length },
   });
 
+  await runAutomationsForActivity({
+    agencyId,
+    triggerType: "Invoice Created",
+    activityId,
+    clientId: invoice.clientId,
+    invoiceId: invoice.id,
+  });
+
   return { ok: true, invoiceId: invoice.id };
 }
 
@@ -207,7 +242,7 @@ export async function updateInvoice(
   invoiceId: string,
   input: InvoiceInput,
 ): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const parsed = invoiceSchema.safeParse(input);
   if (!parsed.success) {
@@ -257,8 +292,12 @@ export async function updateInvoice(
       {
         agencyId,
         clientId: parsed.data.clientId,
+        invoiceId,
+        userId,
         type: "Invoice Updated",
+        title: "Invoice Updated",
         description: `Invoice ${existing.number} was updated (${formatMoney(total)}).`,
+        metadata: { amount: total, number: existing.number },
       },
       tx,
     );
@@ -276,7 +315,7 @@ export async function updateInvoice(
 // --- Archive (soft delete) ----------------------------------------------
 
 export async function archiveInvoice(invoiceId: string): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const result = await db.$transaction(async (tx) => {
     const existing = await tx.invoice.findFirst({
@@ -293,7 +332,10 @@ export async function archiveInvoice(invoiceId: string): Promise<ActionResult> {
       {
         agencyId,
         clientId: existing.clientId,
+        invoiceId,
+        userId,
         type: "Invoice Archived",
+        title: "Invoice Archived",
         description: `Invoice ${existing.number} was archived.`,
       },
       tx,
@@ -314,33 +356,56 @@ async function setStatus(
   invoiceId: string,
   status: "paid" | "unpaid",
 ): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const result = await db.$transaction(async (tx) => {
     const existing = await tx.invoice.findFirst({
       where: { id: invoiceId, agencyId, deletedAt: null },
-      select: { clientId: true, number: true, status: true },
+      select: { clientId: true, number: true, status: true, total: true },
     });
     if (!existing) return null;
-    if (existing.status === status) return existing; // no-op, still success
+    if (existing.status === status) return { ...existing, activityIds: null }; // no-op, still success
 
     await tx.invoice.update({
       where: { id: invoiceId },
       data: { status },
     });
-    await logActivity(
+    const statusActivity = await logActivity(
       {
         agencyId,
         clientId: existing.clientId,
+        invoiceId,
+        userId,
         type: status === "paid" ? "Invoice Paid" : "Invoice Unpaid",
+        title: status === "paid" ? "Invoice Paid" : "Invoice Unpaid",
         description:
           status === "paid"
             ? `Invoice ${existing.number} was marked paid.`
             : `Invoice ${existing.number} was marked unpaid.`,
+        metadata: { amount: Number(existing.total), number: existing.number },
       },
       tx,
     );
-    return existing;
+    // Companion event — the actual money movement, distinct from the invoice
+    // status change, so the timeline's Payments filter surfaces it directly.
+    let paymentActivityId: string | null = null;
+    if (status === "paid") {
+      const paymentActivity = await logActivity(
+        {
+          agencyId,
+          clientId: existing.clientId,
+          invoiceId,
+          userId,
+          type: "Payment Received",
+          title: "Payment Received",
+          description: `Payment of ${formatMoney(Number(existing.total))} received for invoice ${existing.number}.`,
+          metadata: { amount: Number(existing.total), number: existing.number },
+        },
+        tx,
+      );
+      paymentActivityId = paymentActivity.id;
+    }
+    return { ...existing, activityIds: { statusActivityId: statusActivity.id, paymentActivityId } };
   });
 
   if (!result) return { ok: false, error: "Invoice not found." };
@@ -348,6 +413,26 @@ async function setStatus(
   revalidatePath("/invoices");
   revalidatePath(`/invoices/${invoiceId}`);
   revalidatePath(`/clients/${result.clientId}`);
+
+  if (result.activityIds && status === "paid") {
+    await runAutomationsForActivity({
+      agencyId,
+      triggerType: "Invoice Paid",
+      activityId: result.activityIds.statusActivityId,
+      clientId: result.clientId,
+      invoiceId,
+    });
+    if (result.activityIds.paymentActivityId) {
+      await runAutomationsForActivity({
+        agencyId,
+        triggerType: "Payment Received",
+        activityId: result.activityIds.paymentActivityId,
+        clientId: result.clientId,
+        invoiceId,
+      });
+    }
+  }
+
   return { ok: true, invoiceId };
 }
 

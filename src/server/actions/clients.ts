@@ -9,6 +9,7 @@ import { logActivity } from "@/server/activity";
 import { checkLimit } from "@/server/services/plan-limits";
 import { captureServer } from "@/lib/posthog-server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics-events";
+import { runAutomationsForActivity } from "@/server/services/automation-engine";
 
 // --- Validation ----------------------------------------------------------
 
@@ -63,20 +64,22 @@ export async function createClient(input: ClientInput): Promise<ActionResult> {
     };
   }
 
-  const client = await db.$transaction(async (tx) => {
+  const { client, activityId } = await db.$transaction(async (tx) => {
     const created = await tx.client.create({
       data: { agencyId, ...parsed.data },
     });
-    await logActivity(
+    const activity = await logActivity(
       {
         agencyId,
         clientId: created.id,
+        userId,
         type: "Client Created",
+        title: "Client Created",
         description: `Client "${created.name}" was created.`,
       },
       tx,
     );
-    return created;
+    return { client: created, activityId: activity.id };
   });
 
   revalidatePath("/clients");
@@ -85,6 +88,13 @@ export async function createClient(input: ClientInput): Promise<ActionResult> {
     distinctId: userId,
     event: ANALYTICS_EVENTS.ClientCreated,
     agencyId,
+  });
+
+  await runAutomationsForActivity({
+    agencyId,
+    triggerType: "Client Created",
+    activityId,
+    clientId: client.id,
   });
 
   return { ok: true, clientId: client.id };
@@ -96,7 +106,7 @@ export async function updateClient(
   clientId: string,
   input: ClientInput,
 ): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const parsed = clientSchema.safeParse(input);
   if (!parsed.success) {
@@ -109,28 +119,33 @@ export async function updateClient(
 
   // Ownership enforced by the agencyId predicate — updateMany returns 0 if the
   // client belongs to another agency or is archived.
-  const result = await db.$transaction(async (tx) => {
+  const activityId = await db.$transaction(async (tx) => {
     const { count } = await tx.client.updateMany({
       where: { id: clientId, agencyId, deletedAt: null },
       data: parsed.data,
     });
-    if (count === 0) return false;
-    await logActivity(
+    if (count === 0) return null;
+    const activity = await logActivity(
       {
         agencyId,
         clientId,
+        userId,
         type: "Client Updated",
+        title: "Client Updated",
         description: `Client details were updated.`,
       },
       tx,
     );
-    return true;
+    return activity.id;
   });
 
-  if (!result) return { ok: false, error: "Client not found." };
+  if (!activityId) return { ok: false, error: "Client not found." };
 
   revalidatePath("/clients");
   revalidatePath(`/clients/${clientId}`);
+
+  await runAutomationsForActivity({ agencyId, triggerType: "Client Updated", activityId, clientId });
+
   return { ok: true, clientId };
 }
 
@@ -140,7 +155,7 @@ export async function updateNotes(
   clientId: string,
   input: { notes: string },
 ): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const parsed = notesSchema.safeParse(input);
   if (!parsed.success) {
@@ -157,7 +172,9 @@ export async function updateNotes(
       {
         agencyId,
         clientId,
+        userId,
         type: "Note Added",
+        title: "Note Added",
         description: "Notes were updated.",
       },
       tx,
@@ -174,7 +191,7 @@ export async function updateNotes(
 // --- Archive (soft delete) ----------------------------------------------
 
 export async function archiveClient(clientId: string): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const result = await db.$transaction(async (tx) => {
     const { count } = await tx.client.updateMany({
@@ -186,7 +203,9 @@ export async function archiveClient(clientId: string): Promise<ActionResult> {
       {
         agencyId,
         clientId,
+        userId,
         type: "Client Archived",
+        title: "Client Archived",
         description: "Client was archived.",
       },
       tx,
@@ -209,7 +228,7 @@ export async function archiveClient(clientId: string): Promise<ActionResult> {
  * already intact and reappears automatically.
  */
 export async function restoreClient(clientId: string): Promise<ActionResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, userId } = await requireAgency();
 
   const result = await db.$transaction(async (tx) => {
     const { count } = await tx.client.updateMany({
@@ -221,7 +240,9 @@ export async function restoreClient(clientId: string): Promise<ActionResult> {
       {
         agencyId,
         clientId,
+        userId,
         type: "Client Restored",
+        title: "Client Restored",
         description: "Client was restored.",
       },
       tx,

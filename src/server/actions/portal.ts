@@ -97,6 +97,7 @@ export async function addPortalComment(
         clientId: client.id,
         projectId: project.id,
         type: "Portal Comment",
+        title: "Portal Comment",
         description: `${parsed.data.author} commented on "${project.name}".`,
       },
       tx,

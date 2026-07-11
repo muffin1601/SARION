@@ -48,6 +48,28 @@ async function agencyByCustomer(
   });
 }
 
+/**
+ * Resolve the agency that owns a Lemon Squeezy subscription/customer via our
+ * own verified mapping — never trust `custom_data.agency_id` for anything
+ * past initial linkage. Falls back to matching by customer id since a
+ * subscription's id is stable but we key primarily on lemonSubscriptionId.
+ */
+async function agencyBySubscription(
+  subscriptionId: string,
+  customerId: string | number | null | undefined,
+): Promise<{ id: string; subscriptionStatus: string | null } | null> {
+  const byId = await db.agency.findFirst({
+    where: { lemonSubscriptionId: subscriptionId },
+    select: { id: true, subscriptionStatus: true },
+  });
+  if (byId) return byId;
+  if (!customerId) return null;
+  return db.agency.findFirst({
+    where: { lemonCustomerId: String(customerId) },
+    select: { id: true, subscriptionStatus: true },
+  });
+}
+
 /** Best-effort billing notification — never throws into the webhook flow. */
 async function notify<K extends EmailKind>(
   agencyId: string,
@@ -147,17 +169,54 @@ export async function POST(req: NextRequest) {
       case "subscription_created":
       case "subscription_updated":
       case "subscription_resumed": {
-        if (!agencyId) break;
         const { tier, interval } = resolveSubscriptionPlan(attrs.variant_id ?? "");
         const status = lemonStatusToOurs(attrs.status ?? "active", attrs.ends_at ?? null);
 
-        const existing = await db.agency.findUnique({
-          where: { id: agencyId },
-          select: { subscriptionStatus: true },
-        });
+        // `subscription_created` is the ONLY event allowed to trust
+        // `custom_data.agency_id` — it's the sole moment there is no existing
+        // lemonSubscriptionId/lemonCustomerId mapping to verify against yet
+        // (this is the checkout that creates that mapping). Guard even this
+        // case: refuse to (re)link an agency that's already bound to a
+        // different Lemon Squeezy customer, so a stale/replayed checkout
+        // session can never hijack another agency's billing record.
+        //
+        // `subscription_updated`/`subscription_resumed` refer to a
+        // subscription that must already be linked, so they resolve the
+        // agency from our own verified lemonSubscriptionId/lemonCustomerId
+        // mapping and ignore `custom_data.agency_id` entirely.
+        let resolvedAgencyId: string | null = null;
+        let existingStatus: string | null = null;
+
+        if (eventName === "subscription_created") {
+          if (!agencyId) break;
+          const target = await db.agency.findUnique({
+            where: { id: agencyId },
+            select: { subscriptionStatus: true, lemonCustomerId: true },
+          });
+          if (!target) break;
+          if (
+            target.lemonCustomerId &&
+            attrs.customer_id &&
+            target.lemonCustomerId !== String(attrs.customer_id)
+          ) {
+            console.error(
+              `[webhook] Refusing to relink agency ${agencyId}: already bound to a different Lemon Squeezy customer.`,
+            );
+            break;
+          }
+          resolvedAgencyId = agencyId;
+          existingStatus = target.subscriptionStatus;
+        } else {
+          const agency = await agencyBySubscription(body.data.id, attrs.customer_id);
+          if (!agency) break;
+          resolvedAgencyId = agency.id;
+          existingStatus = agency.subscriptionStatus;
+        }
+
+        const existing = { subscriptionStatus: existingStatus };
 
         await db.agency.update({
-          where: { id: agencyId },
+          where: { id: resolvedAgencyId },
           data: {
             planTier: tier,
             billingInterval: interval,
@@ -171,14 +230,14 @@ export async function POST(req: NextRequest) {
         });
 
         // Analytics distinct id (owner) shared across the billing funnel.
-        const distinctId = await ownerDistinctId(agencyId);
+        const distinctId = await ownerDistinctId(resolvedAgencyId);
 
         // The checkout that produced this subscription has completed.
         if (eventName === "subscription_created") {
           await captureServer({
             distinctId,
             event: ANALYTICS_EVENTS.CheckoutCompleted,
-            agencyId,
+            agencyId: resolvedAgencyId,
             properties: { tier, interval },
           });
         }
@@ -190,7 +249,7 @@ export async function POST(req: NextRequest) {
           existing?.subscriptionStatus !== "active";
         if (isNewlyActive) {
           const { amount, interval: per } = priceLabel(tier, interval);
-          await notify(agencyId, "subscriptionActivated", {
+          await notify(resolvedAgencyId, "subscriptionActivated", {
             planName: getPlan(tier).name,
             amount,
             interval: per,
@@ -198,7 +257,7 @@ export async function POST(req: NextRequest) {
           await captureServer({
             distinctId,
             event: ANALYTICS_EVENTS.SubscriptionActivated,
-            agencyId,
+            agencyId: resolvedAgencyId,
             properties: { tier, interval },
           });
         }
@@ -207,17 +266,19 @@ export async function POST(req: NextRequest) {
 
       case "subscription_cancelled": {
         // Cancellation requested — access continues until the period ends. We
-        // keep the tier and only downgrade on subscription_expired.
-        if (!agencyId) break;
+        // keep the tier and only downgrade on subscription_expired. Resolve
+        // via our own verified mapping, never custom_data.agency_id.
+        const cancelledAgency = await agencyBySubscription(body.data.id, attrs.customer_id);
+        if (!cancelledAgency) break;
         const status = lemonStatusToOurs("cancelled", attrs.ends_at ?? null);
         const { tier } = resolveSubscriptionPlan(attrs.variant_id ?? "");
 
         await db.agency.update({
-          where: { id: agencyId },
+          where: { id: cancelledAgency.id },
           data: { subscriptionStatus: status },
         });
 
-        await notify(agencyId, "subscriptionCancelled", {
+        await notify(cancelledAgency.id, "subscriptionCancelled", {
           planName: getPlan(tier).name,
           accessUntil: attrs.ends_at
             ? formatDate(attrs.ends_at)
@@ -225,9 +286,9 @@ export async function POST(req: NextRequest) {
         });
 
         await captureServer({
-          distinctId: await ownerDistinctId(agencyId),
+          distinctId: await ownerDistinctId(cancelledAgency.id),
           event: ANALYTICS_EVENTS.SubscriptionCancelled,
-          agencyId,
+          agencyId: cancelledAgency.id,
           properties: { tier },
         });
         break;
@@ -235,9 +296,11 @@ export async function POST(req: NextRequest) {
 
       case "subscription_expired": {
         // Subscription truly ended — drop to the free plan (data preserved).
-        if (!agencyId) break;
+        // Resolve via our own verified mapping, never custom_data.agency_id.
+        const expiredAgency = await agencyBySubscription(body.data.id, attrs.customer_id);
+        if (!expiredAgency) break;
         await db.agency.update({
-          where: { id: agencyId },
+          where: { id: expiredAgency.id },
           data: {
             planTier: "free",
             subscriptionStatus: "canceled",

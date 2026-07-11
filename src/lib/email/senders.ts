@@ -57,7 +57,10 @@ export type EmailKind =
   | "scorecardReport"
   // Digital products lead capture (hello@)
   | "freeSampleDelivery"
-  | "newsletterWelcome";
+  | "newsletterWelcome"
+  // Automation Builder (support@ — sent on behalf of the agency)
+  | "automationNotification"
+  | "proposalShared";
 
 /** Workflow → sender. Drives deliverability + brand-voice correctness. */
 export const SENDER_FOR: Record<EmailKind, SenderKey> = {
@@ -92,6 +95,9 @@ export const SENDER_FOR: Record<EmailKind, SenderKey> = {
 
   freeSampleDelivery: "hello",
   newsletterWelcome: "hello",
+
+  automationNotification: "support",
+  proposalShared: "sales",
 };
 
 /** RFC 5322 "Display Name <addr>" string for the Resend `from` field. */

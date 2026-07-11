@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { requireAgency } from "@/server/auth-context";
+import { requireAgency, requireVerifiedEmailOrError } from "@/server/auth-context";
 import { logActivity } from "@/server/activity";
 import { sendInviteEmail } from "@/lib/email";
 import { checkLimit } from "@/server/services/plan-limits";
@@ -47,6 +47,9 @@ export async function inviteTeamMember(
   if (role !== "owner") {
     return { ok: false, error: "Only the agency owner can invite members." };
   }
+
+  const verificationError = await requireVerifiedEmailOrError(userId);
+  if (verificationError) return { ok: false, error: verificationError };
 
   const parsed = inviteSchema.safeParse(input);
   if (!parsed.success) {
@@ -109,7 +112,9 @@ export async function inviteTeamMember(
     await logActivity(
       {
         agencyId,
+        userId,
         type: "Team Member Invited",
+        title: "Team Member Invited",
         description: `${name} (${email}) was invited to the team.`,
       },
       tx,
@@ -160,7 +165,7 @@ export type RemoveMemberResult = { ok: true } | { ok: false; error: string };
 export async function removeTeamMember(
   memberId: string,
 ): Promise<RemoveMemberResult> {
-  const { agencyId, role } = await requireAgency();
+  const { agencyId, role, userId } = await requireAgency();
 
   if (role !== "owner") {
     return { ok: false, error: "Only the agency owner can remove members." };
@@ -192,7 +197,9 @@ export async function removeTeamMember(
     await logActivity(
       {
         agencyId,
+        userId,
         type: "Team Member Removed",
+        title: "Team Member Removed",
         description: `${target.name} (${target.email}) was removed from the team.`,
       },
       tx,
@@ -216,7 +223,7 @@ export type CancelInviteResult = { ok: true } | { ok: false; error: string };
 export async function cancelInvite(
   inviteId: string,
 ): Promise<CancelInviteResult> {
-  const { agencyId, role } = await requireAgency();
+  const { agencyId, role, userId } = await requireAgency();
 
   if (role !== "owner") {
     return { ok: false, error: "Only the agency owner can cancel invites." };
@@ -235,7 +242,9 @@ export async function cancelInvite(
     await logActivity(
       {
         agencyId,
+        userId,
         type: "Invite Cancelled",
+        title: "Invite Cancelled",
         description: `Invite for ${existing.name} (${existing.email}) was cancelled.`,
       },
       tx,

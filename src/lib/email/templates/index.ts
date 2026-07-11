@@ -12,6 +12,7 @@ import * as contact from "./contact";
 import * as product from "./product";
 import * as scorecard from "./scorecard";
 import * as leads from "./leads";
+import * as automation from "./automation";
 
 export interface EmailPayloads {
   // Auth
@@ -55,6 +56,10 @@ export interface EmailPayloads {
   // Digital products lead capture
   freeSampleDelivery: { downloadUrl: string; productUrl: string };
   newsletterWelcome: { unsubscribeUrl?: string };
+  // Automation Builder
+  automationNotification: { subject: string; message: string; fromAgency?: string };
+  // Proposal Builder
+  proposalShared: { proposalName: string; proposalUrl: string; fromAgency?: string };
 }
 
 // Compile-time guarantee that EmailPayloads covers exactly the EmailKind union.
@@ -96,4 +101,7 @@ export const TEMPLATES: {
 
   freeSampleDelivery: leads.freeSampleDelivery,
   newsletterWelcome: leads.newsletterWelcome,
+
+  automationNotification: automation.automationNotification,
+  proposalShared: billing.proposalShared,
 };

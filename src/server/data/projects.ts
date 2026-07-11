@@ -77,6 +77,22 @@ export async function getProjectActivity(agencyId: string, projectId: string) {
 }
 
 /** Active clients (id + name) for the project form's client dropdown. */
+export interface ProjectOption {
+  id: string;
+  name: string;
+  clientName: string;
+}
+
+/** Lightweight project list for selects (timer widget, manual time entry). */
+export async function getProjectOptions(agencyId: string): Promise<ProjectOption[]> {
+  const projects = await db.project.findMany({
+    where: { agencyId, deletedAt: null, status: { not: "COMPLETED" } },
+    orderBy: { name: "asc" },
+    select: { id: true, name: true, client: { select: { name: true } } },
+  });
+  return projects.map((p) => ({ id: p.id, name: p.name, clientName: p.client.name }));
+}
+
 export async function getClientOptions(agencyId: string) {
   return db.client.findMany({
     where: { agencyId, deletedAt: null },

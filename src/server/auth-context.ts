@@ -62,6 +62,23 @@ export async function requireOwner(): Promise<AgencyContext> {
  * Usage (when ready to enforce):
  *   const ctx = await requireActiveSubscription();
  */
+/**
+ * Gate for actions with real external/financial consequences (sending an
+ * invoice or proposal to a client, creating a billing subscription, inviting
+ * a teammate). Exploration of the product itself stays open pre-verification
+ * — only these outbound/money-moving actions are blocked — so this is called
+ * inline inside the specific server action, not from a page-level guard.
+ * Returns an error string to surface to the user, or null if verified.
+ */
+export async function requireVerifiedEmailOrError(userId: string): Promise<string | null> {
+  const { db } = await import("@/lib/db");
+  const user = await db.user.findUnique({ where: { id: userId }, select: { emailVerified: true } });
+  if (!user?.emailVerified) {
+    return "Please verify your email address before doing this. Check your inbox for the verification link.";
+  }
+  return null;
+}
+
 export async function requireActiveSubscription(): Promise<AgencyContext> {
   const ctx = await requireAgency();
 
