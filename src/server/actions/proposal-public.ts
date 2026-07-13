@@ -94,6 +94,12 @@ export async function acceptProposal(shareToken: string, input: { name: string }
   });
 
   revalidatePath(`/p/${shareToken}`);
+  // Also refresh the agency-side surfaces so the owner sees the acceptance
+  // without a manual reload: proposal list/detail, dashboard, and timeline.
+  revalidatePath("/proposals");
+  revalidatePath(`/proposals/${proposal.id}`);
+  revalidatePath("/dashboard");
+  revalidatePath("/activity");
   return { ok: true };
 }
 

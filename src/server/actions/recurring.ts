@@ -156,5 +156,12 @@ export async function generateNow(subscriptionId: string): Promise<SimpleResult>
   const result = await generateForSubscription(subscriptionId);
   revalidatePath("/recurring");
   revalidatePath(`/recurring/${subscriptionId}`);
+  // The new invoice + activity affects several other read surfaces —
+  // revalidate them so the next visit shows fresh data without a manual reload.
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/activity");
+  revalidatePath("/reports");
+  revalidatePath("/invoices");
   return result.ok ? { ok: true } : { ok: false, error: result.message };
 }

@@ -1,13 +1,19 @@
+"use client";
+
 import Link from "next/link";
-import { Check, Circle } from "lucide-react";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Check, Circle, X } from "lucide-react";
 
 import type { OnboardingStatus } from "@/server/data/dashboard";
+import { dismissOnboarding } from "@/server/actions/dashboard-prefs";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Step {
   key: keyof OnboardingStatus;
@@ -16,28 +22,56 @@ interface Step {
 }
 
 const STEPS: Step[] = [
-  { key: "hasClient", label: "Create First Client", href: "/clients/new" },
-  { key: "hasProject", label: "Create First Project", href: "/projects/new" },
-  { key: "hasLogo", label: "Upload Agency Logo", href: "/settings" },
-  { key: "hasPortalView", label: "Open Client Portal", href: "/clients" },
-  { key: "hasInvoice", label: "Create First Invoice", href: "/invoices/new" },
-  { key: "hasTeamInvite", label: "Invite Team", href: "/team" },
+  { key: "hasClient", label: "Create first Client", href: "/clients/new" },
+  { key: "hasProposal", label: "Create first Proposal", href: "/proposals/new" },
+  { key: "hasProposalAccepted", label: "Proposal Accepted", href: "/proposals" },
+  { key: "hasTimeTracked", label: "Track Time", href: "/time" },
+  { key: "hasInvoiceSent", label: "Send Invoice", href: "/invoices" },
+  { key: "hasVisitedDashboard", label: "Open Dashboard", href: "/dashboard" },
 ];
 
 /**
- * Onboarding checklist (F8). Progress is computed dynamically from real data —
- * no extra table. Hides itself entirely once all five steps are complete.
+ * Welcome checklist shown on first login. Progress is computed dynamically
+ * from real data (no separate progress table) — dismissal is the only bit of
+ * state, stored per-agency on Agency.onboardingDismissedAt. Auto-hides once
+ * every step is complete, or once dismissed.
  */
-export function OnboardingCard({ status }: { status: OnboardingStatus }) {
+export function OnboardingCard({
+  status,
+  dismissed,
+}: {
+  status: OnboardingStatus;
+  dismissed: boolean;
+}) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const completed = STEPS.filter((s) => status[s.key]).length;
-  if (completed === STEPS.length) return null;
+
+  if (dismissed || completed === STEPS.length) return null;
+
+  function handleDismiss() {
+    startTransition(async () => {
+      await dismissOnboarding();
+      router.refresh();
+    });
+  }
 
   return (
-    <Card>
-      <CardHeader className="flex-row items-center justify-between space-y-0">
-        <CardTitle>Get your workspace ready</CardTitle>
+    <Card className="relative">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-2 top-2 h-7 w-7 text-muted-foreground hover:text-foreground"
+        onClick={handleDismiss}
+        disabled={isPending}
+        aria-label="Dismiss welcome checklist"
+      >
+        <X className="h-4 w-4" />
+      </Button>
+      <CardHeader className="flex-row items-center justify-between space-y-0 pr-10">
+        <CardTitle>Welcome — let&apos;s get you set up</CardTitle>
         <span className="text-sm font-medium text-muted-foreground">
-          {completed} / {STEPS.length} Completed
+          {completed} / {STEPS.length}
         </span>
       </CardHeader>
       <CardContent>

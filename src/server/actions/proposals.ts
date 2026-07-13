@@ -405,6 +405,12 @@ export async function convertProposal(proposalId: string): Promise<ConvertResult
   revalidatePath("/proposals");
   revalidatePath(`/proposals/${proposalId}`);
   revalidatePath(`/clients/${clientId}`);
+  revalidatePath("/projects");
+  revalidatePath("/invoices");
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/activity");
+  revalidatePath("/reports");
 
   return { ok: true, clientId, projectId, invoiceId };
 }

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { requireOwner } from "@/server/auth-context";
 import { getSubscription, listOccurrences } from "@/server/data/recurring";
 import { PageWrapper } from "@/components/layout/page-wrapper";
+import { GenerateNowButton } from "@/components/recurring/generate-now-button";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,14 +42,22 @@ export default async function SubscriptionDetailPage({ params }: { params: Promi
   const [subscription, occurrences] = await Promise.all([getSubscription(agencyId, id), listOccurrences(agencyId, id)]);
   if (!subscription) notFound();
 
+  // Only offer manual generation for a subscription that's actually due —
+  // active, and its next billing date has arrived — matching the same gate
+  // the cron path (processDueSubscriptions) uses.
+  const isDue = subscription.status === "active" && subscription.nextBillingDate <= new Date();
+
   return (
     <PageWrapper
       title={subscription.name}
       description={subscription.clientName}
       action={
-        <Button asChild variant="outline" size="sm">
-          <Link href={`/recurring/${id}/edit`}>Edit</Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          {isDue && <GenerateNowButton subscriptionId={id} subscriptionName={subscription.name} />}
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/recurring/${id}/edit`}>Edit</Link>
+          </Button>
+        </div>
       }
     >
       <div className="space-y-6">
@@ -115,7 +124,8 @@ function Info({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
       <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-      <p className="mt-1 text-sm font-medium">{value}</p>
+      {/* div, not p — value can be a Badge (renders a div), which is invalid inside <p> and throws a hydration mismatch. */}
+      <div className="mt-1 text-sm font-medium">{value}</div>
     </div>
   );
 }

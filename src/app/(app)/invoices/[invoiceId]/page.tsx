@@ -109,11 +109,12 @@ export default async function InvoiceDetailPage({
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Status
               </p>
-              <p className="mt-1">
+              {/* div, not p — Badge renders a div, which is invalid inside <p> and throws a hydration mismatch. */}
+              <div className="mt-1">
                 <Badge variant={INVOICE_STATUS_VARIANT[shown]}>
                   {invoiceStatusLabel(shown)}
                 </Badge>
-              </p>
+              </div>
             </div>
             <Info label="Issue Date" value={formatDate(invoice.issueDate)} />
             <Info label="Due Date" value={formatDate(invoice.dueDate)} />

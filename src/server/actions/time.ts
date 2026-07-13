@@ -40,6 +40,8 @@ export async function stopTimerAction(input: { billable?: boolean; billableRate?
   const result = await stopTimer(agencyId, userId, input);
   revalidatePath("/time");
   revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/reports");
   if (!result.ok) return result;
   return { ok: true, entryId: result.entryId! };
 }
@@ -115,6 +117,9 @@ export async function createManualTimeEntry(input: ManualEntryInput): Promise<En
   await runAutomationsForActivity({ agencyId, triggerType: "Hours Logged", activityId: activity.id, clientId: project.clientId, projectId: parsed.data.projectId });
 
   revalidatePath("/time");
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/reports");
   return { ok: true, entryId: entry.id };
 }
 
@@ -150,6 +155,9 @@ export async function updateTimeEntry(entryId: string, input: ManualEntryInput):
   });
 
   revalidatePath("/time");
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/reports");
   return { ok: true, entryId };
 }
 
@@ -161,5 +169,8 @@ export async function deleteTimeEntry(entryId: string): Promise<ActionResult> {
 
   await db.timeEntry.delete({ where: { id: entryId } });
   revalidatePath("/time");
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/reports");
   return { ok: true };
 }

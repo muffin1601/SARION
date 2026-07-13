@@ -413,6 +413,10 @@ async function setStatus(
   revalidatePath("/invoices");
   revalidatePath(`/invoices/${invoiceId}`);
   revalidatePath(`/clients/${result.clientId}`);
+  revalidatePath("/dashboard");
+  revalidatePath("/finance");
+  revalidatePath("/activity");
+  revalidatePath("/reports");
 
   if (result.activityIds && status === "paid") {
     await runAutomationsForActivity({

@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { actionCatalogEntry } from "@/lib/automation-actions";
 import { triggerLabel } from "@/lib/automation-triggers";
 import { RunHistoryTable } from "@/components/automations/run-history-table";
+import { RunNowButton } from "@/components/automations/run-now-button";
 
 export const metadata: Metadata = { title: "Automation · Sarion" };
 
@@ -35,6 +36,7 @@ export default async function AutomationDetailPage({
           <Badge variant={automation.enabled ? "success" : "secondary"}>
             {automation.enabled ? "Enabled" : "Disabled"}
           </Badge>
+          <RunNowButton automationId={id} automationName={automation.name} />
           <Button asChild variant="outline" size="sm">
             <Link href={`/automations/${id}/edit`}>Edit</Link>
           </Button>

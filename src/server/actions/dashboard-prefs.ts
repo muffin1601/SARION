@@ -103,3 +103,11 @@ export async function dismissNotification(id: string): Promise<PrefsResult> {
     return { dismissedNotificationIds: [...current.dismissedNotificationIds, id] };
   });
 }
+
+/** Dismisses the dashboard Welcome Checklist for the whole agency (not just this user). */
+export async function dismissOnboarding(): Promise<PrefsResult> {
+  const { agencyId } = await requireAgency();
+  await db.agency.update({ where: { id: agencyId }, data: { onboardingDismissedAt: new Date() } });
+  revalidatePath("/dashboard");
+  return { ok: true };
+}

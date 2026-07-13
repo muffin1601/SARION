@@ -189,12 +189,24 @@ export async function duplicateAutomation(automationId: string): Promise<ActionR
 }
 
 export async function runAutomationManually(automationId: string): Promise<SimpleResult> {
-  const { agencyId } = await requireAgency();
+  const { agencyId, role } = await requireAgency();
+
+  if (role !== "owner") {
+    const existing = await db.automation.findFirst({ where: { id: automationId, agencyId }, select: { triggerType: true } });
+    if (!existing) return { ok: false, error: "Automation not found." };
+    if (isBillingTrigger(existing.triggerType)) return { ok: false, error: BILLING_AUTOMATION_ERROR };
+  }
 
   const status = await runAutomationManuallyById(agencyId, automationId);
   if (status === "not_found") return { ok: false, error: "Automation not found." };
 
   revalidatePath("/automations");
   revalidatePath(`/automations/${automationId}`);
+  // Actions can create activities/invoices/etc. — revalidate the other
+  // surfaces that read that data so a manual run shows up without a reload.
+  revalidatePath("/dashboard");
+  revalidatePath("/activity");
+  revalidatePath("/finance");
+  revalidatePath("/reports");
   return status === "success" ? { ok: true } : { ok: false, error: "Automation ran but one or more actions failed. Check run history." };
 }

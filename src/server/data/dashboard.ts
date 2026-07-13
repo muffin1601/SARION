@@ -66,6 +66,12 @@ export interface OnboardingStatus {
   hasPortalView: boolean;
   hasInvoice: boolean;
   hasTeamInvite: boolean;
+  hasProposal: boolean;
+  hasProposalAccepted: boolean;
+  hasTimeTracked: boolean;
+  hasInvoiceSent: boolean;
+  /** Trivially true once rendered — viewing the dashboard satisfies this step. */
+  hasVisitedDashboard: boolean;
 }
 
 export interface RevenueChartData {
@@ -127,6 +133,7 @@ export interface CommandCenterData {
   recentInvoices: RecentInvoice[];
   teamActivity: TeamActivity;
   onboarding: OnboardingStatus;
+  onboardingDismissed: boolean;
   recentAutomationRuns: RecentAutomationRun[];
   financeSnapshot: FinanceSnapshot;
   ops: OpsSnapshot;
@@ -197,6 +204,8 @@ export async function getCommandCenterData(agencyId: string): Promise<CommandCen
     recurringOverview,
     proposalStatusGroups,
     autoPausedSubscriptions,
+    timeEntryCount,
+    invoiceSentActivityCount,
   ] = await Promise.all([
     db.invoice.aggregate({
       where: { agencyId, deletedAt: null, status: "paid", updatedAt: { gte: today, lt: tomorrow } },
@@ -316,7 +325,7 @@ export async function getCommandCenterData(agencyId: string): Promise<CommandCen
         user: { select: { id: true, name: true, image: true } },
       },
     }),
-    db.agency.findUnique({ where: { id: agencyId }, select: { logoUrl: true } }),
+    db.agency.findUnique({ where: { id: agencyId }, select: { logoUrl: true, onboardingDismissedAt: true } }),
     db.activity.count({ where: { agencyId, type: "Portal Viewed" } }),
     db.invoice.count({ where: { agencyId, deletedAt: null } }),
     db.user.count({ where: { agencyId } }),
@@ -334,6 +343,8 @@ export async function getCommandCenterData(agencyId: string): Promise<CommandCen
       where: { agencyId, status: "paused", autoPausedAt: { not: null } },
       select: { id: true, name: true, consecutiveFailureCount: true },
     }),
+    db.timeEntry.count({ where: { agencyId } }),
+    db.activity.count({ where: { agencyId, type: "Invoice Sent" } }),
   ]);
 
   const todayRevenue = Number(todayRevenueAgg._sum.total ?? 0);
@@ -627,6 +638,12 @@ export async function getCommandCenterData(agencyId: string): Promise<CommandCen
       hasPortalView: portalViewCount > 0,
       hasInvoice: invoiceCount > 0,
       hasTeamInvite: userCount > 1,
+      hasProposal: proposalStatusGroups.reduce((sum, g) => sum + g._count._all, 0) > 0,
+      hasProposalAccepted: proposalStatusGroups.some((g) => g.status === "accepted" && g._count._all > 0),
+      hasTimeTracked: timeEntryCount > 0,
+      hasInvoiceSent: invoiceSentActivityCount > 0,
+      hasVisitedDashboard: true,
     },
+    onboardingDismissed: Boolean(agencyForLogo?.onboardingDismissedAt),
   };
 }

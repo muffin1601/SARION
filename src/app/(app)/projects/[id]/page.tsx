@@ -100,11 +100,11 @@ export default async function ProjectDetailPage({
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Status
                 </p>
-                <p className="mt-1">
+                <div className="mt-1">
                   <Badge variant={PROJECT_STATUS_VARIANT[project.status]}>
                     {statusLabel(project.status)}
                   </Badge>
-                </p>
+                </div>
               </div>
               <Info label="Start Date" value={formatDate(project.startDate)} />
               <Info label="Due Date" value={formatDate(project.dueDate)} />

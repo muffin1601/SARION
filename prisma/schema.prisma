@@ -87,6 +87,9 @@ model Agency {
   invoiceSequence     Int             @default(1)
   // Whether the starter sample workspace has been seeded (F8 onboarding).
   seeded              Boolean         @default(false)
+  // Set when the agency dismisses the dashboard Welcome Checklist. Null means
+  // "still showing" (subject to also auto-hiding once every step is complete).
+  onboardingDismissedAt DateTime?
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now()) @updatedAt
 

@@ -180,7 +180,7 @@ export default async function DashboardPage() {
         }
       >
         <div className="space-y-6">
-          <OnboardingCard status={data.onboarding} />
+          <OnboardingCard status={data.onboarding} dismissed={data.onboardingDismissed} />
 
           {/* Snapshot cards */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
