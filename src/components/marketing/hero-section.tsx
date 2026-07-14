@@ -10,7 +10,7 @@ const HERO_FEATURES = [
   "Projects",
   "Invoicing",
   "Team Management",
-  "AI Assistant (Coming Soon)",
+  "Reporting",
 ];
 
 export function HeroSection() {

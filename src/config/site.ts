@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Sarion",
-  description: "Agency CRM + Client Portal for small agencies.",
+  description: "The operating system for modern agencies — CRM, projects, invoices, and client portals in one workspace.",
   // Fall back to the production domain — never localhost. A localhost fallback
   // here would poison metadataBase, canonical, OG and sitemap URLs if the env
   // var were ever missing in a production build.

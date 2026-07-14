@@ -9,11 +9,19 @@ import "./marketing.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Sarion — Run your agency from one place",
+    default: "Sarion — The Operating System for Modern Agencies",
     template: "%s · Sarion",
   },
   description:
-    "Client management, projects, invoices, and client portals for agencies. Run your entire agency from one workspace.",
+    "Sarion is the agency operating system: CRM, projects, invoices, and branded client portals in one workspace, built around a single client record.",
+  keywords: [
+    "agency operating system",
+    "agency CRM",
+    "agency management software",
+    "client portal software",
+    "agency project management",
+    "client management software",
+  ],
 };
 
 export default async function MarketingLayout({

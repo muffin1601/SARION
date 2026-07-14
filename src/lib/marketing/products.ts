@@ -161,7 +161,7 @@ export const FLAGSHIP_CRM = {
   name: "SARION CRM",
   eyebrow: "Flagship SaaS · Subscription",
   description:
-    "Built for agencies and client-based businesses replacing a patchwork of spreadsheets, generic CRMs, and manual follow-up. SARION combines pipeline, client management, and AI-powered automation in one system, so nothing falls through the cracks between the first call and the invoice.",
+    "Built for agencies and client-based businesses replacing a patchwork of spreadsheets, generic CRMs, project tools, and invoicing software. SARION combines client management, projects, a branded client portal, and invoicing in one system, so nothing falls through the cracks between the first call and the paid invoice.",
   primaryLabel: "Start Free",
   primaryHref: "/signup",
   secondaryLabel: "Learn More",

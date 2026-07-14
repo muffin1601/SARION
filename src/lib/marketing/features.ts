@@ -111,6 +111,8 @@ export const FEATURE_SECTIONS: FeatureSection[] = [
     features: ["Client records", "Notes", "Activity history", "Search"],
     shot: "clients",
     shotAlt: "The Sarion clients list with company, email, and project counts",
+    ctaHref: "/features/crm",
+    ctaLabel: "See the CRM in depth",
   },
   {
     eyebrow: "Project Management",
@@ -121,6 +123,8 @@ export const FEATURE_SECTIONS: FeatureSection[] = [
     features: ["Status tracking", "Due dates", "Task checklists"],
     shot: "projects",
     shotAlt: "The Sarion projects view showing status and due dates per client",
+    ctaHref: "/features/projects",
+    ctaLabel: "See project tracking in depth",
   },
   {
     eyebrow: "Client Portal",

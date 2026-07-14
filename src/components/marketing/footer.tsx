@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import {
   PRODUCT_LINKS,
+  FEATURE_LINKS,
   CONTENT_LINKS,
   SOLUTIONS_LINKS,
   COMPARE_LINKS,
@@ -18,6 +19,7 @@ import styles from "./footer.module.css";
 const COLUMNS: { heading: string; links: typeof PRODUCT_LINKS }[] = [
   { heading: "Company", links: COMPANY_LINKS },
   { heading: "Product", links: PRODUCT_LINKS },
+  { heading: "Features", links: FEATURE_LINKS },
   { heading: "Resources", links: CONTENT_LINKS },
   { heading: "Solutions", links: SOLUTIONS_LINKS },
   { heading: "Compare", links: COMPARE_LINKS },

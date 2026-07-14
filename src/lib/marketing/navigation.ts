@@ -28,6 +28,19 @@ export const PRODUCT_LINKS: NavLink[] = [
   { label: "Free Scorecard", href: "/scorecard" },
 ];
 
+/** Individual feature pages — footer column + used to build the Features nav dropdown. */
+export const FEATURE_LINKS: NavLink[] = [
+  { label: "CRM", href: "/features/crm" },
+  { label: "Projects", href: "/features/projects" },
+  { label: "Client Portal", href: "/features/client-portal" },
+  { label: "Invoices", href: "/features/invoices" },
+  { label: "Dashboard", href: "/features/dashboard" },
+  { label: "Team Collaboration", href: "/features/team-collaboration" },
+  { label: "Reporting", href: "/features/reporting" },
+  { label: "Activity Timeline", href: "/features/activity-timeline" },
+  { label: "Tasks", href: "/features/tasks" },
+];
+
 /** Content column in the footer. */
 export const CONTENT_LINKS: NavLink[] = [
   { label: "Blog", href: "/blog" },

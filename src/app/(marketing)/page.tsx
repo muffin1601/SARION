@@ -108,8 +108,8 @@ export default function HomePage() {
       <JsonLd id="home-faq-schema" data={FAQ_SCHEMA} />
 
       <AnnouncementBar
-        href="/products/claude-code-mastery"
-        label="🚀 New: SARION AI Engineering Suite – Volume 1: Claude Code Mastery is now available."
+        href="/scorecard"
+        label="🚀 New: Score your agency's operations free in 3 minutes."
       />
 
       <HeroSection />
@@ -140,11 +140,35 @@ export default function HomePage() {
       {/* B2. Scorecard lead magnet — quantifies the pain just named above */}
       <ScorecardBanner placement="home_problem" />
 
-      {/* C. Solution preview — a taste of the capabilities, not the full list */}
+      {/* B3. Everything Around One Client — the core product story */}
+      <section className="mSection">
+        <div className="mContainer">
+          <SectionHeader
+            eyebrow="One record, not five tools"
+            title="Everything revolves around a single client record"
+            description="Lead becomes client. Client gets projects and files. Projects surface in a branded portal. Work becomes an invoice. Invoice gets paid. Nothing changes tools along the way."
+          />
+          <div className={styles.flowChain} aria-label="Client workflow: Lead to Client to Projects to Files to Client Portal to Invoices to Payments">
+            {["Lead", "Client", "Projects", "Files", "Client Portal", "Invoices", "Payments"].map((step, i, arr) => (
+              <span key={step} className={styles.flowStepWrap}>
+                <span className={styles.flowStep}>{step}</span>
+                {i < arr.length - 1 && <span className={styles.flowArrow} aria-hidden>→</span>}
+              </span>
+            ))}
+          </div>
+          <p className={styles.flowCaption}>
+            Sarion isn&apos;t a generic CRM, another project tool, or a Notion
+            clone — it&apos;s the complete client delivery workflow, built
+            around the client record from the first call to the paid invoice.
+          </p>
+        </div>
+      </section>
+
+      {/* C. Complete Agency Workspace — a taste of the capabilities, not the full list */}
       <section className="mSection mSectionAlt">
         <div className="mContainer">
           <SectionHeader
-            eyebrow="The solution"
+            eyebrow="Complete agency workspace"
             title="Everything you need to run client work, in one place"
             description="One workspace, built for agency delivery — not another spreadsheet to maintain."
           />
@@ -156,6 +180,22 @@ export default function HomePage() {
           <div className={styles.center}>
             <Link href="/features" className="mBtn mBtnSecondary mBtnLg">
               Explore all features →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* C2. CRM — standalone section, the record everything else hangs off */}
+      <section className="mSection">
+        <div className="mContainer">
+          <SectionHeader
+            eyebrow="Client CRM"
+            title="Not a generic CRM — built around agency delivery"
+            description="Every client record holds contact details, notes, project history, files, invoices, and portal activity in one place — not scattered across a sales CRM that stops caring once the deal closes."
+          />
+          <div className={styles.center}>
+            <Link href="/features/crm" className="mBtn mBtnSecondary mBtnLg">
+              See the CRM →
             </Link>
           </div>
         </div>

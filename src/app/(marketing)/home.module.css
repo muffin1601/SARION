@@ -12,6 +12,43 @@
   margin-top: var(--m-space-7);
 }
 
+.flowChain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--m-space-2);
+  margin-top: var(--m-space-7);
+}
+
+.flowStepWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-space-2);
+}
+
+.flowStep {
+  padding: var(--m-space-3) var(--m-space-5);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius-full, 999px);
+  background: var(--m-card);
+  font-weight: 600;
+  font-size: var(--m-text-sm);
+  white-space: nowrap;
+}
+
+.flowArrow {
+  color: var(--m-fg-muted);
+}
+
+.flowCaption {
+  margin-top: var(--m-space-6);
+  text-align: center;
+  color: var(--m-fg-muted);
+  max-width: 640px;
+  margin-inline: auto;
+}
+
 .center {
   display: flex;
   justify-content: center;
