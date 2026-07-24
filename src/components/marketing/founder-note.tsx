@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { TEAM } from "@/lib/marketing/team";
 import styles from "./founder-note.module.css";
 
@@ -20,7 +21,9 @@ export function FounderNote() {
             workspace.”
           </p>
           <div className={styles.founder}>
-            <span className={styles.avatar}>{FOUNDER.initials}</span>
+            <span className={styles.avatar}>
+              <Image src={FOUNDER.image} alt={FOUNDER.name} fill sizes="40px" className={styles.avatarImg} />
+            </span>
             <div className={styles.founderText}>
               <span className={styles.founderName}>{FOUNDER.name}</span>
               <span className={styles.founderTitle}>{FOUNDER.title}</span>

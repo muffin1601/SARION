@@ -36,6 +36,7 @@
 }
 
 .avatar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +48,11 @@
   font-size: var(--m-text-sm);
   font-weight: 700;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatarImg {
+  object-fit: cover;
 }
 
 .founderText {
