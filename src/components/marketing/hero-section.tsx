@@ -18,10 +18,10 @@ export function HeroSection() {
     <section className={styles.hero}>
       <div className={`mContainer ${styles.inner}`}>
         <div className={styles.copy}>
-          <span className="mEyebrow">Agency operating system</span>
+          <span className="mEyebrow">Agency management software</span>
           <h1 className={styles.headline}>
-            Your agency, out of <em className={styles.accent}>8 tools</em>{" "}
-            and into one.
+            Agency management software for{" "}
+            <em className={styles.accent}>modern agencies.</em>
           </h1>
           <p className={styles.subheadline}>
             Clients, projects, invoicing, and a branded client portal — one

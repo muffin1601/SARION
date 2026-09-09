@@ -62,11 +62,11 @@ export const metadata: Metadata = {
   // Sensible default: index everything. Authenticated/auth/portal layouts
   // override this with noindex below.
   robots: {
-    index: true,
-    follow: true,
+    index: siteConfig.isProduction,
+    follow: siteConfig.isProduction,
     googleBot: {
-      index: true,
-      follow: true,
+      index: siteConfig.isProduction,
+      follow: siteConfig.isProduction,
       "max-image-preview": "large",
       "max-snippet": -1,
       "max-video-preview": -1,

@@ -14,7 +14,7 @@ import type { HomeFaqItem } from "@/lib/marketing/faq";
 import styles from "../features.module.css";
 
 export const metadata: Metadata = {
-  title: "Client Portal",
+  title: "Client Portal for Agencies",
   description:
     "A branded space where clients see project status and invoices without emailing you for updates. White-labeled, shareable, and included on every paid plan.",
   alternates: { canonical: "/features/client-portal" },

@@ -13,7 +13,7 @@ import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import styles from "../features.module.css";
 
 export const metadata: Metadata = {
-  title: "Invoicing",
+  title: "Agency Invoicing Software",
   description:
     "Create, send, and track invoices — paid, unpaid, overdue — tied directly to the client and project they're for.",
   alternates: { canonical: "/features/invoices" },
@@ -142,8 +142,8 @@ export default function InvoicesFeaturePage() {
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
-            <Link href="/#demo" className="mBtn mBtnSecondary mBtnLg">
-              Watch Demo
+            <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
+              See Portal Demo
             </Link>
           </div>
         </div>

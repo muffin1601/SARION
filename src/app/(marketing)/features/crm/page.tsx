@@ -13,7 +13,7 @@ import { breadcrumbSchema, faqSchema } from "@/lib/seo/schema";
 import styles from "../features.module.css";
 
 export const metadata: Metadata = {
-  title: "Client CRM",
+  title: "CRM for Agencies | Agency CRM Software",
   description:
     "Not a sales CRM — a client management system built for ongoing agency-client delivery relationships, where every contact, note, project, and invoice lives on one client record.",
   alternates: { canonical: "/features/crm" },
@@ -113,8 +113,8 @@ export default function CrmPage() {
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
-            <Link href="/#demo" className="mBtn mBtnSecondary mBtnLg">
-              Watch Demo
+            <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
+              See Portal Demo
             </Link>
           </div>
         </div>

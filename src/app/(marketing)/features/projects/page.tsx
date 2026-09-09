@@ -14,7 +14,7 @@ import type { HomeFaqItem } from "@/lib/marketing/faq";
 import styles from "../features.module.css";
 
 export const metadata: Metadata = {
-  title: "Project Management",
+  title: "Agency Project Management Software",
   description:
     "Track project status, due dates, and task checklists scoped to each client — every project lives directly on the client record, tied to invoices and portal activity, not a standalone project tool.",
   alternates: { canonical: "/features/projects" },
@@ -115,8 +115,8 @@ export default function ProjectsFeaturePage() {
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
-            <Link href="/#demo" className="mBtn mBtnSecondary mBtnLg">
-              Watch Demo
+            <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
+              See Portal Demo
             </Link>
           </div>
         </div>

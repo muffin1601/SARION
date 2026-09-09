@@ -12,13 +12,21 @@
   margin-top: var(--m-space-7);
 }
 
+.flowContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .flowChain {
   display: flex;
+  width: min(100%, 960px);
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--m-space-2);
-  margin-top: var(--m-space-7);
+  margin: var(--m-space-6) auto 0;
 }
 
 .flowStepWrap {
@@ -42,11 +50,21 @@
 }
 
 .flowCaption {
-  margin-top: var(--m-space-6);
+  width: min(100%, 720px);
+  margin: var(--m-space-5) auto 0;
   text-align: center;
   color: var(--m-fg-muted);
-  max-width: 640px;
-  margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+  .flowChain,
+  .flowStepWrap {
+    flex-direction: column;
+  }
+
+  .flowArrow {
+    transform: rotate(90deg);
+  }
 }
 
 .center {

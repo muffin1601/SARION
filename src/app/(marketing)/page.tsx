@@ -24,6 +24,11 @@ import { softwareApplicationSchema, faqSchema } from "@/lib/seo/schema";
 import styles from "./home.module.css";
 
 export const metadata: Metadata = {
+  title: {
+    absolute: "Agency Management Software & CRM for Agencies | Sarion",
+  },
+  description:
+    "Manage clients, projects, tasks, invoices, and a branded client portal in one agency management platform. Try Sarion free.",
   // Marketing layout already sets the homepage title/description; pin the
   // canonical to the root so the indexable home URL is unambiguous.
   alternates: { canonical: "/" },
@@ -35,6 +40,12 @@ export const metadata: Metadata = {
     "project and invoicing software for agencies",
     "freelancer client management",
   ],
+  openGraph: {
+    title: "Agency Management Software & CRM for Agencies | Sarion",
+    description:
+      "Manage clients, projects, tasks, invoices, and a branded client portal in one agency management platform.",
+    url: "/",
+  },
 };
 
 // Product structured data (SoftwareApplication with real pricing) + FAQ schema.
@@ -148,19 +159,21 @@ export default function HomePage() {
             title="Everything revolves around a single client record"
             description="Lead becomes client. Client gets projects and files. Projects surface in a branded portal. Work becomes an invoice. Invoice gets paid. Nothing changes tools along the way."
           />
-          <div className={styles.flowChain} aria-label="Client workflow: Lead to Client to Projects to Files to Client Portal to Invoices to Payments">
+          <div className={styles.flowContent}>
+            <div className={styles.flowChain} aria-label="Client workflow: Lead to Client to Projects to Files to Client Portal to Invoices to Payments">
             {["Lead", "Client", "Projects", "Files", "Client Portal", "Invoices", "Payments"].map((step, i, arr) => (
               <span key={step} className={styles.flowStepWrap}>
                 <span className={styles.flowStep}>{step}</span>
                 {i < arr.length - 1 && <span className={styles.flowArrow} aria-hidden>→</span>}
               </span>
             ))}
-          </div>
-          <p className={styles.flowCaption}>
+            </div>
+            <p className={styles.flowCaption}>
             Sarion isn&apos;t a generic CRM, another project tool, or a Notion
             clone — it&apos;s the complete client delivery workflow, built
-            around the client record from the first call to the paid invoice.
-          </p>
+              around the client record from the first call to the paid invoice.
+            </p>
+          </div>
         </div>
       </section>
 

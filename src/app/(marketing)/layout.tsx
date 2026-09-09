@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s · Sarion",
   },
   description:
-    "Sarion is the agency operating system: CRM, projects, invoices, and branded client portals in one workspace, built around a single client record.",
+    "Manage clients, projects, tasks, invoices, and a branded client portal in one agency management platform. Try Sarion free.",
   keywords: [
     "agency operating system",
     "agency CRM",

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Search",
   description: "Search articles, tools, comparisons, resources, and solutions across the Sarion site.",
   alternates: { canonical: "/search" },
+  robots: { index: false, follow: true },
   openGraph: {
     title: "Search · Sarion",
     description: "Search articles, tools, comparisons, resources, and solutions across the Sarion site.",

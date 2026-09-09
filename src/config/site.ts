@@ -1,10 +1,15 @@
+const productionUrl = "https://trysarion.com";
+const configuredUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+const isProduction = !configuredUrl || configuredUrl === productionUrl;
+
 export const siteConfig = {
   name: "Sarion",
   description: "The operating system for modern agencies — CRM, projects, invoices, and client portals in one workspace.",
   // Fall back to the production domain — never localhost. A localhost fallback
   // here would poison metadataBase, canonical, OG and sitemap URLs if the env
   // var were ever missing in a production build.
-  url: process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com",
+  url: productionUrl,
+  isProduction,
   tagline: "Run Your Entire Agency From One Place.",
   // Public contact inbox. Contact-form submissions are sent here.
   // IMPORTANT: point this at a real, monitored mailbox before launch.

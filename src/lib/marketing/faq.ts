@@ -14,16 +14,37 @@ export interface HomeFaqItem {
 
 export const HOME_FAQ: HomeFaqItem[] = [
   {
-    question: "What is Sarion?",
+    question: "What is agency management software?",
     answer:
       "Sarion is agency management software that brings client management (CRM), projects, tasks, invoicing, and a branded client portal into one workspace. It's built specifically for small agencies, studios, and freelancers who are tired of stitching together spreadsheets, inboxes, and half a dozen disconnected apps.",
     href: "/features",
     hrefLabel: "Explore all features",
   },
   {
-    question: "Who is Sarion for?",
+    question: "What type of agencies is Sarion built for?",
     answer:
       "Sarion is designed for design studios, marketing and web agencies, consultancies, and solo freelancers managing multiple clients. If you run client work and need one place for projects, invoices, and client communication, Sarion fits.",
+  },
+  {
+    question: "Does Sarion include CRM and project management?",
+    answer:
+      "Yes. Sarion combines an agency CRM with client-linked projects, task checklists, invoices, files, and a branded client portal. Your team can manage the full client relationship and delivery workflow in one place.",
+    href: "/features",
+    hrefLabel: "Explore all features",
+  },
+  {
+    question: "Can clients access their own portal?",
+    answer:
+      "Yes. Each client can use a secure, branded portal link to view project status, invoices, files, and updates without creating an account or searching through email.",
+    href: "/features/client-portal",
+    hrefLabel: "Explore the client portal",
+  },
+  {
+    question: "Can agencies manage invoices in Sarion?",
+    answer:
+      "Yes. Sarion lets agencies create and track invoices with line items, due dates, payment status, and aging information alongside the relevant client and project.",
+    href: "/features/invoices",
+    hrefLabel: "Explore invoicing",
   },
   {
     question: "Is there a free plan?",

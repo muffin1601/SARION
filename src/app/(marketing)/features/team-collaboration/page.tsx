@@ -111,8 +111,8 @@ export default function TeamCollaborationPage() {
             <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
-            <Link href="/#demo" className="mBtn mBtnSecondary mBtnLg">
-              Watch Demo
+            <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
+              See Portal Demo
             </Link>
           </div>
         </div>
