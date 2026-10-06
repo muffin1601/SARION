@@ -1,0 +1,7 @@
+"Keyword","Page 1","Page 2","Risk","Recommended Owner","Action"
+"agency CRM","/agency-crm","/features/crm","Medium","/agency-crm","Commercial hub owns category intent; feature page supports detailed product intent and links upward."
+"client portal for agencies","/client-portal","/features/client-portal","Medium","/client-portal","Commercial hub owns category intent; feature page owns feature-detail intent."
+"project management for agencies","/project-management-for-agencies","/features/projects","Medium","/project-management-for-agencies","Commercial hub owns evaluation intent; feature page documents the product capability."
+"agency invoicing software","/agency-invoicing","/features/invoices","Medium","/agency-invoicing","Commercial hub owns solution intent; feature page documents invoice functionality."
+"agency management software","/","/agency-management-software","Low","/","Keep homepage as owner; permanent redirect prevents a duplicate exact-match landing page."
+"all-in-one agency software","/","/all-in-one-agency-software","Low","/","Keep homepage as owner; permanent redirect consolidates signals."

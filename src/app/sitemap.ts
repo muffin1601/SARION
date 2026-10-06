@@ -9,6 +9,7 @@ import { RESOURCE_CATEGORIES } from "@/content/resources/categories";
 import { INDUSTRIES } from "@/content/solutions/industries";
 import { COMPARISONS } from "@/content/compare/comparisons";
 import { getToolEntries } from "@/content/tools/tools";
+import { COMMERCIAL_PAGES } from "@/content/seo/commercial-pages";
 
 type Route = {
   path: string;
@@ -124,6 +125,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(content.addedDate),
   }));
 
+  const commercialRoutes: Route[] = COMMERCIAL_PAGES.map((page) => ({
+    path: `/${page.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
   const routes = [
     ...staticRoutes,
     ...postRoutes,
@@ -135,6 +142,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...solutionRoutes,
     ...comparisonRoutes,
     ...toolRoutes,
+    ...commercialRoutes,
   ];
 
   return routes.map((r) => ({

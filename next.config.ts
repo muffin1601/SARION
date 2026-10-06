@@ -45,6 +45,12 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: "standalone", // optimized for Docker / Coolify deployment
   reactStrictMode: true,
+  async redirects() {
+    return [
+      { source: "/agency-management-software", destination: "/", permanent: true },
+      { source: "/all-in-one-agency-software", destination: "/", permanent: true },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

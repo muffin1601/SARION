@@ -30,10 +30,12 @@ export const PRODUCT_LINKS: NavLink[] = [
 
 /** Individual feature pages — footer column + used to build the Features nav dropdown. */
 export const FEATURE_LINKS: NavLink[] = [
-  { label: "CRM", href: "/features/crm" },
-  { label: "Projects", href: "/features/projects" },
-  { label: "Client Portal", href: "/features/client-portal" },
-  { label: "Invoices", href: "/features/invoices" },
+  { label: "Agency CRM", href: "/agency-crm" },
+  { label: "Project Management", href: "/project-management-for-agencies" },
+  { label: "Client Portal", href: "/client-portal" },
+  { label: "Agency Invoicing", href: "/agency-invoicing" },
+  { label: "Client Management", href: "/client-management-software" },
+  { label: "Agency Operations", href: "/agency-operations" },
   { label: "Dashboard", href: "/features/dashboard" },
   { label: "Team Collaboration", href: "/features/team-collaboration" },
   { label: "Reporting", href: "/features/reporting" },
