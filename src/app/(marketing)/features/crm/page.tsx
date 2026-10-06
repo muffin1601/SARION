@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
@@ -110,7 +111,7 @@ export default function CrmPage() {
             that build up over months of working together.
           </p>
           <div className={styles.heroActions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">

@@ -1,5 +1,7 @@
 "use client";
 
+import { appUrl } from "@/config/urls";
+
 import { useState } from "react";
 import Link from "next/link";
 import { MailCheck } from "lucide-react";
@@ -160,7 +162,7 @@ export function ContactForm() {
         >
           {submitting ? "Sending…" : "Send Message"}
         </button>
-        <Link href="/signup" className="mBtn mBtnSecondary mBtnLg">
+        <Link href={appUrl("/signup")} className="mBtn mBtnSecondary mBtnLg">
           Start Free
         </Link>
       </div>

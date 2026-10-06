@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
@@ -139,7 +140,7 @@ export default function InvoicesFeaturePage() {
             and aging are all visible from the same place you manage the work itself.
           </p>
           <div className={styles.heroActions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">

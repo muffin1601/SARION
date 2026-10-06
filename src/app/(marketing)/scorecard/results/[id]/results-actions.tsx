@@ -1,5 +1,7 @@
 "use client";
 
+import { appUrl } from "@/config/urls";
+
 import Link from "next/link";
 
 import { trackEvent } from "@/lib/analytics";
@@ -17,7 +19,7 @@ export function TrialButton({
 }) {
   return (
     <Link
-      href={`/signup?source=scorecard&session=${sessionId}`}
+      href={appUrl(`/signup?source=scorecard&session=${sessionId}`)}
       className={`mBtn ${variant === "primary" ? "mBtnPrimary" : "mBtnSecondary"} mBtnLg`}
       onClick={() => trackEvent(ANALYTICS_EVENTS.ScorecardTrialClicked, { session: sessionId })}
     >

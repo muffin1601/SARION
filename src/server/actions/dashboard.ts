@@ -37,7 +37,7 @@ export async function sendInvoiceReminder(invoiceId: string): Promise<DashboardA
     return { ok: false, error: "This client has no email on file." };
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.trysarion.com";
   const { sendEmailSafe } = await import("@/lib/email");
   await sendEmailSafe("invoiceAvailable", invoice.client.email, {
     invoiceNumber: invoice.number,

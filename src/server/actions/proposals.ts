@@ -279,7 +279,7 @@ export async function sendProposal(proposalId: string): Promise<SimpleResult> {
         db.agency.findUnique({ where: { id: agencyId }, select: { name: true } }),
       ]);
       if (client?.email) {
-        const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com";
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.trysarion.com";
         const { sendEmailSafe } = await import("@/lib/email");
         await sendEmailSafe("proposalShared", client.email, {
           proposalName: proposal.name,

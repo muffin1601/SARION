@@ -55,7 +55,7 @@ export function websiteSchema() {
 
 /**
  * SoftwareApplication with a real AggregateOffer derived from the live plan
- * matrix (lowest paid monthly → highest). Eligible for product/SaaS rich data.
+ * matrix (free entry tier → highest paid monthly). Eligible for product/SaaS rich data.
  */
 export function softwareApplicationSchema() {
   const monthly = PAID_PLAN_LIST.map((p) => p.pricing.monthly);
@@ -78,9 +78,9 @@ export function softwareApplicationSchema() {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",
-      lowPrice: Math.min(...monthly),
+      lowPrice: PLANS.free.pricing.monthly,
       highPrice: Math.max(...monthly),
-      offerCount: PAID_PLAN_LIST.length,
+      offerCount: PAID_PLAN_LIST.length + 1,
       offers: [
         // Include the free tier explicitly so $0 entry is discoverable.
         {
@@ -88,6 +88,7 @@ export function softwareApplicationSchema() {
           name: `${PLANS.free.name} plan`,
           price: 0,
           priceCurrency: "USD",
+          url: `${siteConfig.url}/pricing`,
         },
         ...PAID_PLAN_LIST.map((p) => ({
           "@type": "Offer",

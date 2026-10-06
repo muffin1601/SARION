@@ -3,8 +3,14 @@ import { APIError } from "better-auth/api";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 
+import { APP_URL } from "@/config/urls";
 import { db } from "@/lib/db";
 import { logActivity } from "@/server/activity";
+
+const configuredTrustedOrigins = (process.env.BETTER_AUTH_TRUSTED_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 /**
  * Better Auth — email/password only (no OAuth per Day 2 spec).
@@ -21,6 +27,12 @@ import { logActivity } from "@/server/activity";
  * is required.
  */
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL ?? APP_URL,
+  trustedOrigins: [
+    APP_URL,
+    ...configuredTrustedOrigins,
+    ...(process.env.NODE_ENV === "production" ? [] : ["http://localhost:3000", "http://localhost:3001"]),
+  ],
   database: prismaAdapter(db, { provider: "postgresql" }),
   emailAndPassword: {
     enabled: true,

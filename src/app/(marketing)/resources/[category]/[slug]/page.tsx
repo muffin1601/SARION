@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -139,7 +140,7 @@ export default async function ResourcePage({
         headline="Run the rest of your agency from one place"
         subtext="This resource is free. Sarion is where the day-to-day client work happens next."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Features"
         secondaryHref="/features"
       />

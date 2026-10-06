@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
@@ -108,7 +109,7 @@ export default function ClientPortalPage() {
             description="Clients get one link to check project status, leave comments, and see what they owe — under your agency's own branding, not Sarion's."
           />
           <div className={styles.heroActions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">

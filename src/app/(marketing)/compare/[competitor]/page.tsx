@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -102,7 +103,7 @@ export default async function ComparisonPage({
           />
           <p className={styles.summary}>{comparison.quickSummary}</p>
           <div className={styles.heroActions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free Trial
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
@@ -195,7 +196,7 @@ export default async function ComparisonPage({
         headline="See it for yourself"
         subtext="Start free and try the client portal, pricing, and workflow built around agency client work."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Portal Demo"
         secondaryHref="/portal-demo"
       />

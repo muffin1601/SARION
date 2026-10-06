@@ -13,14 +13,15 @@
  * kept in one place so a rebrand is a single-file change.
  */
 
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com";
+import { APP_URL, MARKETING_URL } from "@/config/urls";
 
 export const brand = {
   // Identity
   name: "Sarion",
-  url: APP_URL,
-  logoLight: `${APP_URL}/light-theme-logo-SARION.png`, // dark wordmark, for light bg
-  logoDark: `${APP_URL}/dark-theme-logo-SARION.png`, // light wordmark, for dark bg
+  url: MARKETING_URL,
+  appUrl: APP_URL,
+  logoLight: `${MARKETING_URL}/light-theme-logo-SARION.png`, // dark wordmark, for light bg
+  logoDark: `${MARKETING_URL}/dark-theme-logo-SARION.png`, // light wordmark, for dark bg
   supportEmail: "support@trysarion.com",
   tagline: "The agency CRM & client portal built for modern teams.",
 

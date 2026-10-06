@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, ShieldCheck, Sparkles, Heart } from "lucide-react";
@@ -136,7 +137,7 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
           </div>

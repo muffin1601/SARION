@@ -13,7 +13,7 @@ const firstName = (name: string) => name.trim().split(/\s+/)[0] || name;
 
 // ── Welcome ─────────────────────────────────────────────────────────────────
 export function welcome(data: { name: string; ctaUrl?: string }): EmailContent {
-  const cta = data.ctaUrl ?? `${brand.url}/dashboard`;
+  const cta = data.ctaUrl ?? `${brand.appUrl}/dashboard`;
   const body =
     heading(`Welcome to Sarion, ${escapeHtml(firstName(data.name))} 👋`) +
     paragraph(

@@ -1,5 +1,7 @@
+import { MARKETING_URL } from "@/config/urls";
+
 const productionUrl = "https://trysarion.com";
-const configuredUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+const configuredUrl = MARKETING_URL;
 const isProduction = !configuredUrl || configuredUrl === productionUrl;
 
 export const siteConfig = {
@@ -8,7 +10,7 @@ export const siteConfig = {
   // Fall back to the production domain — never localhost. A localhost fallback
   // here would poison metadataBase, canonical, OG and sitemap URLs if the env
   // var were ever missing in a production build.
-  url: productionUrl,
+  url: configuredUrl,
   isProduction,
   tagline: "Run Your Entire Agency From One Place.",
   // Public contact inbox. Contact-form submissions are sent here.

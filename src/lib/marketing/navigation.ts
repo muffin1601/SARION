@@ -1,3 +1,5 @@
+import { appUrl } from "@/config/urls";
+
 /**
  * Marketing site navigation data.
  * Edit links here — never inline in Navbar/Footer components.
@@ -93,5 +95,5 @@ export const COMPANY_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
   { label: "Why Sarion", href: "/why-sarion" },
   { label: "Contact", href: "/contact" },
-  { label: "Log in", href: "/login" },
+  { label: "Log in", href: appUrl("/login") },
 ];

@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import Link from "next/link";
 import { Check } from "lucide-react";
 
@@ -28,7 +29,7 @@ export function HeroSection() {
             workspace, so nothing slips through the cracks.
           </p>
           <div className={styles.actions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free Trial
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">

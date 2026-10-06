@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 
 import { SectionHeader } from "@/components/marketing/section-header";
@@ -164,7 +165,7 @@ export default async function ToolPage({
         headline="Put these numbers to work"
         subtext="Sarion is where the client records, invoicing, and portal behind these numbers actually live."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Features"
         secondaryHref="/features"
       />

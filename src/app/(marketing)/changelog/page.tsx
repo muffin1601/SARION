@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 
 import { SectionHeader } from "@/components/marketing/section-header";
@@ -78,7 +79,7 @@ export default function ChangelogPage() {
         primaryLabel="View Roadmap"
         primaryHref="/roadmap"
         secondaryLabel="Start Free Trial"
-        secondaryHref="/signup"
+        secondaryHref={appUrl("/signup")}
       />
     </>
   );

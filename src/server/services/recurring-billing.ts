@@ -199,7 +199,7 @@ export async function generateForSubscription(subscriptionId: string): Promise<{
           db.agency.findUnique({ where: { id: subscription.agencyId }, select: { name: true } }),
         ]);
         if (client?.email) {
-          const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com";
+          const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.trysarion.com";
           const { sendEmailSafe } = await import("@/lib/email");
           await sendEmailSafe("invoiceAvailable", client.email, {
             invoiceNumber,

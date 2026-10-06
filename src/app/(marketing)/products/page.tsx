@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -98,7 +99,7 @@ export default function ProductsPage() {
             <Link href="#developer-collection" className="mBtn mBtnPrimary mBtnLg">
               Explore Products
             </Link>
-            <Link href="/signup" className="mBtn mBtnSecondary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnSecondary mBtnLg">
               Start CRM Free
             </Link>
           </div>

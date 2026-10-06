@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -86,7 +87,7 @@ export default async function IndustryPage({
             description={industry.heroSubhead}
           />
           <div className={styles.heroActions}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free Trial
             </Link>
             <Link href="/portal-demo" className="mBtn mBtnSecondary mBtnLg">
@@ -188,7 +189,7 @@ export default async function IndustryPage({
         headline={`Built for ${industry.name}`}
         subtext="Start free — no card required. See your first client portal live in minutes."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Features"
         secondaryHref="/features"
       />

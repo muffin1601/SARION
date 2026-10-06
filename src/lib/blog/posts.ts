@@ -5,7 +5,10 @@ import readingTime from "reading-time";
 
 import type { Post, PostFrontmatter } from "./types";
 
-const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
+const workingDirectory = process.cwd();
+const BLOG_DIR = fs.existsSync(path.join(workingDirectory, "src", "content", "blog"))
+  ? path.join(workingDirectory, "src", "content", "blog")
+  : path.resolve(workingDirectory, "..", "..", "src", "content", "blog");
 
 let cache: Post[] | null = null;
 

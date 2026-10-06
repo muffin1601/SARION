@@ -95,7 +95,7 @@ export function leadFollowUp(data: { name: string }): EmailContent {
     heading(`Still thinking it over, ${escapeHtml(firstName(data.name))}?`) +
     paragraph("Just checking in after your interest in Sarion. If you have questions about features, pricing, or migrating from your current tools, I'm a reply away — happy to help however I can.") +
     paragraph("If now isn't the right time, no worries at all. Whenever you're ready, you can jump straight in:") +
-    button({ href: `${brand.url}/signup`, label: "Start a free trial" });
+    button({ href: `${brand.appUrl}/signup`, label: "Start a free trial" });
   return {
     subject: "Quick follow-up from Sarion",
     html: emailLayout({ preheader: "Checking in — any questions about Sarion?", body }),
@@ -103,7 +103,7 @@ export function leadFollowUp(data: { name: string }): EmailContent {
 
 Checking in after your interest in Sarion. Questions about features, pricing, or migrating? Just reply.
 
-Start a free trial: ${brand.url}/signup
+Start a free trial: ${brand.appUrl}/signup
 
 ${textSignature()}`,
   };

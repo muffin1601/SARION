@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -104,7 +105,7 @@ export default function IntegrationsPage() {
         headline="Try what's already built"
         subtext="The core CRM, portal, and invoicing workflow is live today — integrations extend it, they aren't required to get value."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Features"
         secondaryHref="/features"
       />

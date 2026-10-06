@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -44,7 +45,7 @@ export default async function CommercialPage({ params }: { params: Promise<{ com
       <BreadcrumbNav trail={trail} center />
       <SectionHeader as="h1" eyebrow={page.eyebrow} title={page.title} description={page.description} />
       <p className={styles.intro}>{page.intro}</p>
-      <div className={styles.actions}><Link href="/signup" className="mBtn mBtnPrimary mBtnLg">Start free</Link><Link href="/pricing" className="mBtn mBtnSecondary mBtnLg">View pricing</Link></div>
+      <div className={styles.actions}><Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">Start free</Link><Link href="/pricing" className="mBtn mBtnSecondary mBtnLg">View pricing</Link></div>
     </div></section>
     <section className="mSection mSectionAlt"><div className="mContainer">
       <SectionHeader eyebrow="The operational gap" title={page.problemTitle} description="The cost is not only software spend. It is the repeated coordination required to keep disconnected records accurate." />

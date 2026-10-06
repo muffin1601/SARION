@@ -9,20 +9,25 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://sarion:sarion@localhost:5432/sarion
+      DIRECT_URL: postgresql://sarion:sarion@localhost:5432/sarion
+      NEXT_PUBLIC_SITE_URL: https://trysarion.com
+      NEXT_PUBLIC_MARKETING_URL: https://trysarion.com
+      NEXT_PUBLIC_APP_URL: https://app.trysarion.com
+      BETTER_AUTH_SECRET: ci-placeholder-secret-with-at-least-32-characters
+      BETTER_AUTH_URL: https://app.trysarion.com
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm prisma generate
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: pnpm build
-        env:
-          DATABASE_URL: postgresql://sarion:sarion@localhost:5432/sarion
-          BETTER_AUTH_SECRET: ci-placeholder-secret
+          cache: npm
+      - run: npm ci
+      - run: npm run routes:workspaces
+      - run: npm run lint
+      - run: npm run typecheck:marketing
+      - run: npm run typecheck:app
+      - run: npm run seo:check
+      - run: npm run build:marketing
+      - run: npm run build:app

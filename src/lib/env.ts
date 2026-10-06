@@ -29,7 +29,7 @@ const schema = z.object({
   NEXT_PUBLIC_APP_URL: z
     .string()
     .url(
-      "NEXT_PUBLIC_APP_URL must be a valid URL (e.g. https://trysarion.com)",
+      "NEXT_PUBLIC_APP_URL must be a valid URL (e.g. https://app.trysarion.com)",
     ),
 
   // ── Better Auth ───────────────────────────────────────────────────────────
@@ -41,6 +41,7 @@ const schema = z.object({
       "BETTER_AUTH_SECRET is the dev placeholder — generate a real secret for production: openssl rand -base64 32",
     ),
   BETTER_AUTH_URL: z.string().url().optional(),
+  BETTER_AUTH_TRUSTED_ORIGINS: z.string().optional(),
 
   // ── Lemon Squeezy (optional — absent = graceful degradation in billing UI) ─
   LEMONSQUEEZY_API_KEY: z.string().optional(),

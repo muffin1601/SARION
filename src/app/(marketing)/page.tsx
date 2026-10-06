@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
@@ -291,7 +292,7 @@ export default function HomePage() {
             <Link href="/pricing" className="mBtn mBtnSecondary mBtnLg">
               View Pricing
             </Link>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free Trial
             </Link>
           </div>

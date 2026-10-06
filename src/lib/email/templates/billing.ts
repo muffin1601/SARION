@@ -11,7 +11,7 @@ import {
   textSignature,
 } from "../layout";
 
-const billingUrl = `${brand.url}/settings/billing`;
+const billingUrl = `${brand.appUrl}/settings/billing`;
 
 // ── Payment successful ──────────────────────────────────────────────────────
 export function paymentSuccessful(data: {
@@ -89,7 +89,7 @@ export function subscriptionActivated(data: {
       { label: "Price", value: `${escapeHtml(data.amount)} / ${escapeHtml(data.interval)}` },
       { label: "Status", value: statusBadge("Active", "success") },
     ]) +
-    button({ href: `${brand.url}/dashboard`, label: "Go to dashboard" }) +
+    button({ href: `${brand.appUrl}/dashboard`, label: "Go to dashboard" }) +
     mutedNote("You can upgrade, downgrade, or cancel anytime from billing settings.");
   return {
     subject: `Your ${data.planName} subscription is active`,
@@ -100,7 +100,7 @@ Plan: ${data.planName}
 Price: ${data.amount} / ${data.interval}
 Status: Active
 
-Go to dashboard: ${brand.url}/dashboard
+Go to dashboard: ${brand.appUrl}/dashboard
 
 ${textSignature()}`,
   };

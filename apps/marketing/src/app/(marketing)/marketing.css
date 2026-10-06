@@ -1,0 +1,484 @@
+/* ===========================================================================
+   Sarion marketing design system — premium, conversion-focused.
+   No Tailwind utilities are used on the marketing site. Tokens are scoped to
+   .marketingTheme so they never leak into the authenticated app.
+
+   Theme: tokens follow the shared next-themes class on <html> (set by the root
+   ThemeProvider), so toggling the theme anywhere — app or marketing — updates
+   the whole product. Light is the base; `html.dark` overrides below.
+   =========================================================================== */
+
+.marketingTheme {
+  /* ---------------------------------------------------------------------
+     Palette mirrors the dashboard tokens in src/app/globals.css exactly
+     (same HSL values), so marketing and app share one identity.
+     --------------------------------------------------------------------- */
+
+  /* Surfaces (light) — background / secondary / card */
+  --m-bg: hsl(0 0% 100%);
+  --m-bg-elev: hsl(210 40% 96%); /* --secondary / --muted */
+  --m-card: hsl(0 0% 100%);
+  --m-card-hover: hsl(210 40% 96%);
+
+  /* Borders (light) — --border, with a stronger step for hovers */
+  --m-border: hsl(214 32% 91%);
+  --m-border-strong: hsl(213 27% 84%);
+
+  /* Text (light) — --foreground / --muted-foreground */
+  --m-fg: hsl(222 47% 11%);
+  --m-fg-muted: hsl(215 16% 47%);
+  --m-fg-subtle: hsl(215 18% 58%);
+
+  /* Brand + status (Sarion blue) — --primary */
+  --m-primary: hsl(221 83% 53%);
+  --m-primary-hover: hsl(221 83% 45%);
+  --m-primary-fg: hsl(0 0% 100%);
+  --m-primary-soft: hsl(221 83% 53% / 0.1);
+  /* Decorative brand glow for hero/CTA radial accents. */
+  --m-glow: hsl(221 83% 53% / 0.1);
+  --m-success: #059669;
+  --m-success-soft: rgba(5, 150, 105, 0.12);
+  --m-warning: #b45309;
+  --m-warning-soft: rgba(217, 119, 6, 0.14);
+
+  /* Theme-aware chrome */
+  --m-nav-bg: hsl(0 0% 100% / 0.72);
+  --m-shadow: 0 24px 60px -30px rgba(15, 23, 42, 0.25);
+
+  /* Elevation scale (light) */
+  --m-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --m-shadow-card:
+    0 1px 3px rgba(15, 23, 42, 0.05), 0 8px 24px -16px rgba(15, 23, 42, 0.18);
+  --m-shadow-card-hover:
+    0 4px 12px -2px rgba(15, 23, 42, 0.1),
+    0 20px 44px -18px rgba(15, 23, 42, 0.28);
+
+  /* Focus ring (light) — --ring */
+  --m-ring: 0 0 0 3px hsl(221 83% 53% / 0.35);
+
+  /* Radius — honors the app-wide 2px maximum */
+  --m-radius: 2px;
+
+  /* Spacing scale */
+  --m-space-1: 4px;
+  --m-space-2: 8px;
+  --m-space-3: 12px;
+  --m-space-4: 16px;
+  --m-space-5: 24px;
+  --m-space-6: 32px;
+  --m-space-7: 48px;
+  --m-space-8: 64px;
+  --m-space-9: 96px;
+
+  /* Type scale */
+  --m-text-xs: 0.8125rem;
+  --m-text-sm: 0.9375rem;
+  --m-text-base: 1rem;
+  --m-text-lg: 1.125rem;
+  --m-text-xl: 1.375rem;
+  --m-text-2xl: 1.75rem;
+  --m-text-3xl: 2.25rem;
+  --m-text-4xl: 3rem;
+
+  /* Layout */
+  --m-container: 1120px;
+  --m-nav-h: 80px;
+
+  /* Marketing headings use the elegant serif (Fraunces). Remapped here so every
+     marketing component that references --font-heading picks it up, while the
+     dashboard app keeps Geist. */
+  --font-heading: var(--font-serif);
+
+  color-scheme: light;
+  background-color: var(--m-bg);
+  color: var(--m-fg);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Dark theme overrides — applied when the shared theme class is `dark`. */
+html.dark .marketingTheme {
+  /* Mirrors globals.css .dark tokens exactly (same HSL values). */
+  --m-bg: hsl(222 47% 7%); /* --background */
+  --m-bg-elev: hsl(222 47% 9%); /* --card level */
+  --m-card: hsl(222 47% 9%); /* --card */
+  --m-card-hover: hsl(217 33% 17%); /* --secondary / --accent */
+
+  --m-border: hsl(217 33% 17%); /* --border */
+  --m-border-strong: hsl(217 33% 26%);
+
+  --m-fg: hsl(210 40% 98%); /* --foreground */
+  --m-fg-muted: hsl(215 20% 65%); /* --muted-foreground */
+  --m-fg-subtle: hsl(215 18% 50%);
+
+  --m-primary: hsl(217 91% 60%); /* --primary */
+  --m-primary-hover: hsl(217 91% 67%);
+  --m-primary-soft: hsl(217 91% 60% / 0.15);
+  --m-glow: hsl(217 91% 60% / 0.13);
+  --m-success: #34d399;
+  --m-success-soft: rgba(52, 211, 153, 0.14);
+  --m-warning: #fbbf24;
+  --m-warning-soft: rgba(251, 191, 36, 0.14);
+
+  --m-nav-bg: hsl(222 47% 7% / 0.72);
+  --m-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+
+  --m-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --m-shadow-card:
+    0 1px 3px rgba(0, 0, 0, 0.5), 0 10px 30px -18px rgba(0, 0, 0, 0.8);
+  --m-shadow-card-hover:
+    0 6px 18px -4px rgba(0, 0, 0, 0.6), 0 26px 52px -20px rgba(0, 0, 0, 0.9);
+
+  --m-ring: 0 0 0 3px hsl(217 91% 60% / 0.5);
+
+  color-scheme: dark;
+}
+
+.marketingTheme h1,
+.marketingTheme h2,
+.marketingTheme h3,
+.marketingTheme h4 {
+  font-family: var(--font-heading), Georgia, "Times New Roman", serif;
+  /* Serifs carry weight differently — 600 reads as confident, not heavy. */
+  font-weight: 600;
+  line-height: 1.12;
+  /* Serif display type wants far less negative tracking than a sans. */
+  letter-spacing: -0.01em;
+  color: var(--m-fg);
+  margin: 0;
+  /* Enable ligatures + proportional figures for a polished, editorial finish. */
+  font-feature-settings: "liga" 1, "calt" 1;
+  text-wrap: balance;
+}
+
+/* Large display headings (hero h1) lean into the optical-size axis. */
+.marketingTheme h1 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 144;
+}
+
+.marketingTheme p {
+  margin: 0;
+}
+
+.marketingTheme a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Layout helpers ------------------------------------------------------ */
+.mContainer {
+  width: 100%;
+  max-width: var(--m-container);
+  margin-inline: auto;
+  padding-inline: var(--m-space-5);
+}
+
+.mSection {
+  padding-block: var(--m-space-9);
+}
+
+.mSectionTight {
+  padding-block: var(--m-space-8);
+}
+
+/* Alternating surface for clearer separation between adjacent sections. */
+.marketingTheme .mSectionAlt {
+  background: var(--m-bg-elev);
+  border-block: 1px solid var(--m-border);
+}
+
+/* Accessible keyboard focus for all interactive elements. */
+.marketingTheme a:focus-visible,
+.marketingTheme button:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--m-ring);
+  border-radius: var(--m-radius);
+}
+
+/* Respect reduced-motion: neutralize hover lifts and transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .marketingTheme *,
+  .marketingTheme *::before,
+  .marketingTheme *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .marketingTheme :hover {
+    transform: none !important;
+  }
+}
+
+/* --- Buttons ------------------------------------------------------------- */
+.mBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-space-2);
+  height: 42px;
+  padding-inline: var(--m-space-5);
+  border-radius: var(--m-radius);
+  border: 1px solid transparent;
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+/* Subtle press feedback, shared by every button variant. */
+.mBtn:active {
+  transform: translateY(1px);
+}
+
+.mBtnLg {
+  height: 48px;
+  padding-inline: var(--m-space-6);
+  font-size: var(--m-text-base);
+}
+
+/* Button color rules are scoped under .marketingTheme so they outrank the
+   `.marketingTheme a` link reset (these buttons are often <a> links). */
+.marketingTheme .mBtnPrimary {
+  background-color: var(--m-primary);
+  color: var(--m-primary-fg);
+  box-shadow: var(--m-shadow-sm);
+}
+.marketingTheme .mBtnPrimary:hover {
+  background-color: var(--m-primary-hover);
+}
+
+/* Light theme: solid near-black button with white text (Vercel/Linear style). */
+.marketingTheme .mBtnSecondary {
+  background-color: var(--m-fg);
+  color: var(--m-bg);
+  border-color: var(--m-fg);
+}
+.marketingTheme .mBtnSecondary:hover {
+  opacity: 0.9;
+}
+
+/* Dark theme: revert to the transparent outline style. */
+html.dark .marketingTheme .mBtnSecondary {
+  background-color: transparent;
+  color: var(--m-fg);
+  border-color: var(--m-border-strong);
+  opacity: 1;
+}
+html.dark .marketingTheme .mBtnSecondary:hover {
+  background-color: var(--m-card-hover);
+}
+
+.marketingTheme .mBtnGhost {
+  background-color: transparent;
+  color: var(--m-fg-muted);
+}
+.marketingTheme .mBtnGhost:hover {
+  color: var(--m-fg);
+}
+
+/* --- Shared atoms -------------------------------------------------------- */
+.mEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  padding: 5px 11px;
+  border-radius: var(--m-radius);
+  border: 1px solid var(--m-border);
+  background: var(--m-primary-soft);
+  font-size: var(--m-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--m-primary);
+}
+/* Leading status dot for the tag. */
+.mEyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--m-primary);
+}
+
+.mBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m-space-2);
+  padding: 2px 10px;
+  border-radius: var(--m-radius);
+  font-size: var(--m-text-xs);
+  font-weight: 600;
+}
+.mBadgeSuccess {
+  background: var(--m-success-soft);
+  color: var(--m-success);
+}
+.mBadgeWarning {
+  background: var(--m-warning-soft);
+  color: var(--m-warning);
+}
+.mBadgeInfo {
+  background: var(--m-primary-soft);
+  color: var(--m-primary);
+}
+
+/* --- Article body (blog posts, resources) --------------------------------
+   Built entirely from existing --m-* tokens — no new colors or fonts. */
+.mProse {
+  max-width: 720px;
+  font-size: var(--m-text-lg);
+  line-height: 1.75;
+  color: var(--m-fg-muted);
+}
+
+.mProse > * + * {
+  margin-top: var(--m-space-5);
+}
+
+.mProse h2,
+.mProse h3,
+.mProse h4 {
+  margin-top: var(--m-space-8);
+  color: var(--m-fg);
+  scroll-margin-top: var(--m-space-7);
+}
+.mProse h2 {
+  font-size: var(--m-text-2xl);
+}
+.mProse h3 {
+  font-size: var(--m-text-xl);
+}
+.mProse h4 {
+  font-size: var(--m-text-lg);
+}
+
+.mProse a {
+  color: var(--m-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.mProse a:hover {
+  color: var(--m-primary-hover);
+}
+
+.mProse ul,
+.mProse ol {
+  padding-left: var(--m-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--m-space-3);
+}
+
+.mProse blockquote {
+  border-left: 3px solid var(--m-primary);
+  padding-left: var(--m-space-5);
+  font-style: italic;
+  color: var(--m-fg);
+}
+
+.mProse code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9em;
+  background: var(--m-bg-elev);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  padding: 0.1em 0.4em;
+}
+
+.mProse pre {
+  background: var(--m-bg-elev);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius);
+  padding: var(--m-space-4);
+  overflow-x: auto;
+}
+.mProse pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.mProse table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--m-text-base);
+}
+.mProse th,
+.mProse td {
+  border: 1px solid var(--m-border);
+  padding: var(--m-space-2) var(--m-space-3);
+  text-align: left;
+}
+.mProse th {
+  color: var(--m-fg);
+  background: var(--m-bg-elev);
+}
+
+.mProse hr {
+  border: none;
+  border-top: 1px solid var(--m-border);
+}
+
+/* Anchor-link wrapper injected by rehype-autolink-headings (behavior: wrap) */
+.mProse h2 > a,
+.mProse h3 > a,
+.mProse h4 > a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+.mProse h2 > a:hover,
+.mProse h3 > a:hover,
+.mProse h4 > a:hover {
+  text-decoration: underline;
+}
+
+/* --- Blog-specific atoms --------------------------------------------------- */
+.mTocLink {
+  display: block;
+  font-size: var(--m-text-sm);
+  color: var(--m-fg-muted);
+  padding-block: var(--m-space-1);
+  border-left: 2px solid transparent;
+  padding-left: var(--m-space-3);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.mTocLink:hover {
+  color: var(--m-fg);
+}
+.mTocLink[data-active="true"] {
+  color: var(--m-primary);
+  border-left-color: var(--m-primary);
+  font-weight: 600;
+}
+
+.mShareBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m-space-2);
+  height: 36px;
+  padding-inline: var(--m-space-4);
+  border-radius: var(--m-radius);
+  border: 1px solid var(--m-border);
+  font-size: var(--m-text-sm);
+  font-weight: 600;
+  color: var(--m-fg-muted);
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.mShareBtn:hover {
+  color: var(--m-fg);
+  border-color: var(--m-border-strong);
+  background: var(--m-card-hover);
+}

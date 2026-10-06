@@ -1,5 +1,7 @@
 "use client";
 
+import { appUrl } from "@/config/urls";
+
 import { useState } from "react";
 import Link from "next/link";
 import { Check, Sparkles } from "lucide-react";
@@ -96,7 +98,7 @@ function PlanCard({
       </span>
 
       <Link
-        href="/signup"
+        href={appUrl("/signup")}
         className={`mBtn ${plan.featured ? "mBtnPrimary" : "mBtnSecondary"} ${styles.cta}`}
       >
         {plan.ctaLabel}

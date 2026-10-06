@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import type { Metadata } from "next";
 
 import { SectionHeader } from "@/components/marketing/section-header";
@@ -76,7 +77,7 @@ export default function RoadmapPage() {
         headline="Try what's already live"
         subtext="Start a free trial and see the CRM, portal, and invoicing features shipping today."
         primaryLabel="Start Free Trial"
-        primaryHref="/signup"
+        primaryHref={appUrl("/signup")}
         secondaryLabel="See Portal Demo"
         secondaryHref="/portal-demo"
       />

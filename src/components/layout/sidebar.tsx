@@ -7,6 +7,7 @@ import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/layout/logo";
 import { getNavItems } from "@/lib/nav-items";
+import { MARKETING_URL } from "@/config/urls";
 
 interface SidebarProps {
   role: string;
@@ -65,6 +66,11 @@ export function Sidebar({ role, showUpgrade }: SidebarProps) {
           </Link>
         </div>
       )}
+      <div className="border-t px-6 py-3">
+        <Link href={MARKETING_URL} className="text-xs text-muted-foreground hover:text-foreground">
+          Sarion website ↗
+        </Link>
+      </div>
     </aside>
   );
 }

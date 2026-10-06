@@ -17,7 +17,7 @@ import {
  * in one auditable place.
  */
 
-const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com";
+const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "https://app.trysarion.com";
 
 export interface CheckoutParams {
   agencyId: string;

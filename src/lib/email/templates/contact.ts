@@ -28,7 +28,7 @@ export function contactConfirmation(data: {
         `<p class="email-body" style="margin:0;font-size:14px;color:${brand.body};line-height:1.6;white-space:pre-wrap;">${escapeHtml(data.message)}</p>`,
     ) +
     paragraph("In the meantime, feel free to explore Sarion or start a free trial — no credit card required.") +
-    button({ href: `${brand.url}/signup`, label: "Start your free trial" });
+    button({ href: `${brand.appUrl}/signup`, label: "Start your free trial" });
   return {
     subject: "We've received your message — Sarion",
     html: emailLayout({
@@ -43,7 +43,7 @@ We've received your message and will reply personally — usually within one bus
 Your message:
 ${data.message}
 
-Start a free trial (no card required): ${brand.url}/signup
+Start a free trial (no card required): ${brand.appUrl}/signup
 
 ${textSignature()}`,
   };

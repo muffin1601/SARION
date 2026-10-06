@@ -1,5 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
+
+const SESSION_COOKIE_NAMES = [
+  "__Secure-better-auth.session_token",
+  "better-auth.session_token",
+] as const;
 
 /**
  * Route protection — unauthenticated users hitting an app route are bounced to
@@ -7,7 +11,7 @@ import { getSessionCookie } from "better-auth/cookies";
  * resolve the full session server-side before rendering sensitive data.
  */
 export function middleware(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
+  const sessionCookie = SESSION_COOKIE_NAMES.some((name) => request.cookies.has(name));
 
   if (!sessionCookie) {
     const loginUrl = new URL("/login", request.url);

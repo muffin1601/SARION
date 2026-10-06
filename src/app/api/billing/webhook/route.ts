@@ -333,7 +333,7 @@ export async function POST(req: NextRequest) {
         await notify(agency.id, "paymentFailed", {
           planName: getPlan(agency.planTier).name,
           amount,
-          retryUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://trysarion.com"}/settings/billing`,
+          retryUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://app.trysarion.com"}/settings/billing`,
         });
         break;
       }

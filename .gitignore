@@ -26,6 +26,10 @@ coverage/
 !.vscode/extensions.json
 *.tsbuildinfo
 
+# Generated from the canonical root public/ tree before each workspace build.
+/apps/marketing/public/
+/apps/app/public/
+
 # Email preview output (scripts/email-preview.ts)
 # .email-previews/
 

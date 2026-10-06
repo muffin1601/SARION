@@ -1,3 +1,5 @@
+import { appUrl } from "@/config/urls";
+
 /**
  * SARION Digital Products — a second business line alongside the CRM.
  * Copy sourced from public/release/SARION-Claude-Code-Mastery-Kit-v1.0.0/Marketing/*
@@ -163,7 +165,7 @@ export const FLAGSHIP_CRM = {
   description:
     "Built for agencies and client-based businesses replacing a patchwork of spreadsheets, generic CRMs, project tools, and invoicing software. SARION combines client management, projects, a branded client portal, and invoicing in one system, so nothing falls through the cracks between the first call and the paid invoice.",
   primaryLabel: "Start Free",
-  primaryHref: "/signup",
+  primaryHref: appUrl("/signup"),
   secondaryLabel: "Learn More",
   secondaryHref: "/features",
 };

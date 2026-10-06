@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import Link from "next/link";
 import { Check } from "lucide-react";
 
@@ -26,7 +27,7 @@ export function PricingCard({
   features,
   featured = false,
   ctaLabel = "Start Free Trial",
-  ctaHref = "/signup",
+  ctaHref = appUrl("/signup"),
   period = "/month",
   badge,
   solo = false,

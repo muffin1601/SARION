@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 /**
  * Marketing Portal Demo — an interactive walkthrough of the Sarion client
  * portal, driven by the mock data in src/lib/marketing/features.ts
@@ -130,7 +131,7 @@ export default function PortalDemoPage() {
           <PortalDemoClient />
 
           <div className={styles.inlineCta}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Give your clients this experience
             </Link>
           </div>
@@ -175,7 +176,7 @@ export default function PortalDemoPage() {
             ))}
           </div>
           <div className={styles.inlineCta}>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free
             </Link>
           </div>
@@ -203,7 +204,7 @@ export default function PortalDemoPage() {
               <Link href="/pricing">pricing</Link> or browse{" "}
               <Link href="/features">everything Sarion includes</Link>.
             </p>
-            <Link href="/signup" className="mBtn mBtnPrimary mBtnLg">
+            <Link href={appUrl("/signup")} className="mBtn mBtnPrimary mBtnLg">
               Start Free Trial
             </Link>
           </div>

@@ -25,7 +25,7 @@ export function newFeature(data: {
   ctaUrl?: string;
   unsubscribeUrl?: string;
 }): EmailContent {
-  const cta = data.ctaUrl ?? `${brand.url}/dashboard`;
+  const cta = data.ctaUrl ?? `${brand.appUrl}/dashboard`;
   const body =
     eyebrow("New in Sarion") +
     heading(escapeHtml(data.featureName)) +

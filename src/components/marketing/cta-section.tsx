@@ -1,3 +1,4 @@
+import { appUrl } from "@/config/urls";
 import Link from "next/link";
 
 import styles from "./cta-section.module.css";
@@ -15,7 +16,7 @@ export function CTASection({
   headline,
   subtext,
   primaryLabel = "Start Free Trial",
-  primaryHref = "/signup",
+  primaryHref = appUrl("/signup"),
   secondaryLabel = "See How It Works",
   secondaryHref = "/features",
 }: CTASectionProps) {

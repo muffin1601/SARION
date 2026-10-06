@@ -3,6 +3,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
+const slugify = (value) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 function parseCsv(input) {
   const rows = [];
@@ -94,7 +95,7 @@ for (const file of fs.readdirSync(path.join(root, "src/content/blog"))) {
     discovered.add(`/blog/${file.replace(/\.mdx$/, "")}`);
     const body = read(`src/content/blog/${file}`);
     const tagsLine = body.match(/tags:\s*\[([^\]]+)\]/)?.[1] ?? "";
-    for (const tag of tagsLine.matchAll(/["']([^"']+)["']/g)) discovered.add(`/blog/tag/${tag[1]}`);
+    for (const tag of tagsLine.matchAll(/["']([^"']+)["']/g)) discovered.add(`/blog/tag/${slugify(tag[1])}`);
   }
 }
 for (const match of read("src/content/categories.ts").matchAll(/slug: "([^"]+)"/g)) discovered.add(`/blog/category/${match[1]}`);
