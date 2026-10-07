@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
-import { MARKETING_URL } from "@/config/urls";
 
 export default function AppHome() {
-  redirect(MARKETING_URL);
+  // The protected dashboard middleware sends unauthenticated visitors to
+  // /login and authenticated visitors to their CRM dashboard.
+  redirect("/dashboard");
 }
 
