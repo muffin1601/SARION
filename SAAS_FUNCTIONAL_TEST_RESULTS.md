@@ -13,13 +13,13 @@ Test date: 2026-10-06. Test data: no production data used and no database writes
 | App robots/noindex | pass | `robots.txt` disallows `/`; `X-Robots-Tag: noindex, nofollow, noarchive` on app responses |
 | Auth API POST redirect | pass (safety) | marketing host returns 404 rather than redirecting credential POSTs |
 | Billing webhook POST redirect | pass (safety) | marketing host returns 404 rather than redirecting signed webhook POSTs; provider endpoint must be switched manually |
-| New signup | staging required | requires disposable mailbox and staging database |
-| Existing-user login/logout/session refresh | staging required | requires safe existing staging account |
-| Reset/verification/invitation emails | staging required | requires verified sender/mailbox |
-| Tenant permissions and app workflows | staging required | must use isolated records, never customer data |
-| Portal/proposal token end-to-end | staging required | requires disposable generated tokens and data |
-| Lemon Squeezy checkout/webhook | staging required | requires provider test event/verified endpoint |
+| New signup | production smoke test required | requires a disposable internal mailbox and account |
+| Existing-user login/logout/session refresh | production smoke test required | requires a safe internal account |
+| Reset/verification/invitation emails | production smoke test required | requires a verified sender and internal mailbox |
+| Tenant permissions and app workflows | production smoke test required | use isolated non-customer records only |
+| Portal/proposal token end-to-end | production smoke test required | requires disposable generated tokens and data |
+| Lemon Squeezy checkout/webhook | production smoke test required | requires a provider test event against the verified production endpoint |
 | Browser automation | blocked | in-app browser could not connect because sandbox policy metadata was unavailable |
 
-The server-side authorization and tenant checks are unchanged. A successful compile does not substitute for the staging-required rows.
+The server-side authorization and tenant checks are unchanged. A successful compile does not substitute for the controlled production smoke-test rows.
 

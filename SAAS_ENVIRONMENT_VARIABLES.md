@@ -11,7 +11,7 @@ Never copy `.env` into source control. Values below are names and destinations o
 | `DIRECT_URL` | no runtime migration | migration tooling | direct/session DB URL; do not migrate from marketing |
 | `BETTER_AUTH_SECRET` | no | yes | reuse current secret; rotating forces reauthentication |
 | `BETTER_AUTH_URL` | no | yes | exact app origin |
-| `BETTER_AUTH_TRUSTED_ORIGINS` | no | optional | exact comma-separated staging origins, never wildcard production origins |
+| `BETTER_AUTH_TRUSTED_ORIGINS` | no | optional | exact comma-separated non-production origins, never wildcard production origins |
 | `LEMONSQUEEZY_*`, `LEMON_*_VARIANT_ID` | no | yes | billing and verified webhook only |
 | `RESEND_API_KEY`, `EMAIL_FROM` | contact/scorecard | yes | retain verified sender |
 | `CONTACT_EMAIL`, `NEXT_PUBLIC_CONTACT_EMAIL` | yes | optional | marketing contact flow |

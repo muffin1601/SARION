@@ -33,5 +33,5 @@ Status: locally implemented and locally tested; not deployed.
 | Source lint | pass |
 | Browser automation | blocked by sandbox browser connection; not fabricated |
 | Database mutations | not run |
-| External callback/provider tests | staging/manual only |
+| External callback/provider tests | production smoke test/manual only |
 

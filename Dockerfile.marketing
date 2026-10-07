@@ -1,0 +1,33 @@
+# syntax=docker/dockerfile:1
+
+FROM node:20-alpine AS base
+WORKDIR /app
+
+FROM base AS deps
+COPY package.json package-lock.json ./
+COPY apps/marketing/package.json ./apps/marketing/package.json
+COPY apps/app/package.json ./apps/app/package.json
+RUN npm ci
+
+FROM base AS builder
+ARG NEXT_PUBLIC_MARKETING_URL=https://trysarion.com
+ARG NEXT_PUBLIC_APP_URL=https://app.trysarion.com
+ARG NEXT_PUBLIC_AHREFS_KEY
+ARG NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL
+ENV NEXT_PUBLIC_MARKETING_URL=$NEXT_PUBLIC_MARKETING_URL \
+    NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL \
+    NEXT_PUBLIC_AHREFS_KEY=$NEXT_PUBLIC_AHREFS_KEY \
+    NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL=$NEXT_PUBLIC_MASTERY_KIT_CHECKOUT_URL
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN node scripts/generate-workspace-routes.mjs && npm run build:marketing
+
+FROM base AS runner
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+COPY --from=builder /app/apps/marketing/public ./apps/marketing/public
+COPY --from=builder /app/apps/marketing/.next/standalone ./
+COPY --from=builder /app/apps/marketing/.next/static ./apps/marketing/.next/static
+EXPOSE 3000
+CMD ["node", "apps/marketing/server.js"]

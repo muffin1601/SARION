@@ -1,5 +1,6 @@
 {
   "name": "@sarion/app",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "prepare:assets": "node ../../scripts/prepare-workspace-public.mjs app",
