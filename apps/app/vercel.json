@@ -1,4 +1,6 @@
 {
+  "installCommand": "npm ci --include=dev --prefix ../..",
+  "buildCommand": "npm run build",
   "crons": [
     { "path": "/api/cron/recurring-billing", "schedule": "0 6 * * *" }
   ]
