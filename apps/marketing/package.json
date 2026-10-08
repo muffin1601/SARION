@@ -2,6 +2,11 @@
   "name": "@sarion/marketing",
   "version": "0.1.0",
   "private": true,
+  "dependencies": {
+    "next": "^15.5.27",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "scripts": {
     "prepare:assets": "node ../../scripts/prepare-workspace-public.mjs marketing",
     "dev": "npm run prepare:assets && next dev",
