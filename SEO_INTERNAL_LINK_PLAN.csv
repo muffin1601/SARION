@@ -1,0 +1,10 @@
+Source URL,Destination URL,Suggested Anchor,Reason,Priority,Implemented
+"/","/agency-crm","agency CRM for ongoing client delivery","Clarifies the CRM pillar without competing for the homepage category term","P1","Yes — commercial capability links"
+"/","/client-portal","client portal for agency updates","Routes portal intent to its canonical hub","P1","Yes — commercial capability links"
+"/","/project-management-for-agencies","project management for agencies","Routes delivery-workflow intent to its canonical hub","P1","Yes — commercial capability links"
+"/","/agency-invoicing","agency invoicing and tracking","Routes billing intent to its canonical hub","P1","Yes — commercial capability links"
+"/agency-crm","/client-management-software","client management workspace","Distinguishes ongoing account management from CRM","P1","Yes — commercial capability links"
+"/agency-crm","/project-management-for-agencies","client-linked project management","Explains connected delivery context","P1","Yes — commercial capability links"
+"/client-portal","/agency-invoicing","invoice visibility in the portal","Connects a supported feature to billing hub","P1","Yes — commercial capability links"
+"/project-management-for-agencies","/client-portal","client-facing project updates","Connects delivery to client communication","P1","Yes — commercial capability links"
+"/agency-operations","/agency-crm","client operations CRM","Connects operations to relationship context","P1","Yes — commercial capability links"

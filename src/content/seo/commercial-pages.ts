@@ -55,6 +55,8 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "Does Sarion include a sales pipeline?", answer: "Sarion is focused on post-sale client management and delivery rather than complex lead scoring, deal forecasting, or marketing automation." },
       { question: "Can a small agency start free?", answer: "Yes. Sarion has a free plan for one client and one active project, and paid plans start with a 14-day trial without a credit card." },
       { question: "Can I migrate from spreadsheets?", answer: "Yes. You can move client details into structured records and then create the related projects and invoices. Concierge onboarding and migration are included on the Agency plan." },
+      { question: "Do agencies need both CRM and project management software?", answer: "Agencies need both relationship context and delivery visibility. Sarion connects client records to projects, task checklists, portal activity, and invoices so those responsibilities share context." },
+      { question: "Can one CRM manage clients, projects, and invoices?", answer: "Sarion is designed to keep client management, project delivery, invoice tracking, and client portal visibility connected in one workspace." },
     ],
   },
   {
@@ -93,6 +95,7 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "Can the portal use my agency branding?", answer: "Yes. Branding capabilities depend on the plan: the free portal is powered by Sarion, Starter includes basic branding, Growth adds a branded portal and custom domain, and Agency includes full white-label." },
       { question: "What can clients see?", answer: "Clients can see the delivery information shared through their portal, including project status, dates, comments, files, activity, and invoice context." },
       { question: "Can I see the portal before signing up?", answer: "Yes. The public portal demo lets you explore the client experience with sample data." },
+      { question: "How is a client portal different from email or a shared drive?", answer: "Email and shared drives split updates, files, and questions across many places. A Sarion portal keeps the relevant project status, comments, files, activity, and invoice context together for the client." },
     ],
   },
   {
@@ -131,6 +134,7 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "Does Sarion support task assignment?", answer: "Yes. Projects can include task checklists and owners so the team can see responsibility and progress." },
       { question: "Can clients track project status?", answer: "Yes. The client portal shows relevant project information and supports contextual comments without exposing the internal workspace." },
       { question: "Is Sarion suitable for large, highly customized workflows?", answer: "Sarion prioritizes a simple agency delivery workflow. Teams needing complex dependencies, portfolio governance, or deeply customized work structures may prefer a specialist enterprise project platform." },
+      { question: "How does an agency project start from CRM context?", answer: "In Sarion, projects are created against the client record, so delivery teams retain relationship context and can keep portal updates and invoice visibility connected to the work." },
     ],
   },
   {
@@ -169,6 +173,7 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "Are invoices connected to projects?", answer: "Invoices are linked to the relevant client and can be associated with project context, keeping delivery and billing easier to understand." },
       { question: "Can clients see invoices in their portal?", answer: "Yes. Invoice information is available in the client-facing portal alongside project information." },
       { question: "Does Sarion replace accounting software?", answer: "No. Sarion handles operational client invoicing and tracking; it is not a general ledger, payroll, or tax filing product." },
+      { question: "How does invoice tracking support agency cash flow?", answer: "Clear issue dates, due dates, paid, pending, and overdue states make outstanding client work visible to the agency team before follow-up becomes an afterthought." },
     ],
   },
   {
@@ -207,6 +212,7 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "How does Sarion help manage multiple clients?", answer: "Each client has a searchable record with its own projects, invoices, notes, activity, and portal link, while shared views help the team work across the portfolio." },
       { question: "Is this the same as a sales CRM?", answer: "Not exactly. Sarion emphasizes ongoing delivery after a client is won rather than complex prospecting and pipeline automation." },
       { question: "Can teams collaborate on client accounts?", answer: "Yes. Paid plans support team collaboration, with limits and permission capabilities depending on the selected plan." },
+      { question: "What is the difference between client management and project management?", answer: "Client management keeps relationship history and account context organized; project management coordinates the work. Sarion connects both so teams can see the relationship and delivery together." },
     ],
   },
   {
@@ -245,6 +251,7 @@ export const COMMERCIAL_PAGES: CommercialPage[] = [
       { question: "Can Sarion replace every agency tool?", answer: "No. Sarion consolidates the client-operations layer; specialist production, accounting, and channel tools may still have an important role." },
       { question: "Is Sarion suitable for small agencies?", answer: "Yes. The workflow and plan structure are designed for freelancers, studios, and small or growing agency teams." },
       { question: "Does Sarion support onboarding and migration?", answer: "The product is designed for straightforward setup, and the Agency plan includes concierge onboarding and migration support." },
+      { question: "What is an agency operating system?", answer: "For an agency, an operating system is the repeatable workflow that connects client context, delivery, team coordination, client updates, invoicing, and reporting. Sarion focuses on that client-operations layer." },
     ],
   },
 ];
